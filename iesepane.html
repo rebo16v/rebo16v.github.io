@@ -7,8 +7,8 @@
 </head>
 
 <body>
-    <p>This add-in will set cell A1 to the value 'Hello world!'.</p>
-    <button id="helloButton">Say hello</button>
+    <p>Sample normal</p>
+    <button id="montecarloButton">Montecarlo</button>
 
     <!-- The following image URL tracks diagnostic data for this sample add-in. Please remove the image tag if you reuse this sample in your own code project. -->
     <img src="https://pnptelemetry.azurewebsites.net/pnp-officeaddins/samples/excel-add-in-hello-world-run" />
@@ -16,21 +16,29 @@
 
 <script>
     Office.onReady((info) => {
-        // Check that we loaded into Excel
         if (info.host === Office.HostType.Excel) {
-            document.getElementById("helloButton").onclick = sayHello;
+            document.getElementById("montecarloButton").onclick = montecarlo;
         }
     });
 
-    function sayHello() {
+    function montecarlo() {
         Excel.run(context => {
-
-            // Insert text 'Hello world!' into cell A1.
-            context.workbook.worksheets.getActiveWorksheet().getRange("A1").values = [['Hello world!']];
-
-            // sync the context to run the previous API call, and return.
+            context.workbook.worksheets.getActiveWorksheet().getRange("A1").values = [[sampleNormal(10,2)]];
             return context.sync();
         });
+    }
+
+    function boxMullerTransform() {
+    const u1 = Math.random();
+    const u2 = Math.random();
+    const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+    const z1 = Math.sqrt(-2.0 * Math.log(u1)) * Math.sin(2.0 * Math.PI * u2);
+    return { z0, z1 };
+    }
+
+    function sampleNormal(mean, stddev) {
+        const { z0, _ } = boxMullerTransform();
+        return z0 * stddev + mean;
     }
 </script>
 
