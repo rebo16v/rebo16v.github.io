@@ -23,7 +23,16 @@
 
     function montecarlo() {
         Excel.run(context => {
-            context.workbook.worksheets.getActiveWorksheet().getRange("A1").values = [[sampleNormal(10,2)]];
+
+            // context.workbook.worksheets.getActiveWorksheet().getRange("A1").values = [[sampleNormal(10,2)]];
+
+            for (let i = 0; i < 20; i++) {
+              document.write("---------------------------------")
+              document.write("iteration -> " + i)
+              document.write("revenues = " + sampleNormal(10,2))
+              document.write("   costs = " + (10 * Math.random())
+            }
+
             return context.sync();
         });
     }
