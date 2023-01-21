@@ -33,14 +33,17 @@
     function montecarlo() {
         Excel.run(context => {
             const sheet = context.workbook.worksheets.getActiveWorksheet()
-            let n_iter = document.getElementById("niter").value
+            let n_iter = parseInt(document.getElementById("niter").value)
             for (let i = 0; i < n_iter; i++) {
               let row = (i+4)
               let revenues = sampleNormal(1000,200)
               let costs = sampleNormal(600,100)
               sheet.getRange("B"+row+":D"+row).values = [[revenues, costs, (revenues-costs)]];
             }
-            sheet.getRange("B"+(n_iter+4)+":D"+(n_iter+4)).formulas = [["=AVERAGE(B4:B" + (n_iter+4) + ")", "=A1", "=A2"]];            
+            sheet.getRange("B"+(n_iter+4)+":D"+(n_iter+4)).formulas =
+              [["=AVERAGE(B4:B" + (n_iter+4) + ")", "=AVERAGE(C4:C" + (n_iter+4) + ")", "=AVERAGE(D4:D" + (n_iter+4) + ")"]];
+            sheet.getRange("B"+(n_iter+5)+":D"+(n_iter+5)).formulas =
+              [["=STDEV(B4:B" + (n_iter+5) + ")", "=STDEV(C4:C" + (n_iter+5) + ")", "=STDEV(D4:D" + (n_iter+5) + ")"]];
             return context.sync();
         });
     }
