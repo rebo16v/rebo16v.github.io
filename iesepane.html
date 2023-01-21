@@ -38,11 +38,12 @@
             let n_iter = document.getElementById("niter").value
 
             for (let i = 0; i < n_iter; i++) {
+              let row = (i+4)
               let revenues = sampleNormal(1000,200)
               let costs = sampleNormal(600,100)
-              context.workbook.worksheets.getActiveWorksheet().getRange("B"+(i+4)).values = [[revenues]];
-              context.workbook.worksheets.getActiveWorksheet().getRange("C"+(i+4)).values = [[costs]];
-              context.workbook.worksheets.getActiveWorksheet().getRange("D"+(i+4)).values = [[(revenues-costs)]];
+              context.workbook.worksheets.getActiveWorksheet().getRange("B"+row+":D"+row).values = [[revenues, costs, (revenues-costs)]];
+              // context.workbook.worksheets.getActiveWorksheet().getRange("C"+(i+4)).values = [[costs]];
+              // context.workbook.worksheets.getActiveWorksheet().getRange("D"+(i+4)).values = [[(revenues-costs)]];
             }
             return context.sync();
         });
