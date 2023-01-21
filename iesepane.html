@@ -9,7 +9,7 @@
 <body>
     <br><p>IESE Montecarlo</p><br>
     <button id="setupButton">Setup</button>
-    <br><br>iterations:<input type="text" id="niter" name="niter"><br>
+    <br><br>iterations:<input type="text" size="5" id="niter" name="niter">
     <button id="montecarloButton">Montecarlo</button>
 </body>
 
@@ -40,11 +40,10 @@
             for (let i = 0; i < n_iter; i++) {
               let revenues = sampleNormal(1000,200)
               let costs = sampleNormal(600,100)
-              context.workbook.worksheets.getActiveWorksheet().getRange("B"+i+4).values = [[revenues]];
-              context.workbook.worksheets.getActiveWorksheet().getRange("C"+i+4).values = [[costs]];
-              context.workbook.worksheets.getActiveWorksheet().getRange("D"+i+4).values = [[(revenues-costs)]];
+              context.workbook.worksheets.getActiveWorksheet().getRange("B"+(i+4)).values = [[revenues]];
+              context.workbook.worksheets.getActiveWorksheet().getRange("C"+(i+4)).values = [[costs]];
+              context.workbook.worksheets.getActiveWorksheet().getRange("D"+(i+4)).values = [[(revenues-costs)]];
             }
-
             return context.sync();
         });
     }
