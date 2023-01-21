@@ -7,18 +7,17 @@
 </head>
 
 <body>
-    <br><p>IESE Montecarlo</p>
-    <br>iterations:<input type="text" id="niter" name="niter">
+    <br><p>IESE Montecarlo</p><br>
     <button id="setupButton">Setup</button>
+    <br><br>iterations:<input type="text" id="niter" name="niter"><br>
     <button id="montecarloButton">Montecarlo</button>
 </body>
 
 <script>
     Office.onReady((info) => {
-        if (
-          info.host === Office.HostType.Excel) {
-            document.getElementById("setupButton").onclick = setup;
+        if (info.host === Office.HostType.Excel) {
             document.getElementById("montecarloButton").onclick = montecarlo;
+            document.getElementById("setupButton").onclick = setup;
         }
     });
 
