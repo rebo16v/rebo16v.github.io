@@ -34,13 +34,15 @@
         Excel.run(context => {
             const sheet = context.workbook.worksheets.getActiveWorksheet()
             const n_iter = parseInt(document.getElementById("niter").value)
-            const [[revenues_mean], [revenues_stdev]] = sheet.getRange("B1:D2").values
-            const [[costs_mean], [costs_stdev]] = sheet.getRange("C1:C2").values
+            const [[revenues_mean], [revenues_stdev]] = sheet.getRange("B1:B2").values
+            const [[costs_mean], [costs_stdev]] = sheet.getRange("C1:C2").values            
+            console.log("revenues => (" + revenues_mean + "," + revenues_stdev + ")")
+            console.log("costs => (" + costs_mean + "," + costs_stdev + ")")
 
             for (let i = 0; i < n_iter; i++) {
               let row = (i+4)
-              let revenues = sampleNormal(revenues_mean, revenues_stdev)
-              let costs = sampleNormal(costs_mean, costs_stdev)
+              let revenues = sampleNormal(parseInt(revenues_mean), parseInt(revenues_stdev))
+              let costs = sampleNormal(parseInt(costs_mean), parseInt(costs_stdev))
               sheet.getRange("B"+row+":D"+row).values = [[revenues, costs, (revenues-costs)]];
             }
             sheet.getRange("B"+(n_iter+4)+":D"+(n_iter+4)).formulas =
