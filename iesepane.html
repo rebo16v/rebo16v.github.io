@@ -7,7 +7,8 @@
 </head>
 
 <body>
-    <p>Sample normal</p>
+    <br><p>IESE Montecarlo</p>
+    <br>iterations:<input type="text" id="niter" name="niter">
     <button id="montecarloButton">Montecarlo</button>
 </body>
 
@@ -21,11 +22,14 @@
     function montecarlo() {
         Excel.run(context => {
 
-            context.workbook.worksheets.getActiveWorksheet().getRange("A1").values = [["montecarlo"]];
+            let n_iter = document.getElementById("niter").value
 
-            for (let i = 1; i <= 20; i++) {
-              context.workbook.worksheets.getActiveWorksheet().getRange("B"+i).values = [[sampleNormal(10,2)]];
-              context.workbook.worksheets.getActiveWorksheet().getRange("C"+i).values = [[sampleNormal(5,4)]];
+            for (let i = 1; i <= n_iter; i++) {
+              let revenues = sampleNormal(1000,200)
+              let costs = sampleNormal(600,100)
+              context.workbook.worksheets.getActiveWorksheet().getRange("A"+i).values = [[revenues]];
+              context.workbook.worksheets.getActiveWorksheet().getRange("B"+i).values = [[costs]];
+              context.workbook.worksheets.getActiveWorksheet().getRange("C"+i).values = [[(revenues-costs)]];
             }
 
             return context.sync();
