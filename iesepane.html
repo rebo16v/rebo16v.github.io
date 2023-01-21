@@ -30,7 +30,7 @@
     }
 
     function montecarlo() {
-        Excel.run(context => {
+        await Excel.run(context => {
             const sheet = context.workbook.worksheets.getActiveWorksheet();
             const n_iter = parseInt(document.getElementById("niter").value);
             const conf = sheet.getRange("B1:C2");
@@ -50,7 +50,7 @@
               [["=AVERAGE(B4:B" + (n_iter+4) + ")", "=AVERAGE(C4:C" + (n_iter+4) + ")", "=AVERAGE(D4:D" + (n_iter+4) + ")"]];
             sheet.getRange("B"+(n_iter+5)+":D"+(n_iter+5)).formulas =
               [["=STDEV(B4:B" + (n_iter+5) + ")", "=STDEV(C4:C" + (n_iter+5) + ")", "=STDEV(D4:D" + (n_iter+5) + ")"]];
-            return context.sync();
+            await context.sync();
         });
     }
 
