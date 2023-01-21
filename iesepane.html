@@ -34,8 +34,8 @@
         Excel.run(context => {
             const sheet = context.workbook.worksheets.getActiveWorksheet()
             const n_iter = parseInt(document.getElementById("niter").value)
-            const [[revenues_mean], [revenues_stdev]] = sheet.getRange("B1:B2").values
-            const [[costs_mean], [costs_stdev]] = sheet.getRange("C1:C2").values            
+            const [[revenues_mean], [revenues_stdev]] = sheet.getRange("B1:B2").text
+            const [[costs_mean], [costs_stdev]] = sheet.getRange("C1:C2").text            
             console.log("revenues => (" + revenues_mean + "," + revenues_stdev + ")")
             console.log("costs => (" + costs_mean + "," + costs_stdev + ")")
 
