@@ -29,13 +29,13 @@
         });
     }
 
-    async function montecarlo() {
+    function montecarlo() {
         Excel.run(context => {
             const sheet = context.workbook.worksheets.getActiveWorksheet();
             const n_iter = parseInt(document.getElementById("niter").value);
             const conf = sheet.getRange("B1:C2");
             conf.load("text");
-            await context.sync();
+            context.sync();
             const [[revenues_mean, costs_mean], [revenues_stdev, costs_stdev]] = conf.text;
             console.log("revenues => (" + revenues_mean + "," + revenues_stdev + ")");
             console.log("costs => (" + costs_mean + "," + costs_stdev + ")");
