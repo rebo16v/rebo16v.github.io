@@ -23,28 +23,24 @@
 
     function setup() {
         Excel.run(context => {
-            context.workbook.worksheets.getActiveWorksheet().getRange("A1").values = [["mean"]];
-            context.workbook.worksheets.getActiveWorksheet().getRange("A2").values = [["stdev"]];
-            context.workbook.worksheets.getActiveWorksheet().getRange("B3").values = [["revenues"]];
-            context.workbook.worksheets.getActiveWorksheet().getRange("C3").values = [["costs"]];
-            context.workbook.worksheets.getActiveWorksheet().getRange("D3").values = [["profits"]];
+            const sheet = context.workbook.worksheets.getActiveWorksheet()
+            sheet.getRange("A1:A2").values = [["mean"], ["stdev"]];
+            sheet.getRange("B3:D3").values = [["revenues", "costs", "profits"]];
             return context.sync();
         });
     }
 
     function montecarlo() {
         Excel.run(context => {
-
+            const sheet = context.workbook.worksheets.getActiveWorksheet()
             let n_iter = document.getElementById("niter").value
-
             for (let i = 0; i < n_iter; i++) {
               let row = (i+4)
               let revenues = sampleNormal(1000,200)
               let costs = sampleNormal(600,100)
-              context.workbook.worksheets.getActiveWorksheet().getRange("B"+row+":D"+row).values = [[revenues, costs, (revenues-costs)]];
-              // context.workbook.worksheets.getActiveWorksheet().getRange("C"+(i+4)).values = [[costs]];
-              // context.workbook.worksheets.getActiveWorksheet().getRange("D"+(i+4)).values = [[(revenues-costs)]];
+              sheet.getRange("B"+row+":D"+row).values = [[revenues, costs, (revenues-costs)]];
             }
+            sheet.getRange("B"+(n_iter+4)+":D"+(n_iter+4)).formulas = [["=AVERAGE(B4:B" + (n_iter+4) + ")", "=A1", "=A2"]];            
             return context.sync();
         });
     }
