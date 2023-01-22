@@ -45,7 +45,7 @@
               let row = (i+4);
               let revenues = sampleNormal(parseInt(revenues_mean), parseInt(revenues_stdev));
               let costs = sampleNormal(parseInt(costs_mean), parseInt(costs_stdev));
-              sheet.getRange("B"+row+":D"+row).values = [[revenues, costs, (revenues-costs)]];
+              sheet.getRange("A"+row+":D"+row).values = [["iter" + i, revenues, costs, (revenues-costs)]];
             }
             const stats = [["mean", "=AVERAGE(B4:B" + (n_iter+3) + ")", "=AVERAGE(C4:C" + (n_iter+3) + ")", "=AVERAGE(D4:D" + (n_iter+3) + ")"],
               ["stdev", "=STDEV(B4:B" + (n_iter+3) + ")", "=STDEV(C4:C" + (n_iter+3) + ")", "=STDEV(D4:D" + (n_iter+3) + ")"]]
