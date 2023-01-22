@@ -47,9 +47,9 @@
               let costs = sampleNormal(parseInt(costs_mean), parseInt(costs_stdev));
               sheet.getRange("B"+row+":D"+row).values = [[revenues, costs, (revenues-costs)]];
             }
-            const stats = [["=AVERAGE(B4:B" + (n_iter+4) + ")", "=AVERAGE(C4:C" + (n_iter+4) + ")", "=AVERAGE(D4:D" + (n_iter+4) + ")"],
-              ["=STDEV(B4:B" + (n_iter+5) + ")", "=STDEV(C4:C" + (n_iter+5) + ")", "=STDEV(D4:D" + (n_iter+5) + ")"]]
-            sheet.getRange("B"+(n_iter+4)+":D"+(n_iter+5)).formulas = stats
+            const stats = [["mean", "=AVERAGE(B4:B" + (n_iter+3) + ")", "=AVERAGE(C4:C" + (n_iter+3) + ")", "=AVERAGE(D4:D" + (n_iter+3) + ")"],
+              ["stdev", "=STDEV(B4:B" + (n_iter+3) + ")", "=STDEV(C4:C" + (n_iter+3) + ")", "=STDEV(D4:D" + (n_iter+3) + ")"]]
+            sheet.getRange("A"+(n_iter+4)+":D"+(n_iter+5)).formulas = stats
             await context.sync();
             return;
         });
