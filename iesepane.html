@@ -29,7 +29,7 @@
         });
     }
 
-    function montecarlo() {
+    async function montecarlo() {
         await Excel.run(async(context) => {
             const sheet = context.workbook.worksheets.getActiveWorksheet();
             const n_iter = parseInt(document.getElementById("niter").value);
