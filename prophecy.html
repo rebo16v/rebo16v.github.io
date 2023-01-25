@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+</head>
+
+<body>
+    <br><p>Montecarlo</p><br>
+    <button id="setupButton">Setup</button>
+    <br><br>iterations:
+    <input type="text" size="5" id="niter" name="niter">
+    <button id="montecarloButton">Montecarlo</button>
+    <div id="montecarloGraph"></div>
+</body>
+
+<script>
+
+var margin = {top: 10, right: 30, bottom: 30, left: 40},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+var svg = d3.select("montecarloGraph")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+    Office.onReady((info) => {
+        if (info.host === Office.HostType.Excel) {
+            document.getElementById("montecarloButton").onclick = montecarlo;
+            document.getElementById("setupButton").onclick = setup;
+        }
+    });
+
+    function setup() {
+        Excel.run(context => {
+            const sheet = context.workbook.worksheets.getActiveWorksheet();
+            sheet.getRange("A1:A2").values = [["mean"], ["stdev"]];
+            sheet.getRange("B3:D3").values = [["revenues", "costs", "profits"]];
+            return context.sync();
+        });
+    }
+
+    async function montecarlo() {
+        await Excel.run(async(context) => {
+            const sheet = context.workbook.worksheets.getActiveWorksheet();
+            const n_iter = parseInt(document.getElementById("niter").value);
+            const conf = sheet.getRange("B1:C2");
+            conf.load("text");
+            await context.sync();
+            const [[revenues_mean, costs_mean], [revenues_stdev, costs_stdev]] = conf.text;
+            console.log("revenues => (" + revenues_mean + "," + revenues_stdev + ")");
+            console.log("costs => (" + costs_mean + "," + costs_stdev + ")");
+
+            const profits = []
+            for (let i = 0; i < n_iter; i++) {
+              let row = (i+4);
+              let revenues = sampleNormal(parseInt(revenues_mean), parseInt(revenues_stdev));
+              let costs = sampleNormal(parseInt(costs_mean), parseInt(costs_stdev));
+              profits[i] = revenues - costs
+              sheet.getRange("A"+row+":D"+row).values = [["iter" + i, revenues, costs, (revenues-costs)]];
+            }
+            const stats = [["mean", "=AVERAGE(B4:B" + (n_iter+3) + ")", "=AVERAGE(C4:C" + (n_iter+3) + ")", "=AVERAGE(D4:D" + (n_iter+3) + ")"],
+              ["stdev", "=STDEV(B4:B" + (n_iter+3) + ")", "=STDEV(C4:C" + (n_iter+3) + ")", "=STDEV(D4:D" + (n_iter+3) + ")"]]
+            sheet.getRange("A"+(n_iter+4)+":D"+(n_iter+5)).formulas = stats
+            await context.sync();
+
+            var x = d3.scaleLinear()
+                .domain([0, profits.length])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+                .range([0, width]);
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+
+            // set the parameters for the histogram
+            var histogram = d3.histogram()
+                .value(function(d) { return d; })
+                .domain(x.domain())  // then the domain of the graphic
+                .thresholds(x.ticks(70)); // then the numbers of bins
+
+            // And apply this function to data to get the bins
+            var bins = histogram(profits);
+
+            // Y axis: scale and draw:
+            var y = d3.scaleLinear()
+                .range([height, 0]);
+                y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            return;
+        });
+    }
+
+    function boxMullerTransform() {
+    const u1 = Math.random();
+    const u2 = Math.random();
+    const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+    const z1 = Math.sqrt(-2.0 * Math.log(u1)) * Math.sin(2.0 * Math.PI * u2);
+    return { z0, z1 };
+    }
+
+    function sampleNormal(mean, stddev) {
+        const { z0, _ } = boxMullerTransform();
+        return z0 * stddev + mean;
+    }
+</script>
+
+</html>
