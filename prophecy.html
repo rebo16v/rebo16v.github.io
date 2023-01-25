@@ -77,11 +77,14 @@ var svg = d3.select("montecarloGraph")
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
-            // And apply this function to data to get the bins
-            var bins = d3.histogram(profits)
-                .value(function(d) { return d; })
+            // set the parameters for the histogram
+            var histogram = d3.histogram()
+                // .value(function(d) { return d; })
                 .domain(x.domain())  // then the domain of the graphic
                 .thresholds(x.ticks(3)); // then the numbers of bins
+
+            // And apply this function to data to get the bins
+            var bins = histogram(profits);
             console.log("bins => " + bins)
 
             // Y axis: scale and draw:
