@@ -64,6 +64,7 @@ var svg = d3.select("montecarloGraph")
               profits[i] = revenues - costs
               sheet.getRange("A"+row+":D"+row).values = [["iter" + i, revenues, costs, (revenues-costs)]];
             }
+            console.log("profits => " + profits)
             const stats = [["mean", "=AVERAGE(B4:B" + (n_iter+3) + ")", "=AVERAGE(C4:C" + (n_iter+3) + ")", "=AVERAGE(D4:D" + (n_iter+3) + ")"],
               ["stdev", "=STDEV(B4:B" + (n_iter+3) + ")", "=STDEV(C4:C" + (n_iter+3) + ")", "=STDEV(D4:D" + (n_iter+3) + ")"]]
             sheet.getRange("A"+(n_iter+4)+":D"+(n_iter+5)).formulas = stats
@@ -84,7 +85,7 @@ var svg = d3.select("montecarloGraph")
 
             // And apply this function to data to get the bins
             var bins = histogram(profits);
-            console.log(bins)
+            console.log("bins => " + bins)
 
             // Y axis: scale and draw:
             var y = d3.scaleLinear()
