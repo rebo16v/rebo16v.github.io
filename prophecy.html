@@ -71,7 +71,7 @@ var svg = d3.select("montecarloGraph")
             await context.sync();
 
             var x = d3.scaleLinear()
-                .domain([0, Math.max(...data)])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+                .domain([0, Math.max(...profits)])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
                 .range([0, width]);
             svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
