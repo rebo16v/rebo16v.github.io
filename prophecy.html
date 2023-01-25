@@ -71,20 +71,18 @@ var svg = d3.select("montecarloGraph")
             await context.sync();
 
             var x = d3.scaleLinear()
-                .domain([0, profits.length])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+                .domain([0, Math.max(...data)])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
                 .range([0, width]);
             svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
             // set the parameters for the histogram
-            var histogram = d3.histogram()
+            var bins = d3.histogram()
                 // .value(function(d) { return d; })
                 .domain(x.domain())  // then the domain of the graphic
-                .thresholds(x.ticks(3)); // then the numbers of bins
-
-            // And apply this function to data to get the bins
-            var bins = histogram(profits);
+                .thresholds(x.ticks(3))
+                (profits); // then the numbers of bins
             console.log("bins => " + bins)
 
             // Y axis: scale and draw:
