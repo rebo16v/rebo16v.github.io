@@ -8,6 +8,12 @@
 
 <body>
     <br><p>Montecarlo</p><br>
+
+    <svg height="100" width="100">
+      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+      Sorry, your browser does not support inline SVG.
+    </svg>
+
     <button id="setupButton">Setup</button>
     <br><br>iterations:
     <input type="text" size="5" id="niter" name="niter">
@@ -17,17 +23,17 @@
 
 <script>
 
-var margin = {top: 10, right: 30, bottom: 30, left: 40},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+  var margin = {top: 10, right: 30, bottom: 30, left: 40},
+      width = 460 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
 
-var svg = d3.select("montecarloGraph")
-  .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+  var svg = d3.select("montecarloGraph")
+    .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
 
     Office.onReady((info) => {
         if (info.host === Office.HostType.Excel) {
@@ -77,6 +83,13 @@ var svg = d3.select("montecarloGraph")
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
+            // Y axis: scale and draw:
+            var y = d3.scaleLinear()
+                .range([height, 0]);
+                y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
             // set the parameters for the histogram
             var bins = d3.histogram()
                 // .value(function(d) { return d; })
@@ -84,13 +97,6 @@ var svg = d3.select("montecarloGraph")
                 .thresholds(x.ticks(3))
                 (profits); // then the numbers of bins
             console.log("bins => " + bins)
-
-            // Y axis: scale and draw:
-            var y = d3.scaleLinear()
-                .range([height, 0]);
-                y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
-            svg.append("g")
-                .call(d3.axisLeft(y));
 
             svg.selectAll("rect")
                 .data(bins)
