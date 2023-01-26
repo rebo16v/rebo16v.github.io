@@ -9,8 +9,7 @@
 <body>
     <br><p>Montecarlo</p><br>
 
-    <svg height="100" width="100">
-      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+    <svg id="vector" height="100" width="100">
       Sorry, your browser does not support inline SVG.
     </svg>
 
@@ -97,6 +96,15 @@
                 .thresholds(x.ticks(3))
                 (profits); // then the numbers of bins
             console.log("bins => " + bins)
+
+            var svg = d3.select("montecarloGraph")
+            .append("circle")
+            .attr("cx", "50")
+            .attr("cy", "50")
+            .attr("r", "30")
+            .attr("stroke", "black")
+            .attr("stroke-width", "3")
+            .attr("fill", "red")
 
             svg.selectAll("rect")
                 .data(bins)
