@@ -8,11 +8,6 @@
 
 <body>
     <br><p>Montecarlo</p><br>
-
-    <svg id="vector" height="100" width="100">
-      Sorry, your browser does not support inline SVG.
-    </svg>
-
     <button id="setupButton">Setup</button>
     <br><br>iterations:
     <input type="text" size="5" id="niter" name="niter">
@@ -26,7 +21,7 @@
       width = 460 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
-  var svg = d3.select("montecarloGraph")
+  var svg = d3.select("#montecarloGraph")
     .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
@@ -96,15 +91,6 @@
                 .thresholds(x.ticks(3))
                 (profits); // then the numbers of bins
             console.log("bins => " + bins)
-
-            var svg = d3.select("vector")
-            .append("circle")
-            .attr("cx", "50")
-            .attr("cy", "50")
-            .attr("r", "30")
-            .attr("stroke", "black")
-            .attr("stroke-width", "3")
-            .attr("fill", "red")
 
             svg.selectAll("rect")
                 .data(bins)
