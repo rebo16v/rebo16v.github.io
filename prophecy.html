@@ -61,12 +61,12 @@
                 .domain([revenues_mean - costs_mean - 500, revenues_mean - costs_mean + 500])
                 .range([0, width]);
             svg.append("g")
-                .attr("transform", "translate(0," + height + ")")
+                // .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
                 var y = d3.scaleLinear()
+                    .domain([0, 50]) // d3.max(bins, function(d) { return d.length; })]);
                     .range([height, 0]);
-                    y.domain([0, 50]) // d3.max(bins, function(d) { return d.length; })]);
                 svg.append("g")
                     .call(d3.axisLeft(y));
 
@@ -80,21 +80,18 @@
               await context.sync();
               var bins = d3.histogram()
                   // .value(function(d) { return d; })
-                  .domain(x.domain())  // then the domain of the graphic
+                  .domain(x.domain())
                   .thresholds(x.ticks(10))
-                  (profits); // then the numbers of bins
               console.log("bins => " + bins)
 
               svg.selectAll("rect")
                   .data(bins)
                   .enter()
                   .append("rect")
-                    .attr("x", function(d) {return x(d.x1)})
+                    .attr("x", function(d) {return x(d.x0)})
                     .attr("y", function(d) {return y(d.length)})
-                    // .attr("x", 1)
-                    // .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-                    .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
-                    .attr("height", function(d) { return height - y(d.length); })
+                    .attr("width", function(d) {return x(d.x1) - x(d.x0)})
+                    .attr("height", function(d) {return height - y(d.length)})
                     .style("fill", "#69b3a2")
                   }
 
