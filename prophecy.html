@@ -81,7 +81,7 @@
             var bins = d3.histogram()
                 // .value(function(d) { return d; })
                 .domain(x.domain())  // then the domain of the graphic
-                .thresholds(x.ticks(3))
+                .thresholds(x.ticks(10))
                 (profits); // then the numbers of bins
             console.log("bins => " + bins)
 
