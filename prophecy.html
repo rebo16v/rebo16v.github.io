@@ -78,10 +78,12 @@
               profits[i] = revenues - costs
               sheet.getRange("A"+row+":D"+row).values = [["iter" + i, revenues, costs, (revenues-costs)]];
               await context.sync();
+
               var bins = d3.histogram()
                   // .value(function(d) { return d; })
                   .domain(x.domain())
                   .thresholds(x.ticks(10))
+                  (profits)
               console.log("bins => " + bins)
 
               svg.selectAll("rect")
@@ -93,7 +95,7 @@
                     .attr("width", function(d) {return x(d.x1) - x(d.x0)})
                     .attr("height", function(d) {return height - y(d.length)})
                     .style("fill", "#69b3a2")
-                  }
+            }
 
 
 
