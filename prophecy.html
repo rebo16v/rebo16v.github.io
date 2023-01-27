@@ -52,59 +52,62 @@
             const conf = sheet.getRange("B1:C2");
             conf.load("text");
             await context.sync();
-            const [[revenues_mean, costs_mean], [revenues_stdev, costs_stdev]] = conf.text;
+            const [[revenues_mean, costs_mean], [revenues_stdev, costs_stdev]] = conf.text.map( x => x.map(z => parseInt(z)));
             console.log("revenues => (" + revenues_mean + "," + revenues_stdev + ")");
             console.log("costs => (" + costs_mean + "," + costs_stdev + ")");
+
+            var x = d3.scaleLinear()
+                // .domain([Math.min(...profits), Math.max(...profits)])
+                .domain([revenues_mean - cost_mean - 500, revenues_mean - cost_mean + 500])
+                .range([0, width]);
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+
+                var y = d3.scaleLinear()
+                    .range([height, 0]);
+                    y.domain([0, 50]) // d3.max(bins, function(d) { return d.length; })]);
+                svg.append("g")
+                    .call(d3.axisLeft(y));
 
             const profits = []
             for (let i = 0; i < n_iter; i++) {
               let row = (i+4);
-              let revenues = sampleNormal(parseInt(revenues_mean), parseInt(revenues_stdev));
-              let costs = sampleNormal(parseInt(costs_mean), parseInt(costs_stdev));
+              let revenues = sampleNormal(revenues_mean, revenues_stdev);
+              let costs = sampleNormal(costs_mean, costs_stdev);
               profits[i] = revenues - costs
               sheet.getRange("A"+row+":D"+row).values = [["iter" + i, revenues, costs, (revenues-costs)]];
-            }
+              await context.sync();
+              var bins = d3.histogram()
+                  // .value(function(d) { return d; })
+                  .domain(x.domain())  // then the domain of the graphic
+                  .thresholds(x.ticks(10))
+                  (profits); // then the numbers of bins
+              console.log("bins => " + bins)
+
+              svg.selectAll("rect")
+                  .data(bins)
+                  .enter()
+                  .append("rect")
+                    .attr("x", function(d) {return x(d.x1)})
+                    .attr("y", function(d) {return y(d.length)})
+                    // .attr("x", 1)
+                    // .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+                    .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+                    .attr("height", function(d) { return height - y(d.length); })
+                    .style("fill", "#69b3a2")
+                  }
+
+
+
             console.log("profits => " + profits)
             const stats = [["mean", "=AVERAGE(B4:B" + (n_iter+3) + ")", "=AVERAGE(C4:C" + (n_iter+3) + ")", "=AVERAGE(D4:D" + (n_iter+3) + ")"],
               ["stdev", "=STDEV(B4:B" + (n_iter+3) + ")", "=STDEV(C4:C" + (n_iter+3) + ")", "=STDEV(D4:D" + (n_iter+3) + ")"]]
             sheet.getRange("A"+(n_iter+4)+":D"+(n_iter+5)).formulas = stats
             await context.sync();
 
-            var x = d3.scaleLinear()
-                .domain([Math.min(...profits), Math.max(...profits)])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
-                .range([0, width]);
-            svg.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x));
-
-            // set the parameters for the histogram
-            var bins = d3.histogram()
-                // .value(function(d) { return d; })
-                .domain(x.domain())  // then the domain of the graphic
-                .thresholds(x.ticks(10))
-                (profits); // then the numbers of bins
-            console.log("bins => " + bins)
-
-            // Y axis: scale and draw:
-            var y = d3.scaleLinear()
-                .range([height, 0]);
-                y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
-            svg.append("g")
-                .call(d3.axisLeft(y));
-
-            svg.selectAll("rect")
-                .data(bins)
-                .enter()
-                .append("rect")
-                  .attr("x", function(d) {return x(d.x1)})
-                  .attr("y", function(d) {return y(d.length)})
-                  // .attr("x", 1)
-                  // .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-                  .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
-                  .attr("height", function(d) { return height - y(d.length); })
-                  .style("fill", "#69b3a2")
-
             return;
+
         });
     }
 
