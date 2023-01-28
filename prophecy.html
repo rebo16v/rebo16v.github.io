@@ -31,6 +31,10 @@
       .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
+var axis = [svg.append("g")
+    .attr("transform", "translate(0," + height + ")"),
+    svg.append("g")]
+
     Office.onReady((info) => {
         if (info.host === Office.HostType.Excel) {
             document.getElementById("montecarloButton").onclick = montecarlo;
@@ -42,7 +46,7 @@
         Excel.run(context => {
             const sheet = context.workbook.worksheets.getActiveWorksheet();
             sheet.getRange("A1:A2").values = [["mean"], ["stdev"]];
-            sheet.getRange("B3:D3").values = [["revenues", "costs", "profits"]];
+            sheet.getRange("B3:D3").values = [["revenues", "costs", "profits"]];            
             return context.sync();
         });
     }
@@ -64,15 +68,12 @@
                 // .domain([Math.min(...profits), Math.max(...profits)])
                 .domain([revenues_exp[0] - costs_exp[1], revenues_exp[1] - costs_exp[0]])
                 .range([0, width]);
-            svg.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x));
+            axis[0].call(d3.axisBottom(x));
 
-                var y = d3.scaleLinear()
-                    .domain([0, Math.round(3*n_iter/n_bins)]) // d3.max(bins, function(d) { return d.length; })]);
-                    .range([height, 0]);
-                svg.append("g")
-                    .call(d3.axisLeft(y));
+            var y = d3.scaleLinear()
+                  .domain([0, Math.round(5*n_iter/n_bins)]) // d3.max(bins, function(d) { return d.length; })]);
+                  .range([height, 0]);
+            axis[1].call(d3.axisLeft(y));
 
             const profits = []
             for (let i = 0; i < n_iter; i++) {
@@ -81,7 +82,8 @@
               let costs = sampleNormal(costs_mean, costs_stdev);
               profits[i] = revenues - costs
               // sheet.getRange("A"+row+":D"+row).values = [["iter" + i, revenues, costs, (revenues-costs)]];
-              // await context.sync();
+              sheet.getRange("D3:D4").values = [["iter" + i, profits[i]]];
+              await context.sync();
               console.log("iter" + i + " => " + revenues + ", " + costs)
 
               var bins = d3.histogram()
@@ -114,13 +116,7 @@
 
             }
 
-
-
             console.log("profits => " + profits)
-            const stats = [["mean", "=AVERAGE(B4:B" + (n_iter+3) + ")", "=AVERAGE(C4:C" + (n_iter+3) + ")", "=AVERAGE(D4:D" + (n_iter+3) + ")"],
-              ["stdev", "=STDEV(B4:B" + (n_iter+3) + ")", "=STDEV(C4:C" + (n_iter+3) + ")", "=STDEV(D4:D" + (n_iter+3) + ")"]]
-            sheet.getRange("A"+(n_iter+4)+":D"+(n_iter+5)).formulas = stats
-            await context.sync();
 
             return;
 
