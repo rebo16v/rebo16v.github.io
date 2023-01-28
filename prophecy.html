@@ -70,7 +70,7 @@ var axis = [svg.append("g")
             axis[0].call(d3.axisBottom(x));
 
             var y = d3.scaleLinear()
-                  .domain([0, Math.round(5*n_iter/n_bins)]) 
+                  .domain([0, Math.round(5*n_iter/n_bins)])
                   .range([height, 0]);
             axis[1].call(d3.axisLeft(y));
 
@@ -79,10 +79,10 @@ var axis = [svg.append("g")
               const revenues = sampleNormal(revenues_mean, revenues_stdev);
               const costs = sampleNormal(costs_mean, costs_stdev);
               profits[i] = revenues - costs
-              const profits_mean = x
+              const profits_mean = profits
                 .reduce((a,b) => a+b, 0 ) / profits.length;
-              const profits_stdev = Math.sqrt(x
-                .map(k => (k - x_mean)**2)
+              const profits_stdev = Math.sqrt(profits
+                .map(k => (k - profits_mean)**2)
                 .reduce((a,b) => a+b, 0 ) / profits.length);
               sheet.getRange("D1:D2").values = [[profits_mean], [profits_stdev]];
               sheet.getRange("A4:D4").values = [["iter-" + i, revenues, costs, profits[i]]];
