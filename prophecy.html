@@ -57,8 +57,8 @@
             const [[revenues_mean, costs_mean], [revenues_stdev, costs_stdev]] = conf.text.map( x => x.map(z => parseInt(z)));
             console.log("revenues => (" + revenues_mean + "," + revenues_stdev + ")");
             console.log("costs => (" + costs_mean + "," + costs_stdev + ")");
-            const revenues_exp = [revenues_mean - 3*revenues_stdev, revenues_mean - 3*revenues_stdev]
-            const costs_exp = [costs_mean - 3*costs_stdev, costs_mean - 3*costs_stdev]
+            const revenues_exp = [revenues_mean - 3*revenues_stdev, revenues_mean + 3*revenues_stdev]
+            const costs_exp = [costs_mean - 3*costs_stdev, costs_mean + 3*costs_stdev]
 
             var x = d3.scaleLinear()
                 // .domain([Math.min(...profits), Math.max(...profits)])
