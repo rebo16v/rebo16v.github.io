@@ -61,7 +61,7 @@
                 .domain([revenues_mean - costs_mean - 500, revenues_mean - costs_mean + 500])
                 .range([0, width]);
             svg.append("g")
-                // .attr("transform", "translate(0," + height + ")")
+                .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
                 var y = d3.scaleLinear()
