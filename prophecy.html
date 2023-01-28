@@ -18,7 +18,7 @@
 <script>
 
   var margin = {top: 10, right: 30, bottom: 30, left: 40},
-      width = 460 - margin.left - margin.right,
+      width = 600 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
   var svg = d3.select("#montecarloGraph")
@@ -85,8 +85,11 @@
                   .thresholds(x.ticks(10))
                   (profits)
 
-              console.log("bin  => (" + bins[5].x0 + "," + bins[5].x1 + ") => " + bins[5].length)
-              console.log("bint => (" + x(bins[5].x0) + "," + x(bins[5].x1) + ") => " + y(bins[5].length))
+              for (let i = 0; i < 10; i++) {
+                console.log("========================================================")
+                console.log("bin  => (" + bins[i].x0 + "," + bins[i].x1 + ") => " + bins[i].length)
+                console.log("bint => (" + x(bins[i].x0) + "," + x(bins[i].x1) + ") => " + y(bins[i].length))
+              }
 
               svg.selectAll("rect")
                   .data(bins)
@@ -95,8 +98,8 @@
                     .attr("x", function(d) {return x(d.x0)})
                     .attr("y", function(d) {return y(d.length)})
                     .attr("width", function(d) {return x(d.x1) - x(d.x0)})
-                    .attr("height", function(d) {return height - y(d.length)})
-                    .style("fill", "#69b3a2")
+                    .attr("height", function(d) {return y(0) - y(d.length)})
+                    .style("fill", "green")
             }
 
 
