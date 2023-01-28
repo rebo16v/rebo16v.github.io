@@ -65,7 +65,7 @@
                 .call(d3.axisBottom(x));
 
                 var y = d3.scaleLinear()
-                    .domain([0, 100]) // d3.max(bins, function(d) { return d.length; })]);
+                    .domain([0, 50]) // d3.max(bins, function(d) { return d.length; })]);
                     .range([height, 0]);
                 svg.append("g")
                     .call(d3.axisLeft(y));
@@ -82,14 +82,16 @@
               var bins = d3.histogram()
                   // .value(function(d) { return d; })
                   .domain(x.domain())
-                  .thresholds(x.ticks(10))
+                  .thresholds(x.ticks(50))
                   (profits)
 
+              /*
               for (let i = 0; i < 10; i++) {
                 console.log("========================================================")
                 console.log("bin  => (" + bins[i].x0 + "," + bins[i].x1 + ") => " + bins[i].length)
                 console.log("bint => (" + x(bins[i].x0) + "," + x(bins[i].x1) + ") => " + y(bins[i].length))
               }
+              */
 
               svg.selectAll("rect")
                   .data(bins)
