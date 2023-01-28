@@ -58,14 +58,14 @@
 
             var x = d3.scaleLinear()
                 // .domain([Math.min(...profits), Math.max(...profits)])
-                .domain([revenues_mean - costs_mean - 500, revenues_mean - costs_mean + 500])
+                .domain([revenues_mean - costs_mean - 250, revenues_mean - costs_mean + 250])
                 .range([0, width]);
             svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
                 var y = d3.scaleLinear()
-                    .domain([0, 50]) // d3.max(bins, function(d) { return d.length; })]);
+                    .domain([0, 100]) // d3.max(bins, function(d) { return d.length; })]);
                     .range([height, 0]);
                 svg.append("g")
                     .call(d3.axisLeft(y));
@@ -98,7 +98,7 @@
                           .append("rect")
                           .attr("x", function(d) {return x(d.x0)})
                           .attr("y", function(d) {return y(d.length)})
-                          .attr("width", function(d) {return x(d.x1) - x(d.x0)})
+                          .attr("width", function(d) {return x(d.x1) - x(d.x0) - 2})
                           .attr("height", function(d) {return y(0) - y(d.length)})
                           .style("fill", "green"),
                       update => update
