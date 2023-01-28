@@ -46,7 +46,7 @@ var axis = [svg.append("g")
         Excel.run(context => {
             const sheet = context.workbook.worksheets.getActiveWorksheet();
             sheet.getRange("A1:A2").values = [["mean"], ["stdev"]];
-            sheet.getRange("B3:D3").values = [["revenues", "costs", "profits"]];            
+            sheet.getRange("B3:D3").values = [["revenues", "costs", "profits"]];
             return context.sync();
         });
     }
@@ -82,7 +82,7 @@ var axis = [svg.append("g")
               let costs = sampleNormal(costs_mean, costs_stdev);
               profits[i] = revenues - costs
               // sheet.getRange("A"+row+":D"+row).values = [["iter" + i, revenues, costs, (revenues-costs)]];
-              sheet.getRange("D3:D4").values = [["iter" + i, profits[i]]];
+              sheet.getRange("C4:D4").values = [["iter" + i, profits[i]]];
               await context.sync();
               console.log("iter" + i + " => " + revenues + ", " + costs)
 
