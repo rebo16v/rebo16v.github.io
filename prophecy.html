@@ -74,16 +74,14 @@ var axis = [svg.append("g")
                   .range([height, 0]);
             axis[1].call(d3.axisLeft(y));
 
-            const profits = []
+            const profits = [];
+            profits_mean = 0;
             for (let i = 0; i < n_iter; i++) {
               const revenues = sampleNormal(revenues_mean, revenues_stdev);
               const costs = sampleNormal(costs_mean, costs_stdev);
               profits[i] = revenues - costs
-              const profits_mean = profits
-                .reduce((a,b) => a+b, 0 ) / profits.length;
-              const profits_stdev = Math.sqrt(profits
-                .map(k => (k - profits_mean)**2)
-                .reduce((a,b) => a+b, 0 ) / profits.length);
+              profits_mean = (mean * (profits.length-1) + profits[i]) / profits.length
+              profits_stdv = ""              
               sheet.getRange("D1:D2").values = [[profits_mean], [profits_stdev]];
               sheet.getRange("A4:D4").values = [["iter-" + i, revenues, costs, profits[i]]];
               await context.sync();
