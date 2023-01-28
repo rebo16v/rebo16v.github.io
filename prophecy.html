@@ -83,13 +83,17 @@ var axis = [svg.append("g")
               profits[i] = revenues - costs
               let profits_mean = profits.reduce( ( p, c ) => p + c, 0 ) / profits.length;
               let profits_stdev = 0
+              const profits_mean = x
+                .reduce((a,b) => a+b, 0 ) / profits.length;
+              const profits_stdev = Math.sqrt(x
+                .map(k => (k - x_mean)**2)
+                .reduce((a,b) => a+b, 0 ) / profits.length);
               sheet.getRange("D1:D2").values = [[profits_mean], [profits_stdev]];
-              sheet.getRange("A4:D4").values = [["iter" + i, revenues, costs, profits[i]]];
+              sheet.getRange("A4:D4").values = [["iter-" + i, revenues, costs, profits[i]]];
               await context.sync();
               console.log("iter" + i + " => " + revenues + ", " + costs)
 
               var bins = d3.histogram()
-                  // .value(function(d) { return d; })
                   .domain(x.domain())
                   .thresholds(x.ticks(50))
                   (profits)
