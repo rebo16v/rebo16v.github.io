@@ -65,24 +65,20 @@ var axis = [svg.append("g")
             const costs_exp = [costs_mean - 3*costs_stdev, costs_mean + 3*costs_stdev]
 
             var x = d3.scaleLinear()
-                // .domain([Math.min(...profits), Math.max(...profits)])
                 .domain([revenues_exp[0] - costs_exp[1], revenues_exp[1] - costs_exp[0]])
                 .range([0, width]);
             axis[0].call(d3.axisBottom(x));
 
             var y = d3.scaleLinear()
-                  .domain([0, Math.round(5*n_iter/n_bins)]) // d3.max(bins, function(d) { return d.length; })]);
+                  .domain([0, Math.round(5*n_iter/n_bins)]) 
                   .range([height, 0]);
             axis[1].call(d3.axisLeft(y));
 
             const profits = []
             for (let i = 0; i < n_iter; i++) {
-              let row = (i+4);
-              let revenues = sampleNormal(revenues_mean, revenues_stdev);
-              let costs = sampleNormal(costs_mean, costs_stdev);
+              const revenues = sampleNormal(revenues_mean, revenues_stdev);
+              const costs = sampleNormal(costs_mean, costs_stdev);
               profits[i] = revenues - costs
-              let profits_mean = profits.reduce( ( p, c ) => p + c, 0 ) / profits.length;
-              let profits_stdev = 0
               const profits_mean = x
                 .reduce((a,b) => a+b, 0 ) / profits.length;
               const profits_stdev = Math.sqrt(x
@@ -121,8 +117,6 @@ var axis = [svg.append("g")
                           .attr("height", function(d) {return y(0) - y(d.length)}))
 
             }
-
-            console.log("profits => " + profits)
 
             return;
 
