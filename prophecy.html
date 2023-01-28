@@ -17,6 +17,8 @@
 
 <script>
 
+  const nbis = 50
+
   var margin = {top: 10, right: 10, bottom: 30, left: 30},
       width = 400 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom;
@@ -55,17 +57,19 @@
             const [[revenues_mean, costs_mean], [revenues_stdev, costs_stdev]] = conf.text.map( x => x.map(z => parseInt(z)));
             console.log("revenues => (" + revenues_mean + "," + revenues_stdev + ")");
             console.log("costs => (" + costs_mean + "," + costs_stdev + ")");
+            const revenues_exp = [revenues_mean - 3*revenues_stdev, revenues_mean - 3*revenues_stdev]
+            const costs_exp = [costs_mean - 3*costs_stdev, costs_mean - 3*costs_stdev]
 
             var x = d3.scaleLinear()
                 // .domain([Math.min(...profits), Math.max(...profits)])
-                .domain([revenues_mean - costs_mean - 250, revenues_mean - costs_mean + 250])
+                .domain([revenues_exp[0] - costs_exp[1], revenues_exp[1] - costs_exp[0]])
                 .range([0, width]);
             svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
                 var y = d3.scaleLinear()
-                    .domain([0, 50]) // d3.max(bins, function(d) { return d.length; })]);
+                    .domain([0, Math.round(3*n_iter/n_bins)]) // d3.max(bins, function(d) { return d.length; })]);
                     .range([height, 0]);
                 svg.append("g")
                     .call(d3.axisLeft(y));
@@ -76,8 +80,9 @@
               let revenues = sampleNormal(revenues_mean, revenues_stdev);
               let costs = sampleNormal(costs_mean, costs_stdev);
               profits[i] = revenues - costs
-              sheet.getRange("A"+row+":D"+row).values = [["iter" + i, revenues, costs, (revenues-costs)]];
-              await context.sync();
+              // sheet.getRange("A"+row+":D"+row).values = [["iter" + i, revenues, costs, (revenues-costs)]];
+              // await context.sync();
+              console.log("iter" + i + " => " + revenues + ", " + costs)
 
               var bins = d3.histogram()
                   // .value(function(d) { return d; })
