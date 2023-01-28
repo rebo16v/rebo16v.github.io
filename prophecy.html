@@ -10,7 +10,7 @@
     <br><p>Montecarlo</p><br>
     <button id="setupButton">Setup</button>
     <br><br>iterations:
-    <input type="text" size="5" id="niter" name="niter">
+    <input type="text" size="8" id="niter" name="niter">
     <button id="montecarloButton">Montecarlo</button><br>
     <div id="montecarloGraph"></div>
 </body>
@@ -20,7 +20,7 @@
   const n_bins = 50
 
   const margin = {top: 50, right: 50, bottom: 50, left: 50},
-      width = 400 - margin.left - margin.right,
+      width = 500 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom;
 
   var svg = d3.select("#montecarloGraph")
@@ -81,8 +81,10 @@ var axis = [svg.append("g")
               let revenues = sampleNormal(revenues_mean, revenues_stdev);
               let costs = sampleNormal(costs_mean, costs_stdev);
               profits[i] = revenues - costs
-              // sheet.getRange("A"+row+":D"+row).values = [["iter" + i, revenues, costs, (revenues-costs)]];
-              sheet.getRange("C4:D4").values = [["iter" + i, profits[i]]];
+              let profits_mean = profits.reduce( ( p, c ) => p + c, 0 ) / profits.length;
+              let profits_stdev = 0
+              sheet.getRange("D1:D2").values = [[profits_mean], [profits_stdev]];
+              sheet.getRange("A4:D4").values = [["iter" + i, revenues, costs, profits[i]]];
               await context.sync();
               console.log("iter" + i + " => " + revenues + ", " + costs)
 
@@ -135,6 +137,7 @@ var axis = [svg.append("g")
         const { z0, _ } = boxMullerTransform();
         return z0 * stddev + mean;
     }
+
 </script>
 
 </html>
