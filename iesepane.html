@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <script type="text/javascript"src="https://d3js.org/d3.v7.js"></script>
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 </head>
 
@@ -9,11 +10,31 @@
     <br><p>Montecarlo</p><br>
     <button id="setupButton">Setup</button>
     <br><br>iterations:
-    <input type="text" size="5" id="niter" name="niter">
-    <button id="montecarloButton">Montecarlo</button>
+    <input type="text" size="8" id="niter" name="niter">
+    <button id="montecarloButton">Montecarlo</button><br>
+    <div id="montecarloGraph"></div>
 </body>
 
 <script>
+
+  const n_bins = 50
+
+  const margin = {top: 50, right: 50, bottom: 50, left: 50},
+      width = 500 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
+
+  var svg = d3.select("#montecarloGraph")
+    .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+var axis = [svg.append("g")
+    .attr("transform", "translate(0," + height + ")"),
+    svg.append("g")]
+
     Office.onReady((info) => {
         if (info.host === Office.HostType.Excel) {
             document.getElementById("montecarloButton").onclick = montecarlo;
@@ -37,21 +58,66 @@
             const conf = sheet.getRange("B1:C2");
             conf.load("text");
             await context.sync();
-            const [[revenues_mean, costs_mean], [revenues_stdev, costs_stdev]] = conf.text;
+            const [[revenues_mean, costs_mean], [revenues_stdev, costs_stdev]] = conf.text.map( x => x.map(z => parseInt(z)));
             console.log("revenues => (" + revenues_mean + "," + revenues_stdev + ")");
             console.log("costs => (" + costs_mean + "," + costs_stdev + ")");
+            const revenues_exp = [revenues_mean - 3*revenues_stdev, revenues_mean + 3*revenues_stdev]
+            const costs_exp = [costs_mean - 3*costs_stdev, costs_mean + 3*costs_stdev]
 
+            var x = d3.scaleLinear()
+                .domain([revenues_exp[0] - costs_exp[1], revenues_exp[1] - costs_exp[0]])
+                .range([0, width]);
+            axis[0].call(d3.axisBottom(x));
+
+            var y = d3.scaleLinear()
+                  .domain([0, Math.round(5*n_iter/n_bins)])
+                  .range([height, 0]);
+            axis[1].call(d3.axisLeft(y));
+
+            const profits = [];
+            profits_mean = 0;
             for (let i = 0; i < n_iter; i++) {
-              let row = (i+4);
-              let revenues = sampleNormal(parseInt(revenues_mean), parseInt(revenues_stdev));
-              let costs = sampleNormal(parseInt(costs_mean), parseInt(costs_stdev));
-              sheet.getRange("A"+row+":D"+row).values = [["iter" + i, revenues, costs, (revenues-costs)]];
+              const revenues = sampleNormal(revenues_mean, revenues_stdev);
+              const costs = sampleNormal(costs_mean, costs_stdev);
+              profits[i] = revenues - costs
+              profits_mean = (profits_mean * (profits.length-1) + profits[i]) / profits.length
+              profits_stdev = ""
+              sheet.getRange("D1:D2").values = [[profits_mean], [profits_stdev]];
+              sheet.getRange("A4:D4").values = [["iter-" + i, revenues, costs, profits[i]]];
+              await context.sync();
+              console.log("iter" + i + " => " + revenues + ", " + costs)
+
+              var bins = d3.histogram()
+                  .domain(x.domain())
+                  .thresholds(x.ticks(50))
+                  (profits)
+
+              /*
+              for (let i = 0; i < 10; i++) {
+                console.log("========================================================")
+                console.log("bin  => (" + bins[i].x0 + "," + bins[i].x1 + ") => " + bins[i].length)
+                console.log("bint => (" + x(bins[i].x0) + "," + x(bins[i].x1) + ") => " + y(bins[i].length))
+              }
+              */
+
+              svg.selectAll("rect")
+                  .data(bins)
+                  .join(
+                      enter => enter
+                          .append("rect")
+                          .attr("x", function(d) {return x(d.x0)})
+                          .attr("y", function(d) {return y(d.length)})
+                          .attr("width", function(d) {return x(d.x1) - x(d.x0) - 2})
+                          .attr("height", function(d) {return y(0) - y(d.length)})
+                          .style("fill", "green"),
+                      update => update
+                          .attr("y", function(d) {return y(d.length)})
+                          .attr("height", function(d) {return y(0) - y(d.length)}))
+
             }
-            const stats = [["mean", "=AVERAGE(B4:B" + (n_iter+3) + ")", "=AVERAGE(C4:C" + (n_iter+3) + ")", "=AVERAGE(D4:D" + (n_iter+3) + ")"],
-              ["stdev", "=STDEV(B4:B" + (n_iter+3) + ")", "=STDEV(C4:C" + (n_iter+3) + ")", "=STDEV(D4:D" + (n_iter+3) + ")"]]
-            sheet.getRange("A"+(n_iter+4)+":D"+(n_iter+5)).formulas = stats
-            await context.sync();
+
             return;
+
         });
     }
 
@@ -67,6 +133,7 @@
         const { z0, _ } = boxMullerTransform();
         return z0 * stddev + mean;
     }
+
 </script>
 
 </html>
