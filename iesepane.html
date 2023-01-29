@@ -81,8 +81,7 @@ var axis = [svg.append("g")
               const costs = sampleNormal(costs_mean, costs_stdev);
               profits[i] = revenues - costs
               profits_mean = (profits_mean * (profits.length-1) + profits[i]) / profits.length
-              profits_stdev = ""
-              sheet.getRange("D1:D2").values = [[profits_mean], [profits_stdev]];
+              sheet.getRange("D1").values = [[profits_mean]];
               sheet.getRange("A4:D4").values = [["iter-" + i, revenues, costs, profits[i]]];
               await context.sync();
               console.log("iter" + i + " => " + revenues + ", " + costs)
