@@ -92,14 +92,6 @@ var axis = [svg.append("g")
                   .thresholds(x.ticks(50))
                   (profits)
 
-              /*
-              for (let i = 0; i < 10; i++) {
-                console.log("========================================================")
-                console.log("bin  => (" + bins[i].x0 + "," + bins[i].x1 + ") => " + bins[i].length)
-                console.log("bint => (" + x(bins[i].x0) + "," + x(bins[i].x1) + ") => " + y(bins[i].length))
-              }
-              */
-
               svg.selectAll("rect")
                   .data(bins)
                   .join(
@@ -116,6 +108,12 @@ var axis = [svg.append("g")
 
             }
 
+            const profits_stdev = Math.sqrt(profits
+              .map(k => (k - profits_mean)**2)
+              .reduce((a,b) => a+b, 0 ) / profits.length);
+
+            sheet.getRange("D2").values = [[profits_stdev]];
+            await context.sync();
             return;
 
         });
