@@ -23,6 +23,9 @@
 
   const n_bins = 50
 
+  const randoms = []
+  const forecasts = []
+
   const margin = {top: 50, right: 50, bottom: 50, left: 50},
       width = 500 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom;
@@ -125,9 +128,14 @@ var axis = [svg.append("g")
 
     async function addRandom() {
         await Excel.run(async(context) => {
+          console.log("ranges => " + ranges)
+          const sheet = context.workbook.worksheets.getActiveWorksheet();
           let range = context.workbook.getSelectedRange();
           range.load("address");
           await context.sync();
+          range.format.fill.color = "yellow";
+          await context.sync();
+          let distr = window.open("distribution.html", "distribution", "width=300,heigh=200");
           console.log(`The address of the selected range is "${range.address}"`);
           return;
         })
@@ -139,10 +147,9 @@ var axis = [svg.append("g")
             let range = context.workbook.getSelectedRange();
             range.load("address");
             await context.sync();
+            ranges.push(range)
             range.format.fill.color = "yellow";
             await context.sync();
-            window.open("https://www.mozilla.org/", "mozillaWindow", "popup");
-            console.log(`The address of the selected range is "${range.address}"`);
             return;
           })
         }
