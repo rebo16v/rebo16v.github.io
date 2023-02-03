@@ -129,17 +129,11 @@ var axis = [svg.append("g")
           range.load("address");
           await context.sync();
           console.log(`The address of the selected range is "${range.address}"`);
-          return
+          return;
         })
       }
 
-      function addForecast() {
-          Excel.run(context => {
-            let cell = context.workbook.getActiveCell()
-            console.log("active => " + cell[0] + " => " + cell[1])
-            return context.sync();
-          })
-        }
+    function addForecast() {}
 
     function boxMullerTransform() {
     const u1 = Math.random();
