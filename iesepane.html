@@ -124,10 +124,9 @@ var axis = [svg.append("g")
     }
 
     function addRandom() {
-        Excel.run(context => {
-          const sheet = context.workbook.worksheets.getActiveWorksheet();
-          let cell = sheet.getActiveCell()
-          console.log("active => " + cell[0] + " => " + cell[1])
+        Excel.run(context => {          
+          let cell = context.workbook.getActiveCell();
+          console.log(`The current cell's value is ${cell.getValue()}`);
           return context.sync();
         })
       }
