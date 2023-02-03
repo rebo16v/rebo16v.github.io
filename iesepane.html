@@ -23,8 +23,8 @@
 
   const n_bins = 50
 
-  const randoms = []
-  const forecasts = []
+  let randoms = []
+  let forecasts = []
 
   const margin = {top: 50, right: 50, bottom: 50, left: 50},
       width = 500 - margin.left - margin.right,
@@ -128,7 +128,7 @@ var axis = [svg.append("g")
 
     async function addRandom() {
         await Excel.run(async(context) => {
-          console.log("ranges => " + ranges)
+          console.log("randoms => " + randoms)
           const sheet = context.workbook.worksheets.getActiveWorksheet();
           let range = context.workbook.getSelectedRange();
           range.load("address");
