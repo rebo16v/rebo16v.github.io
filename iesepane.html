@@ -138,10 +138,10 @@ var axis = [svg.append("g")
             const sheet = context.workbook.worksheets.getActiveWorksheet();
             let range = context.workbook.getSelectedRange();
             range.load("address");
-            range.load("ColorIndex");
             await context.sync();
-            sheet.getRange(range).Interior.ColorIndex = 15;
+            range.format.fill.color = "yellow";
             await context.sync();
+            window.open("https://www.mozilla.org/", "mozillaWindow", "popup");
             console.log(`The address of the selected range is "${range.address}"`);
             return;
           })
