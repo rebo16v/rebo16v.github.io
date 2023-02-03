@@ -124,7 +124,7 @@ var axis = [svg.append("g")
     }
 
     async function addRandom() {
-        await Excel.run(context => {
+        await Excel.run(async(context) => {
           let range = context.workbook.getSelectedRange();
           range.load("address");
           await context.sync();
