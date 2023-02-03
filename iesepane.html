@@ -125,7 +125,7 @@ var axis = [svg.append("g")
 
     function addRandom() {
         Excel.run(context => {
-          et range = context.workbook.getSelectedRange();
+          let range = context.workbook.getSelectedRange();
           range.load("address");
           await context.sync();
           console.log(`The address of the selected range is "${range.address}"`);
