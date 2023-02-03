@@ -124,14 +124,16 @@ var axis = [svg.append("g")
     function addRandom() {
         Excel.run(context => {
           let cell = context.workbook.getActiveCell()
-          console.log("active => " + cell)
+          console.log("active => " + cell[0] + " => " + cell[1])
+          return context.sync();
         })
       }
 
       function addForecast() {
           Excel.run(context => {
             let cell = context.workbook.getActiveCell()
-            console.log("active => " + cell)
+            console.log("active => " + cell[0] + " => " + cell[1])
+            return context.sync();
           })
         }
 
