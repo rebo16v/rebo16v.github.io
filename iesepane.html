@@ -133,7 +133,17 @@ var axis = [svg.append("g")
         })
       }
 
-    function addForecast() {}
+      async function addForecast() {
+          await Excel.run(async(context) => {
+            const sheet = context.workbook.worksheets.getActiveWorksheet();
+            let range = context.workbook.getSelectedRange();
+            range.load("address");
+            await context.sync();
+            sheet.getRange(range).Interior.ColorIndex = 15;            
+            console.log(`The address of the selected range is "${range.address}"`);
+            return;
+          })
+        }
 
     function boxMullerTransform() {
     const u1 = Math.random();
