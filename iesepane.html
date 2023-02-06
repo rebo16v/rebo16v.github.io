@@ -130,9 +130,7 @@ var axis = [svg.append("g")
         await Excel.run(async(context) => {
           console.log("randoms => " + randoms)
           randoms.forEach(async function(r) {
-            console.log(`range => "${r.address}"`);
-            r.format.fill.color = "yellow";
-            await context.sync();})
+            console.log(`range => "${r}"`);
           const sheet = context.workbook.worksheets.getActiveWorksheet();
           let range = context.workbook.getSelectedRange();
           range.load("address");
@@ -147,19 +145,15 @@ var axis = [svg.append("g")
 
       async function addForecast() {
           await Excel.run(async(context) => {
-            const sheet = context.workbook.worksheets.getActiveWorksheet();
-            let range = context.workbook.getSelectedRange();
-            // range.load("address");
-            range.load("format.fill.color")
-            context.sync();
-            // console.log(`The address of the selected range is "${range.address}"`);
-            console.log(`The color of the selected range is "${range.format.fill.color}"`);
-            context.trackedObjects.add(range)
-            randoms.push(range)
-            range.format.fill.color = "blue";
-            await context.sync();
-            return;
-          })
+            var cell = context.workbook.getActiveCell();
+            cell.load("address");
+            cell.format.fill.load("color");
+            return context.sync().then(function() {
+              randoms.push(cell.address)
+              console.log('The range address was "' + cell.address + '".');
+              console.log('The range color was "' + cell.format.fill.color + '".');
+            });
+          });
         }
 
     function boxMullerTransform() {
