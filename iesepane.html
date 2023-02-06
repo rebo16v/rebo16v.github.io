@@ -131,7 +131,7 @@ var axis = [svg.append("g")
           const sheet = context.workbook.worksheets.getActiveWorksheet();
           console.log("randoms => " + randoms)
           randoms.forEach(async function(address) {
-            console.log(`range => "${r}"`);
+            console.log(`range => "${address}"`);
             r = sheet.getRange(address)
             r.format.fill.load("color");
             return context.sync().then(function() {
@@ -155,6 +155,7 @@ var axis = [svg.append("g")
               randoms.push(cell.address)
               console.log('The range address was "' + cell.address + '".');
               console.log('The range color was "' + cell.format.fill.color + '".');
+              cell.format.fill = "yellow"
             });
           });
         }
