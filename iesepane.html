@@ -150,7 +150,7 @@ var axis = [svg.append("g")
             const sheet = context.workbook.worksheets.getActiveWorksheet();
             let range = context.workbook.getSelectedRange();
             range.load("address");
-            range.load("format")
+            range.load("format.fill.color")
             await context.sync();
             console.log(`The address of the selected range is "${range.address}"`);
             console.log(`The color of the selected range is "${range.format.fill.color}"`);
