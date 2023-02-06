@@ -151,12 +151,13 @@ var axis = [svg.append("g")
             var cell = context.workbook.getActiveCell();
             cell.load("address");
             cell.format.fill.load("color");
-            await context.sync().then(function() {
+            return context.sync().then(function() {
               randoms.push(cell.address)
               console.log('The range address was "' + cell.address + '".');
               console.log('The range color was "' + cell.format.fill.color + '".');
+              cell.format.fill.color = "yellow"
             });
-            cell.format.fill = "yellow"
+
             return context.sync();
           });
         }
