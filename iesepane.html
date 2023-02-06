@@ -126,7 +126,7 @@ var axis = [svg.append("g")
         });
     }
 
-    async function addRandom() {
+    async function addForecast() {
         await Excel.run(async(context) => {
           const sheet = context.workbook.worksheets.getActiveWorksheet();
           console.log("randoms => " + randoms)
@@ -143,18 +143,17 @@ var axis = [svg.append("g")
         });
       }
 
-      async function addForecast() {
+      async function addRandom() {
           await Excel.run(async(context) => {
             var cell = context.workbook.getActiveCell();
             cell.load("address");
-            cell.format.fill.load("color");
             return context.sync().then(function() {
               randoms.push(cell.address)
               console.log('The range address was "' + cell.address + '".');
-              console.log('The range color was "' + cell.format.fill.color + '".');
               cell.format.fill.color = "yellow"
+              var prophecy = context.workbook.worksheets.getItem("prophecy")
+              prophecy.getRange("A1:A5").values = [["name"], ["value"], ["distribution"], ["mean"], ["stdev"]]
             });
-
             return context.sync();
           });
         }
