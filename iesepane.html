@@ -151,6 +151,7 @@ var axis = [svg.append("g")
             let range = context.workbook.getSelectedRange();
             range.load("address");
             await context.sync();
+            console.log(`The address of the selected range is "${range.address}"`);
             context.trackedObjects.add(range)
             randoms.push(range)
             range.format.fill.color = "blue";
