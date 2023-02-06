@@ -130,7 +130,7 @@ var axis = [svg.append("g")
         await Excel.run(async(context) => {
           console.log("randoms => " + randoms)
           randoms.forEach(async function(r) {
-            console.log(`The address of the selected range is "${r.address}"`);
+            console.log(`range => "${r.address}"`);
             r.format.fill.color = "yellow";
             await context.sync();})
           const sheet = context.workbook.worksheets.getActiveWorksheet();
@@ -150,8 +150,10 @@ var axis = [svg.append("g")
             const sheet = context.workbook.worksheets.getActiveWorksheet();
             let range = context.workbook.getSelectedRange();
             range.load("address");
+            range.load("format")
             await context.sync();
             console.log(`The address of the selected range is "${range.address}"`);
+            console.log(`The color of the selected range is "${range.format.fill.color}"`);
             context.trackedObjects.add(range)
             randoms.push(range)
             range.format.fill.color = "blue";
