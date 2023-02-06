@@ -136,7 +136,7 @@ var axis = [svg.append("g")
             r.format.fill.load("color");
             return context.sync().then(function() {
               r.format.fill.color = "red"
-            }):
+            });
           }
           // range.format.fill.color = "blue";
           // await context.sync();
