@@ -130,7 +130,7 @@ var axis = [svg.append("g")
         await Excel.run(async(context) => {
           console.log("randoms => " + randoms)
           randoms.forEach(async function(r) {
-            console.log("foreach")
+            console.log(`The address of the selected range is "${r.address}"`);
             r.format.fill.color = "yellow";
             await context.sync();})
           const sheet = context.workbook.worksheets.getActiveWorksheet();
