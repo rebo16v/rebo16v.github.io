@@ -131,7 +131,7 @@ var axis = [svg.append("g")
           console.log("randoms => " + randoms)
           randoms.forEach(async function(r) {
             console.log("foreach")
-            r.format.fill.color = "blue";
+            r.format.fill.color = "yellow";
             await context.sync();})
           const sheet = context.workbook.worksheets.getActiveWorksheet();
           let range = context.workbook.getSelectedRange();
@@ -153,7 +153,7 @@ var axis = [svg.append("g")
             await context.sync();
             context.trackedObjects.add(range)
             randoms.push(range)
-            range.format.fill.color = "yellow";
+            range.format.fill.color = "blue";
             await context.sync();
             return;
           })
