@@ -147,20 +147,21 @@ var axis = [svg.append("g")
           await Excel.run(async(context) => {
             var cell = context.workbook.getActiveCell();
             cell.load("address");
+            cell.load("values");
             return context.sync().then(function() {
               randoms.push(cell.address)
               console.log('The range address was "' + cell.address + '".');
               cell.format.fill.color = "yellow"
               var prophecy = context.workbook.worksheets.getItem("prophecy")
-              prophecy.getRange("A1:A5").values = [["name"], ["value"], ["distribution"], ["mean"], ["stdev"]]
-              prophecy.getRange("B3").dataValidation.rule = {
+              prophecy.getCell(randoms.length, 0).values = [["random_" + randoms.length]]
+              prophecy.getCell(randoms.length, 1).values = cell.values
+              prophecy.getCell(randoms.length, 2).dataValidation.rule = {
                     list: {
                       inCellDropDown: true,
                       source: "uniform,normal,triangular"
                     }
                   };
             });
-            return context.sync();
           });
         }
 
