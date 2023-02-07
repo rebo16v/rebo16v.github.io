@@ -47,12 +47,12 @@ var axis = [svg.append("g")
             document.getElementById("addRandom").onclick = addRandom;
             document.getElementById("addForecast").onclick = addForecast;
             document.getElementById("setupButton").onclick = setup;
-            context.workbook.onSelectionChanged.add(handleChange)
         }
     });
 
     function setup() {
         Excel.run(context => {
+            context.workbook.onSelectionChanged.add(handleChange)
             const sheet = context.workbook.worksheets.getActiveWorksheet();
             sheet.getRange("A1:A2").values = [["mean"], ["stdev"]];
             sheet.getRange("B3:D3").values = [["revenues", "costs", "profits"]];
