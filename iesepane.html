@@ -190,7 +190,7 @@ var axis = [svg.append("g")
     }
 
     async function radioChange(event) {
-      console.log("radioChange => " + event.value);
+      console.log("radioChange => " + event);
       await Excel.run(async (context) => {
         var cell = context.workbook.getActiveCell();
         cell.load("address");
