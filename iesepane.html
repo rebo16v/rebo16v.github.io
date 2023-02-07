@@ -153,6 +153,12 @@ var axis = [svg.append("g")
               cell.format.fill.color = "yellow"
               var prophecy = context.workbook.worksheets.getItem("prophecy")
               prophecy.getRange("A1:A5").values = [["name"], ["value"], ["distribution"], ["mean"], ["stdev"]]
+              prophecy.getRange("B3").dataValidation.rule = {
+                    list: {
+                      inCellDropDown: true,
+                      source: "uniform,normal,triangular"
+                    }
+                  };
             });
             return context.sync();
           });
