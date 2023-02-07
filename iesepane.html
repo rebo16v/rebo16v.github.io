@@ -44,9 +44,10 @@ var axis = [svg.append("g")
 
     Office.onReady((info) => {
         if (info.host === Office.HostType.Excel) {
-          document.getElementById("addRandom").onclick = addRandom;
+            document.getElementById("addRandom").onclick = addRandom;
             document.getElementById("addForecast").onclick = addForecast;
             document.getElementById("setupButton").onclick = setup;
+            context.workbook.onSelectionChanged.add(handleChange)
         }
     });
 
@@ -164,6 +165,15 @@ var axis = [svg.append("g")
             });
           });
         }
+
+    async function handleChange(event) {
+        await Excel.run(async (context) => {
+            await context.sync();
+            console.log("Change type of event: " + event.changeType);
+            console.log("Address of event: " + event.address);
+            console.log("Source of event: " + event.source);
+        }).catch(errorHandlerFunction);
+    }
 
     function boxMullerTransform() {
     const u1 = Math.random();
