@@ -50,6 +50,9 @@ var axis = [svg.append("g")
             document.getElementById("addRandom").onclick = addRandom;
             document.getElementById("addForecast").onclick = addForecast;
             document.getElementById("setupButton").onclick = setup;
+            document.getElementById("none").onChange = radioChange;
+            document.getElementById("input").onChange = radioChange;
+            document.getElementById("output").onChange = radioChange;
         }
     });
 
@@ -185,6 +188,10 @@ var axis = [svg.append("g")
           });
         });
     }
+
+    function radioChange(src) {
+      console.log("radioChange => " + src.value);
+      }
 
     function boxMullerTransform() {
     const u1 = Math.random();
