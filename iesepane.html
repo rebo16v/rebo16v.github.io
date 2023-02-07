@@ -171,9 +171,9 @@ var axis = [svg.append("g")
           cell.load("address");
           return context.sync().then(function() {
             var address = cell.address
-            if randoms.includes(address)
+            if (randoms.includes(address))
               document.getElementById('input').checked = true;
-            else if forecasts.includes(address)
+            else if (forecasts.includes(address))
               document.getElementById('output').checked = true;
             else document.getElementById('none').checked = true;
             })
