@@ -50,9 +50,9 @@ var axis = [svg.append("g")
             document.getElementById("addRandom").onclick = addRandom;
             document.getElementById("addForecast").onclick = addForecast;
             document.getElementById("setupButton").onclick = setup;
-            document.getElementById("none").onChange = radioChange;
-            document.getElementById("input").onChange = radioChange;
-            document.getElementById("output").onChange = radioChange;
+            document.getElementById("none").onChange = () => radioChange();
+            document.getElementById("input").onChange = () => radioChange();
+            document.getElementById("output").onChange = () => radioChange();
         }
     });
 
@@ -174,15 +174,15 @@ var axis = [svg.append("g")
           cell.load("address");
           return context.sync().then(function() {
             var address = cell.address
-            console.log("change => " + address)
+            console.log("workbookChange => " + address)
             if (randoms.includes(address)) {
-              console.log("change => input")
+              console.log("workbookChange => input")
               document.getElementById('input').checked = true;
             } else if (forecasts.includes(address)) {
-              console.log("change => output")
+              console.log("workbookChange => output")
               document.getElementById('output').checked = true;
             } else {
-              console.log("change => none")
+              console.log("workbookChange => none")
               document.getElementById('none').checked = true;
             }
           });
@@ -207,7 +207,7 @@ var axis = [svg.append("g")
           } else {
             if (randoms.indexOf(address) != -1) randoms.splice(randoms.indexOf(address), 1);
             if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
-            cell.format.fill.color = "white"              
+            cell.format.fill.color = "white"
           }
         });
       });
