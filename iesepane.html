@@ -171,13 +171,19 @@ var axis = [svg.append("g")
           cell.load("address");
           return context.sync().then(function() {
             var address = cell.address
-            if (randoms.includes(address))
+            console.log("change => " + address)
+            if (randoms.includes(address)) {
+              console.log("change => input")
               document.getElementById('input').checked = true;
-            else if (forecasts.includes(address))
+            } else if (forecasts.includes(address)) {
+              console.log("change => output")
               document.getElementById('output').checked = true;
-            else document.getElementById('none').checked = true;
-            })
-        }).catch(errorHandlerFunction);
+            } else {
+              console.log("change => none")
+              document.getElementById('none').checked = true;
+            }
+          });
+        });
     }
 
     function boxMullerTransform() {
