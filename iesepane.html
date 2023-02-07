@@ -58,7 +58,7 @@ var axis = [svg.append("g")
 
     function setup() {
         Excel.run(context => {
-            context.workbook.onSelectionChanged.add(handleChange)
+            context.workbook.onSelectionChanged.add(workbookChange)
             const sheet = context.workbook.worksheets.getActiveWorksheet();
             sheet.getRange("A1:A2").values = [["mean"], ["stdev"]];
             sheet.getRange("B3:D3").values = [["revenues", "costs", "profits"]];
@@ -168,7 +168,7 @@ var axis = [svg.append("g")
           });
         }
 
-    async function handleChange(event) {
+    async function workbookChange(event) {
         await Excel.run(async (context) => {
           var cell = context.workbook.getActiveCell();
           cell.load("address");
@@ -189,9 +189,29 @@ var axis = [svg.append("g")
         });
     }
 
-    function radioChange(src) {
-      console.log("radioChange => " + src.value);
-      }
+    async function radioChange(event) {
+      console.log("radioChange => " + event.value);
+      await Excel.run(async (context) => {
+        var cell = context.workbook.getActiveCell();
+        cell.load("address");
+        return context.sync().then(function() {
+          var address = cell.address
+          if (event.value == "input") {
+              if (randoms.indexOf(address) == -1) randoms.push(address)
+              if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
+              cell.format.fill.color = "yellow"
+          } else if (event.value == "output") {
+            if (randoms.indexOf(address) != -1) randoms.splice(randoms.indexOf(address), 1);
+            if (forecasts.indexOf(address) == -1) forecasts.push(address)
+            cell.format.fill.color = "red"
+          } else {
+            if (randoms.indexOf(address) != -1) randoms.splice(randoms.indexOf(address), 1);
+            if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
+            cell.format.fill.color = "white"              
+          }
+        });
+      });
+    }
 
     function boxMullerTransform() {
     const u1 = Math.random();
