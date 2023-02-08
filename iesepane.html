@@ -132,12 +132,15 @@
             if (randoms.includes(address)) {
               console.log("workbookChange => input")
               document.getElementById('input').checked = true;
+              document.getElementById('distro').disabled = false;
             } else if (forecasts.includes(address)) {
               console.log("workbookChange => output")
               document.getElementById('output').checked = true;
+              document.getElementById('distro').disabled = true;
             } else {
               console.log("workbookChange => none")
               document.getElementById('none').checked = true;
+              document.getElementById('distro').disabled = true;
             }
           });
         });
