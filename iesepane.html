@@ -175,12 +175,13 @@
     }
 
     async function distro(event) {
-      console.log("=> " + event.address)
       await Excel.run(async (context) => {
         var cell = context.workbook.getActiveCell();
         cell.load("address");
         return context.sync().then(function() {
-          console.log("address => " + cell.address)
+          console.log("distro => " + cell.address)
+          let sheet = context.workbook.worksheets.getItem("prophecy");
+          sheet.activate();
         });
       });
     }
