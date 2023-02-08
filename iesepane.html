@@ -50,9 +50,9 @@ var axis = [svg.append("g")
             document.getElementById("addRandom").onclick = addRandom;
             document.getElementById("addForecast").onclick = addForecast;
             document.getElementById("setupButton").onclick = setup;
-            document.getElementById("none").onChange = (async() => radioChange())(this);
-            document.getElementById("input").onChange = (async() => radioChange())(this);
-            document.getElementById("output").onChange = (async() => radioChange())(this);
+            document.getElementById("none").onchange = radioChange;
+            document.getElementById("input").onchange = radioChange;
+            document.getElementById("output").onchange = radioChange;
         }
     });
 
