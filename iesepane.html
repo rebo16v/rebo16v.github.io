@@ -190,7 +190,7 @@ var axis = [svg.append("g")
     }
 
     async function radioChange(event) {
-      console.log("radioChange => " + event);
+      console.log("radioChange => " + event.value);
       await Excel.run(async (context) => {
         var cell = context.workbook.getActiveCell();
         cell.load("address");
@@ -201,13 +201,13 @@ var axis = [svg.append("g")
               if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
               cell.format.fill.color = "yellow"
           } else if (event.value == "output") {
-            if (randoms.indexOf(address) != -1) randoms.splice(randoms.indexOf(address), 1);
-            if (forecasts.indexOf(address) == -1) forecasts.push(address)
-            cell.format.fill.color = "red"
+              if (randoms.indexOf(address) != -1) randoms.splice(randoms.indexOf(address), 1);
+              if (forecasts.indexOf(address) == -1) forecasts.push(address)
+              cell.format.fill.color = "red"
           } else {
-            if (randoms.indexOf(address) != -1) randoms.splice(randoms.indexOf(address), 1);
-            if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
-            cell.format.fill.color = "white"
+              if (randoms.indexOf(address) != -1) randoms.splice(randoms.indexOf(address), 1);
+              if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
+              cell.format.fill.color = "white"
           }
         });
       });
