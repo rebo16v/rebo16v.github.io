@@ -8,15 +8,12 @@
 
 <body>
     <br><p>Montecarlo</p><br>
-    <button id="setupButton">Setup</button>
-    <br><br>
-    <button id="addRandom">Random Input</button>
-    <button id="addForecast">Forecast</button>
     <br><br>iterations:
     <input type="text" size="8" id="niter" name="niter">
     <button id="montecarloButton">Montecarlo</button><br>
     <input type="radio" id="none" name="age" value="None"><label for="none">None</label><br>
-    <input type="radio" id="input" name="age" value="Input"><label for="input">Input</label><br>
+    <input type="radio" id="input" name="age" value="Input"><label for="input">Input</label>
+    <button id="distro" onclick="distro">Distribution</button><br>
     <input type="radio" id="output" name="age" value="Output"><label for="output">Output</label><br>
 
    <div id="montecarloGraph"></div>
@@ -41,24 +38,24 @@
       .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-var axis = [svg.append("g")
+  var axis = [svg.append("g")
     .attr("transform", "translate(0," + height + ")"),
     svg.append("g")]
 
-    Office.onReady((info) => {
-        if (info.host === Office.HostType.Excel) {
-            document.getElementById("addRandom").onclick = addRandom;
-            document.getElementById("addForecast").onclick = addForecast;
-            document.getElementById("setupButton").onclick = setup;
-            document.getElementById("none").onchange = radioChange;
-            document.getElementById("input").onchange = radioChange;
-            document.getElementById("output").onchange = radioChange;
+  Office.onReady((info) => {
+      if (info.host === Office.HostType.Excel) {
+          document.getElementById("addRandom").onclick = addRandom;
+          document.getElementById("addForecast").onclick = addForecast;
+          document.getElementById("setupButton").onclick = setup;
+          document.getElementById("none").onchange = radioChange;
+          document.getElementById("input").onchange = radioChange;
+          document.getElementById("output").onchange = radioChange;
 
-            Excel.run(context => {
-                context.workbook.onSelectionChanged.add(workbookChange)
-                return context.sync();
-            });
-        }
+          Excel.run(context => {
+              context.workbook.onSelectionChanged.add(workbookChange)
+              return context.sync();
+          });
+      }
     });
 
     async function montecarlo() {
@@ -128,41 +125,6 @@ var axis = [svg.append("g")
         });
     }
 
-    async function addRandom() {
-        await Excel.run(async(context) => {
-          var cell = context.workbook.getActiveCell();
-          cell.load("address");
-          cell.load("values");
-          return context.sync().then(function() {
-            randoms.push(cell.address)
-            console.log("random input address => " + cell.address);
-            cell.format.fill.color = "yellow"
-            var prophecy = context.workbook.worksheets.getItem("prophecy")
-            prophecy.getCell(randoms.length, 0).values = [["random_" + randoms.length]]
-            prophecy.getCell(randoms.length, 1).values = cell.values
-            prophecy.getCell(randoms.length, 2).dataValidation.rule = {
-                  list: {
-                    inCellDropDown: true,
-                    source: "uniform,normal,triangular"
-                  }
-                };
-          });
-        });
-      }
-
-      async function addForecast() {
-          await Excel.run(async(context) => {
-            var cell = context.workbook.getActiveCell();
-            cell.load("address");
-            cell.load("values");
-            return context.sync().then(function() {
-              forecasts.push(cell.address)
-              console.log("forecast address => " + cell.address);
-              cell.format.fill.color = "red"
-            });
-          });
-        }
-
     async function workbookChange(event) {
         await Excel.run(async (context) => {
           var cell = context.workbook.getActiveCell();
@@ -192,14 +154,17 @@ var axis = [svg.append("g")
         return context.sync().then(function() {
           var address = cell.address
           if (document.getElementById('input').checked) {
+              document.getElementById('distro').disabled = false;
               if (randoms.indexOf(address) == -1) randoms.push(address)
               if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
               cell.format.fill.color = "yellow"
           } else if (document.getElementById('output').checked) {
+              document.getElementById('distro').disabled = true;
               if (randoms.indexOf(address) != -1) randoms.splice(randoms.indexOf(address), 1);
               if (forecasts.indexOf(address) == -1) forecasts.push(address)
               cell.format.fill.color = "red"
           } else {
+              document.getElementById('distro').disabled = true;
               if (randoms.indexOf(address) != -1) randoms.splice(randoms.indexOf(address), 1);
               if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
               cell.format.fill.color = "white"
