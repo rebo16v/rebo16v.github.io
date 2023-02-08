@@ -53,18 +53,13 @@ var axis = [svg.append("g")
             document.getElementById("none").onchange = radioChange;
             document.getElementById("input").onchange = radioChange;
             document.getElementById("output").onchange = radioChange;
+
+            Excel.run(context => {
+                context.workbook.onSelectionChanged.add(workbookChange)
+                return context.sync();
+            });
         }
     });
-
-    function setup() {
-        Excel.run(context => {
-            context.workbook.onSelectionChanged.add(workbookChange)
-            const sheet = context.workbook.worksheets.getActiveWorksheet();
-            sheet.getRange("A1:A2").values = [["mean"], ["stdev"]];
-            sheet.getRange("B3:D3").values = [["revenues", "costs", "profits"]];
-            return context.sync();
-        });
-    }
 
     async function montecarlo() {
         await Excel.run(async(context) => {
