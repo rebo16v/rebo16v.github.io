@@ -178,10 +178,20 @@
       await Excel.run(async (context) => {
         var cell = context.workbook.getActiveCell();
         cell.load("address");
+        cell.load("values");
         return context.sync().then(function() {
           console.log("distro => " + cell.address)
-          let sheet = context.workbook.worksheets.getItem("prophecy");
-          sheet.activate();
+          row = 1 + randoms.indexOf(cell.address)
+          var prophecy = context.workbook.worksheets.getItem("prophecy")
+          prophecy.activate();
+          prophecy.getCell(1+row, 0).values = [["random_" + row]]
+          prophecy.getCell(1+row.length, 1).values = cell.values
+          prophecy.getCell(1+row.length, 2).dataValidation.rule = {
+                list: {
+                  inCellDropDown: true,
+                  source: "uniform (min,max),normal (mean,stdev),triangular (mean,stdev,mode)"
+                }
+              };
         });
       });
     }
