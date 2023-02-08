@@ -13,7 +13,7 @@
     <button id="montecarloButton">Montecarlo</button><br>
     <input type="radio" id="none" name="age" value="None"><label for="none">None</label><br>
     <input type="radio" id="input" name="age" value="Input"><label for="input">Input</label>
-    <button id="distro" onclick="distro">Distribution</button><br>
+    <button id="distro">Distribution</button><br>
     <input type="radio" id="output" name="age" value="Output"><label for="output">Output</label><br>
 
    <div id="montecarloGraph"></div>
@@ -44,6 +44,7 @@
 
   Office.onReady((info) => {
       if (info.host === Office.HostType.Excel) {
+          document.getElementById("distro").onclick = distro;
           document.getElementById("none").onchange = radioChange;
           document.getElementById("input").onchange = radioChange;
           document.getElementById("output").onchange = radioChange;
@@ -173,7 +174,8 @@
       });
     }
 
-    async function distro() {
+    async function distro(event) {
+      console.log("=> " + event.address)
       await Excel.run(async (context) => {
         var cell = context.workbook.getActiveCell();
         cell.load("address");
