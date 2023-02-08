@@ -44,9 +44,6 @@
 
   Office.onReady((info) => {
       if (info.host === Office.HostType.Excel) {
-          document.getElementById("addRandom").onclick = addRandom;
-          document.getElementById("addForecast").onclick = addForecast;
-          document.getElementById("setupButton").onclick = setup;
           document.getElementById("none").onchange = radioChange;
           document.getElementById("input").onchange = radioChange;
           document.getElementById("output").onchange = radioChange;
@@ -169,6 +166,16 @@
               if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
               cell.format.fill.color = "white"
           }
+        });
+      });
+    }
+
+    async function distro() {
+      await Excel.run(async (context) => {
+        var cell = context.workbook.getActiveCell();
+        cell.load("address");
+        return context.sync().then(function() {
+          console.log("address => " + cell.address)
         });
       });
     }
