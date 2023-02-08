@@ -196,11 +196,11 @@ var axis = [svg.append("g")
         cell.load("address");
         return context.sync().then(function() {
           var address = cell.address
-          if (event.value == "input") {
+          if (document.getElementById('input').checked) {
               if (randoms.indexOf(address) == -1) randoms.push(address)
               if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
               cell.format.fill.color = "yellow"
-          } else if (event.value == "output") {
+          } else if (document.getElementById('output').checked) {
               if (randoms.indexOf(address) != -1) randoms.splice(randoms.indexOf(address), 1);
               if (forecasts.indexOf(address) == -1) forecasts.push(address)
               cell.format.fill.color = "red"
