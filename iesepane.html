@@ -162,9 +162,9 @@
               if (idx == -1) {
                 randoms.push(address)
                 var prophecy = context.workbook.worksheets.getItem("prophecy")
-                prophecy.getCell(1+idx, 0).values = [["random_" + row]]
-                prophecy.getCell(1+idx.length, 1).values = cell.values
-                prophecy.getCell(1+idx.length, 2).dataValidation.rule = {
+                prophecy.getCell(randoms.length, 0).values = [["random_" + row]]
+                prophecy.getCell(randoms.length, 1).values = cell.values
+                prophecy.getCell(randoms.length, 2).dataValidation.rule = {
                       list: {
                         inCellDropDown: true,
                         source: "uniform (min,max),normal (mean,stdev),triangular (mean,stdev,mode)"
