@@ -161,10 +161,11 @@
               document.getElementById('distro').disabled = false;
               if (idx == -1) {
                 randoms.push(address)
+                var row = randoms.length
                 var prophecy = context.workbook.worksheets.getItem("prophecy")
-                prophecy.getCell(randoms.length, 0).values = [["random_" + row]]
-                prophecy.getCell(randoms.length, 1).values = cell.values
-                prophecy.getCell(randoms.length, 2).dataValidation.rule = {
+                prophecy.getCell(row, 0).values = [["random_" + row]]
+                prophecy.getCell(row, 1).values = cell.values
+                prophecy.getCell(row, 2).dataValidation.rule = {
                       list: {
                         inCellDropDown: true,
                         source: "uniform (min,max),normal (mean,stdev),triangular (mean,stdev,mode)"
