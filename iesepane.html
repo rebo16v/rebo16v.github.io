@@ -150,7 +150,7 @@
     async function radioChange(event) {
       console.log("radioChange => " + event.value);
       await Excel.run(async (context) => {
-        var sheet = context.workbook.getActiveWorksheet();
+        var sheet = context.workbook.worksheets.getActiveWorksheet();
         var cell = context.workbook.getActiveCell();
         cell.load("address");
         cell.load("values")
@@ -202,7 +202,7 @@
         cell.load("address");
         return context.sync().then(function() {
           console.log("distro => " + cell.address)
-          row = randoms.indexOf(cell.address)          
+          row = randoms.indexOf(cell.address)
           var prophecy = context.workbook.worksheets.getItem("prophecy")
           prophecy.activate();
         });
