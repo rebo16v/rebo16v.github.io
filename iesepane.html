@@ -191,7 +191,7 @@
                 range.delete(Excel.DeleteShiftDirection.up);
               }
               if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
-              cell.format.fill.color = "white"
+              cell.format.fill.color = "white";
           }
         });
       });
@@ -202,11 +202,11 @@
         var cell = context.workbook.getActiveCell();
         cell.load("address");
         return context.sync().then(function() {
-          console.log("distro => " + cell.address)
-          row = 1 + randoms.indexOf(cell.address)
-          var prophecy = context.workbook.worksheets.getItem("prophecy")
+          console.log("distro => " + cell.address);
+          row = 1 + randoms.indexOf(cell.address);
+          var prophecy = context.workbook.worksheets.getItem("prophecy");
           prophecy.activate();
-          var range = prophecy.getRange(""A" + row + ":Z" + row")          
+          var range = prophecy.getRange("A" + row + ":Z" + row);
           range.select()
         });
       });
