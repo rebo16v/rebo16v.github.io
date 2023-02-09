@@ -152,6 +152,7 @@
       await Excel.run(async (context) => {
         var sheet = context.workbook.worksheets.getActiveWorksheet();
         var cell = context.workbook.getActiveCell();
+        var prophecy = context.workbook.worksheets.getItem("prophecy")
         cell.load("address");
         cell.load("values")
         return context.sync().then(function() {
@@ -162,7 +163,6 @@
               if (idx == -1) {
                 randoms.push(address)
                 var row = randoms.length
-                var prophecy = context.workbook.worksheets.getItem("prophecy")
                 prophecy.getCell(row, 0).values = [["random_" + row]]
                 // prophecy.getCell(row, 1).values = [[address]]
                 prophecy.getCell(row, 1).hyperlink = {
@@ -184,7 +184,7 @@
               document.getElementById('distro').disabled = true;
               if (idx != -1) {
                 randoms.splice(idx, 1);
-                var range = sheet.getRange("A" + (2+idx) + ":Z" + (2+idx));
+                var range = prophecy.getRange("A" + (2+idx) + ":Z" + (2+idx));
                 range.delete(Excel.DeleteShiftDirection.up);
               }
               if (forecasts.indexOf(address) == -1) forecasts.push(address)
@@ -193,7 +193,7 @@
               document.getElementById('distro').disabled = true;
               if (idx != -1) {
                 randoms.splice(idx, 1);
-                var range = sheet.getRange("A" + (2+idx) + ":Z" + (2+idx));
+                var range = prophecy.getRange("A" + (2+idx) + ":Z" + (2+idx));
                 range.delete(Excel.DeleteShiftDirection.up);
               }
               if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
