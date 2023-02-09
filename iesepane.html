@@ -51,10 +51,20 @@
 
           Excel.run(context => {
               context.workbook.onSelectionChanged.add(workbookChange)
-              return context.sync();
+              context.workbook.worksheets.load("items")
+              return context.sync().then(function(){
+                if (context.workbook.worksheets.items.filter(f => f.name == "prophecy").length > 0) {
+                  console.log("prophecy found!")
+                }
+                else {
+                  var prophecy = context.workbook.worksheets.add("prophecy")
+                  range = prophecy.getRange("A" + 1 + ":A" + 5);
+                  range.values = [["name", "cell", "value", "distribution", "parameters"]]
+                }
+            });
           });
-      }
-    });
+        }
+      });
 
     async function montecarlo() {
         await Excel.run(async(context) => {
