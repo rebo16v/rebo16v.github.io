@@ -203,9 +203,11 @@
         cell.load("address");
         return context.sync().then(function() {
           console.log("distro => " + cell.address)
-          row = randoms.indexOf(cell.address)
+          row = 1 + randoms.indexOf(cell.address)
           var prophecy = context.workbook.worksheets.getItem("prophecy")
           prophecy.activate();
+          var range = prophecy.getRange(""A" + row + ":Z" + row")          
+          range.select()
         });
       });
     }
