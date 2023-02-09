@@ -184,7 +184,7 @@
               document.getElementById('distro').disabled = true;
               if (idx != -1) {
                 randoms.splice(idx, 1);
-                var range = sheet.getRange("A" + (1+idx) + ":Z" + (1+idx));
+                var range = sheet.getRange("A" + (2+idx) + ":Z" + (2+idx));
                 range.delete(Excel.DeleteShiftDirection.up);
               }
               if (forecasts.indexOf(address) == -1) forecasts.push(address)
@@ -193,7 +193,7 @@
               document.getElementById('distro').disabled = true;
               if (idx != -1) {
                 randoms.splice(idx, 1);
-                var range = sheet.getRange("A" + (1+idx) + ":Z" + (1+idx));
+                var range = sheet.getRange("A" + (2+idx) + ":Z" + (2+idx));
                 range.delete(Excel.DeleteShiftDirection.up);
               }
               if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
