@@ -20,24 +20,6 @@ async function montecarlo() {
   });
 }
 
-
-
-
-      return context.sync().then(function() {
-        forecasts.forEach(f => {
-          let [s, c] = f.split("!");
-          let s2 = context.workbook.worksheets.getItem(s);
-          let c2 = s2.getRange(c);
-          c2.load("values");
-          context.sync().then(function() {
-            console.log("f => " + c2.values);
-          });
-        });
-      });
-    });
-  });
-}
-
 async function stepIn(confs) {
   confs.forEach(conf => {
     console.log("conf => "+ conf)
@@ -53,7 +35,7 @@ async function stepIn(confs) {
     let [s, c] = conf[1].split("!");
     let sheet = context.workbook.worksheets.getItem(s);
     let cell = sheet.getRange(c);
-    cell.values = [[input]];    
+    cell.values = [[input]];
   });
 }
 
