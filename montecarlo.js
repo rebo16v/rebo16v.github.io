@@ -38,7 +38,7 @@ function stepIn(confs, context) {
   });
 }
 
-async function stepOut(context) {
+function stepOut(context) {
   console.log("stepOut");
   let ranges = [];
   forecasts.forEach(f => {
