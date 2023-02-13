@@ -43,10 +43,11 @@ async function stepOut(context) {
     console.log("f => "+ f)
     let [s, c] = f.split("!");
     let sheet = context.workbook.worksheets.getItem(s);
-    let cell = sheet.getRange(c);
-    cell.load("values");
+    let range = sheet.getRange(c);
+    range.load("values");
     context.sync().then(function() {
-      let output = cell.values;
+      console.log("stepOut");
+      let output = range.values;
       console.log("output => " + output);
     });
   });
