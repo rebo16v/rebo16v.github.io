@@ -20,6 +20,7 @@ async function montecarlo() {
 }
 
 async function stepIn(confs, context) {
+  console.log("stepIn");
   confs.forEach(conf => {
     let input = 0;
     switch (conf[3]) {
@@ -39,9 +40,9 @@ async function stepIn(confs, context) {
 }
 
 async function stepOut(context) {
+  console.log("stepOut");
   let ranges = [];
   forecasts.forEach(f => {
-    console.log("f => "+ f)
     let [s, c] = f.split("!");
     let sheet = context.workbook.worksheets.getItem(s);
     range = sheet.getRange(c);
