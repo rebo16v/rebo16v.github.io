@@ -39,16 +39,17 @@ async function stepIn(confs, context) {
 }
 
 async function stepOut(context) {
-  let range = [];
+  let ranges = [];
   forecasts.forEach(f => {
     console.log("f => "+ f)
     let [s, c] = f.split("!");
     let sheet = context.workbook.worksheets.getItem(s);
-    range.push(sheet.getRange(c));
+    range = sheet.getRange(c);
     range.load("values");
+    ranges.push(range);
   });
   context.sync().then(function() {
-    range.forEach(r => {
+    ranges.forEach(r => {
       let output = r.values;
       console.log("output => " + output);
     });
