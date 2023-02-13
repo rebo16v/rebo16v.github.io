@@ -1,9 +1,13 @@
+var randoms = [];
+var forecasts = [];
+
 Office.onReady((info) => {
     if (info.host === Office.HostType.Excel) {
-        document.getElementById("distro").onclick = distro;
         document.getElementById("none").onchange = radioChange;
         document.getElementById("input").onchange = radioChange;
         document.getElementById("output").onchange = radioChange;
+        document.getElementById("distro").onclick = distro;
+        document.getElementById("montecarlo").onclick = montecarlo;
 
         Excel.run(context => {
             context.workbook.onSelectionChanged.add(workbookChange)
