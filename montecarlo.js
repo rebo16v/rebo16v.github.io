@@ -36,6 +36,7 @@ async function stepIn(confs, context) {
     let cell = sheet.getRange(c);
     cell.values = [[input]];
   });
+  return context.sync();
 }
 
 async function stepOut(context) {
@@ -45,10 +46,10 @@ async function stepOut(context) {
     let sheet = context.workbook.worksheets.getItem(s);
     let range = sheet.getRange(c);
     range.load("values");
-    context.sync().then(function() {
-      console.log("stepOut");
-      let output = range.values;
-      console.log("output => " + output);
-    });
+  });
+  context.sync().then(function() {
+    console.log("stepOut");
+    let output = range.values;
+    console.log("output => " + output);
   });
 }
