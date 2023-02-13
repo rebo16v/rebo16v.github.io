@@ -6,7 +6,7 @@ async function montecarlo() {
     range.load("values");
     context.sync().then(function() {
       let conf = range.values;
-      conf.forEach(c => {console.log("=> "+ c)}]);
+      conf.forEach(c => {console.log("=> "+ c)});
       console.log("conf => " + conf)
       let app = context.workbook.application;
       app.suspendApiCalculationUntilNextSync();
