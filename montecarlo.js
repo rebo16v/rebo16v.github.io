@@ -3,7 +3,7 @@ async function montecarlo() {
     const n_iter = parseInt(document.getElementById("niter").value);
     let app = context.workbook.application;
     var prophecy = context.workbook.worksheets.getItem("prophecy");
-    range = prophecy.getRange("A" + 2 + ":G" + (2+randoms.length));
+    range = prophecy.getRange("A" + 2 + ":G" + (1+randoms.length));
     range.load("values");
     context.sync().then(function() {
       let confs = range.values;
@@ -12,7 +12,7 @@ async function montecarlo() {
         console.log("iter => " + i);
         stepIn(confs, context);
         context.sync().then(function() {
-          // let o = stepOut();
+          let o = stepOut(context);
           console.log("ok");
         });
       }
@@ -39,7 +39,7 @@ async function stepIn(confs, context) {
   });
 }
 
-async function stepOut() {
+async function stepOut(context) {
   forecasts.forEach(f => {
     console.log("f => "+ f)
     let [s, c] = f.split("!");

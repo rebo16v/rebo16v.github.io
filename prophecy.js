@@ -77,7 +77,7 @@ async function radioChange(event) {
             prophecy.getCell(row, 3).dataValidation.rule = {
                   list: {
                     inCellDropDown: true,
-                    source: "uniform (min,max),normal (mean,stdev),triangular (mean,stdev,mode)"
+                    source: "uniform,normal,triangular"
                   }
                 };
           }
