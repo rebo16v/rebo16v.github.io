@@ -1,8 +1,8 @@
 async function montecarlo() {
   await Excel.run(async(context) => {
     const n_iter = parseInt(document.getElementById("niter").value);
-    var prophecy = context.workbook.worksheets.add("prophecy")
-    range = prophecy.getRange("A" + 2 + ":E" + (2+randoms.length));
+    var prophecy = context.workbook.worksheets..getItem("prophecy");
+    range = prophecy.getRange("A" + 2 + ":G" + (2+randoms.length));
     range.load("values");
     context.sync().then(function() {
       let conf = range.values;
