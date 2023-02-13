@@ -19,7 +19,7 @@ async function montecarlo() {
   });
 }
 
-async function stepIn(confs, context) {
+function stepIn(confs, context) {
   console.log("stepIn");
   confs.forEach(conf => {
     let input = 0;
@@ -36,7 +36,6 @@ async function stepIn(confs, context) {
     let cell = sheet.getRange(c);
     cell.values = [[input]];
   });
-  return context.sync();
 }
 
 async function stepOut(context) {
