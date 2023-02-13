@@ -10,7 +10,7 @@ async function montecarlo() {
       for (let i = 0; i < n_iter; i++) {
         app.suspendApiCalculationUntilNextSync();
         console.log("iter => " + i);
-        await stepIn(confs, context);
+        stepIn(confs, context);
         context.sync().then(function() {
           stepOut(context);
         });
