@@ -126,7 +126,7 @@ async function montecarlo() {
     const n_iter = parseInt(document.getElementById("niter").value);
     let app = context.workbook.application;
     app.suspendApiCalculationUntilNextSync();
-    ranges.forEach(r => {
+    randoms.forEach(r => {
       let [s, c] = r.split("!");
       let s2 = context.workbook.worksheets.getItem(s);
       let c2 = s2.getRange(c);
