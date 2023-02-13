@@ -12,8 +12,7 @@ async function montecarlo() {
         console.log("iter => " + i);
         stepIn(confs, context);
         context.sync().then(function() {
-          let o = stepOut(context);
-          console.log("ok");
+          stepOut(context);
         });
       }
     });
@@ -47,7 +46,7 @@ async function stepOut(context) {
     let cell = sheet.getRange(c);
     cell.load("values");
     context.sync().then(function() {
-      let output = cell.values
+      let output = cell.values;
       console.log("output => " + output);
     });
   });
