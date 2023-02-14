@@ -6,9 +6,7 @@ async function montecarlo() {
     out = [];
     forecasts.forEach((f,i) => {
       out[i] = [];
-      w = window.open("simulation.html", "_blank");
-      w.document.title = "output-" + i;
-
+      win[i] = window.open("simulation.html?id=" + i, "_blank");
     });
     const n_iter = parseInt(document.getElementById("niter").value);
     let app = context.workbook.application;
@@ -17,15 +15,16 @@ async function montecarlo() {
     range.load("values");
     await context.sync();
     let confs = range.values;
-    for (let i = 0; i < n_iter; i++) {
+    for (let k = 0; k < n_iter; k++) {
       app.suspendApiCalculationUntilNextSync();
-      console.log("iter => " + i);
+      console.log("iter => " + k);
       stepIn(confs, context);
       await context.sync()
       let outputs = stepOut(context);
       await context.sync()
       outputs.forEach((o,i) => {
         out[i].push(o.values);
+        win[i].document.title = "output-" + i;
       });
     }
   });
