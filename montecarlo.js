@@ -5,20 +5,19 @@ async function montecarlo() {
     var prophecy = context.workbook.worksheets.getItem("prophecy");
     range = prophecy.getRange("A" + 2 + ":G" + (1+randoms.length));
     range.load("values");
-    context.sync().then(function() {
-      let confs = range.values;
-      for (let i = 0; i < n_iter; i++) {
-        app.suspendApiCalculationUntilNextSync();
-        console.log("iter => " + i);
-        stepIn(confs, context);
-        await context.sync()
-        let outputs = stepOut(context);
-        await context.sync()
-        outputs.forEach(o => {
-          console.log("output => " + o.values);
-        });
-      }
-    });
+    await context.sync();
+    let confs = range.values;
+    for (let i = 0; i < n_iter; i++) {
+      app.suspendApiCalculationUntilNextSync();
+      console.log("iter => " + i);
+      stepIn(confs, context);
+      await context.sync()
+      let outputs = stepOut(context);
+      await context.sync()
+      outputs.forEach(o => {
+        console.log("output => " + o.values);
+      });
+    }
   });
 }
 
