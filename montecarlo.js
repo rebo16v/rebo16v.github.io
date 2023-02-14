@@ -24,7 +24,9 @@ async function montecarlo() {
       await context.sync()
       outputs.forEach((o,i) => {
         out[i].push(o.values);
-        win[i].document.title = "output-" + i;
+        // win[i].document.title = "output-" + i;
+        let element = win[i].document.getElementById("graph")
+        element.style.backgroundColor = "#00FF00";
       });
     }
   });
