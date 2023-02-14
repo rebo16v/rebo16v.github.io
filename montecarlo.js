@@ -2,8 +2,13 @@ let out = []
 
 async function montecarlo() {
   await Excel.run(async(context) => {
+    w = [];
     out = [];
-    forecasts.forEach((f,i) => out[i] = []);
+    forecasts.forEach((f,i) => {
+      out[i] = [];
+      w[i] = Window.open("simulation.html");
+      w[i].document.title = "output-" + i;
+    });
     const n_iter = parseInt(document.getElementById("niter").value);
     let app = context.workbook.application;
     var prophecy = context.workbook.worksheets.getItem("prophecy");
@@ -19,16 +24,14 @@ async function montecarlo() {
       let outputs = stepOut(context);
       await context.sync()
       outputs.forEach((o,i) => {
-        console.log("output => " + o.values);
         out[i].push(o.values);
       });
     }
   });
-  forecasts.forEach((f,i) => console.log(i + " => " + out[i]));
+  forecasts.forEach((f,i) => console.log(i + " => " + out[i].length));
 }
 
 function stepIn(confs, context) {
-  console.log("stepIn");
   confs.forEach(conf => {
     let input = 0;
     switch (conf[3]) {
@@ -47,7 +50,6 @@ function stepIn(confs, context) {
 }
 
 function stepOut(context) {
-  console.log("stepOut");
   let ranges = [];
   forecasts.forEach(f => {
     let [s, c] = f.split("!");
