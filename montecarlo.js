@@ -6,6 +6,10 @@ async function montecarlo() {
     out = [];
     forecasts.forEach((f,i) => {
       out[i] = [];
+      Office.context.ui.displayDialogAsync("https://rebo16v.github.io/simulation.html",
+          function (asyncResult) {
+              win[i] = asyncResult.value;
+          });
       win[i] = window.open("simulation.html?id=" + i, "output-" + i);
     });
     const n_iter = parseInt(document.getElementById("niter").value);

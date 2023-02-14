@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript"src="https://d3js.org/d3.v7.js"></script>
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+</head>
+
+<body>
+    <br>Simulation
+    <br><input id="txt" name="txt"/>
+</body>
+
+<script>
+
+Office.onReady()
+  .then(function() {
+      Office.context.ui.addHandlerAsync(
+          Office.EventType.DialogParentMessageReceived,
+          repaint);
+  });
+
+function repaint(arg) {
+    const msg = JSON.parse(arg.message);
+    document.title = msg.name;
+}
+
+</script>
+
+</html>
