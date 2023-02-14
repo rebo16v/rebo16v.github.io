@@ -2,12 +2,13 @@ let out = []
 
 async function montecarlo() {
   await Excel.run(async(context) => {
-    w = [];
+    win = [];
     out = [];
     forecasts.forEach((f,i) => {
       out[i] = [];
-      w[i] = window.open("simulation.html");
-      w[i].document.title = "output-" + i;
+      w = window.open("simulation.html", "_blank");
+      w.document.title = "output-" + i;
+
     });
     const n_iter = parseInt(document.getElementById("niter").value);
     let app = context.workbook.application;
