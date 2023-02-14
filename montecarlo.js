@@ -12,7 +12,12 @@ async function montecarlo() {
         console.log("iter => " + i);
         stepIn(confs, context);
         context.sync().then(function() {
-          stepOut(context);
+          let outputs = stepOut(context);
+          context.sync().then(function() {
+            outputs.forEach(o => {
+              console.log("output => " + o.values);
+            });
+          });
         });
       }
     });
@@ -48,10 +53,6 @@ function stepOut(context) {
     range.load("values");
     ranges.push(range);
   });
-  context.sync().then(function() {
-    ranges.forEach(r => {
-      let output = r.values;
-      console.log("output => " + output);
-    });
-  });
+  return ranges;
+
 }
