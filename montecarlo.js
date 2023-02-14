@@ -6,7 +6,7 @@ async function montecarlo() {
     out = [];
     forecasts.forEach((f,i) => {
       out[i] = [];
-      win[i] = window.open("simulation.html?id=" + i, "_blank");
+      win[i] = window.open("simulation.html?id=" + i, "output-" + i);
     });
     const n_iter = parseInt(document.getElementById("niter").value);
     let app = context.workbook.application;
