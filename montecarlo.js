@@ -11,13 +11,11 @@ async function montecarlo() {
         app.suspendApiCalculationUntilNextSync();
         console.log("iter => " + i);
         stepIn(confs, context);
-        context.sync().then(function() {
-          let outputs = stepOut(context);
-          context.sync().then(function() {
-            outputs.forEach(o => {
-              console.log("output => " + o.values);
-            });
-          });
+        await context.sync()
+        let outputs = stepOut(context);
+        await context.sync()
+        outputs.forEach(o => {
+          console.log("output => " + o.values);
         });
       }
     });
