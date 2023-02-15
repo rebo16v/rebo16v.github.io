@@ -31,6 +31,7 @@ window.addEventListener("load", (e1) => {
   console.log("ready!");
   window.addEventListener("message", (e2) => {
     console.log("event => " + e2.data);
+    document.write("event => " + e2.data);
   }, false);
 });
 
