@@ -59,7 +59,7 @@ function repaint(){
       .thresholds(x.ticks(50))
       (sims);
   svg.selectAll("rect")
-      .data(freqs)
+      .data(bins)
       .join(
           enter => enter
               .append("rect")
