@@ -7,7 +7,9 @@ async function montecarlo() {
     forecasts.forEach((f,i) => {
       out[i] = [];
       Office.context.ui.displayDialogAsync("https://rebo16v.github.io/simulation.html",
+          {height: 400, width: 600},
           function (asyncResult) {
+              console.log("asyncResult");
               win[i] = asyncResult.value;
           });
       win[i] = window.open("simulation.html?id=" + i, "output-" + i);
