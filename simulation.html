@@ -13,6 +13,7 @@
 
 <script>
 
+/*
 Office.onReady()
   .then(function() {
       console.log("ready!");
@@ -26,6 +27,11 @@ function repaint(arg) {
     console.log(msg.iter + " => " + msg.value);
     document.getElementById("txt").value = msg.iter + " => " + msg.value;
 }
+*/
+
+window.addEventListener("message", (event) => {
+  console.log("event => " + event.data);
+}, false);
 
 </script>
 

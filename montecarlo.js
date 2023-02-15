@@ -7,6 +7,7 @@ async function montecarlo() {
     out = [];
     forecasts.forEach((f,i) => {
       out[i] = [];
+      /*
       Office.context.ui.displayDialogAsync("https://rebo16v.github.io/simulation.html",
           {height: 50, width: 50},
           function (asyncResult) {
@@ -17,6 +18,8 @@ async function montecarlo() {
                   console.log("asyncResult");
               }
           });
+          */
+      win[i] = window.open("https://rebo16v.github.io/simulation.html");
     });
     console.log("hola!");
     await new Promise(r => setTimeout(r, 10000));
@@ -39,7 +42,7 @@ async function montecarlo() {
         let value = o.values[0][0]
         out[i].push(value);
         const msg = JSON.stringify({iter: k, value: value});
-        win[i].messageChild(msg);
+        win[i].postMessage(msg);
         console.log("message sent! " + msg);
       });
     }
