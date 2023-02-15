@@ -8,26 +8,13 @@ async function montecarlo() {
     forecasts.forEach((f,i) => {
       out[i] = [];
       Office.context.ui.displayDialogAsync("https://rebo16v.github.io/simulation.html",
-          {height: 400, width: 600},
-          function dialogCallback(asyncResult) {
+          {height: 50, width: 50},
+          function (asyncResult) {
               if (asyncResult.status == "failed") {
-                  switch (asyncResult.error.code) {
-                      case 12004:
-                          showNotification("Domain is not trusted");
-                          break;
-                      case 12005:
-                          showNotification("HTTPS is required");
-                          break;
-                      case 12007:
-                          showNotification("A dialog is already opened.");
-                          break;
-                      default:
-                          showNotification(asyncResult.error.message);
-                          break;
-                  }
+                console.log("error opening dialog => " +asyncResult.error.code);
               } else {
-                  console.log("asyncResult");
                   win[i] = asyncResult.value;
+                  console.log("asyncResult");
               }
           });
     });
@@ -49,8 +36,8 @@ async function montecarlo() {
         let value = o.values[0][0]
         out[i].push(value);
         const msg = JSON.stringify({iter: k, value: value});
-        win[i].messageChild(msg);
-        console.log("message sent!")
+        // win[i].messageChild(msg);
+        console.log("message sent! " + msg);
       });
     }
   });
