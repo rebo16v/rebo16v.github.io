@@ -7,7 +7,7 @@
 
 <body>
     <br>Simulation
-    <br><input size="12" id="txt" name="txt"/>
+    <br><textarea size="12" id="txt" name="txt">hola</textarea>
 </body>
 
 <script>
@@ -31,7 +31,8 @@ window.addEventListener("load", (e1) => {
   console.log("ready!");
   window.addEventListener("message", (e2) => {
     console.log("event => " + e2.data);
-    document.write("event => " + e2.data);
+    let old = document.getElementById("txt").value
+    document.getElementById("txt").value = old + ("\nevent => " + e2.data);
   }, false);
 });
 
