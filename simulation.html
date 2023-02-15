@@ -44,13 +44,14 @@ axis[1].call(d3.axisLeft(y));
 
 window.addEventListener("load", (e1) => {
   window.addEventListener("message", (e2) => {
+    console.log("message => " + e2.data);
     sims.push(e2.data);
-    repaint;
+    repaint();
   }, false);
   console.log("ready!");
 });
 
-function repaint(e){
+function repaint(){
   let bins = d3.histogram()
       .domain(x.domain())
       .thresholds(x.ticks(50))
