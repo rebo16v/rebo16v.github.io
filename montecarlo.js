@@ -8,7 +8,7 @@ async function montecarlo() {
     forecasts.forEach((f,i) => {
       out[i] = [];
       Office.context.ui.displayDialogAsync("https://rebo16v.github.io/simulation.html",
-          {height: 400, width: 600, displayInIframe: true},
+          {height: 400, width: 600},
           function dialogCallback(asyncResult) {
               if (asyncResult.status == "failed") {
                   switch (asyncResult.error.code) {
