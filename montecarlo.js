@@ -19,7 +19,7 @@ async function montecarlo() {
               }
           });
           */
-      win[i] = window.open("https://rebo16v.github.io/simulation.html");
+      win[i] = window.open("https://rebo16v.github.io/simulation.html". "_blank");
     });
     console.log("hola!");
     await new Promise(r => setTimeout(r, 10000));
