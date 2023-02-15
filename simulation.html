@@ -45,7 +45,7 @@ axis[1].call(d3.axisLeft(y));
 window.addEventListener("load", (e1) => {
   console.log("ready!");
   window.addEventListener("message", (e2) => {
-    sims.push(e2data);
+    sims.push(e2.data);
     repaint();
 
   }, false);
