@@ -18,6 +18,9 @@ async function montecarlo() {
               }
           });
     });
+    console.log("hola!");
+    await new Promise(r => setTimeout(r, 10000));
+    console.log("adios!");
     // const n_iter = parseInt(document.getElementById("niter").value);
     let app = context.workbook.application;
     var prophecy = context.workbook.worksheets.getItem("prophecy");
@@ -36,7 +39,7 @@ async function montecarlo() {
         let value = o.values[0][0]
         out[i].push(value);
         const msg = JSON.stringify({iter: k, value: value});
-        // win[i].messageChild(msg);
+        win[i].messageChild(msg);
         console.log("message sent! " + msg);
       });
     }

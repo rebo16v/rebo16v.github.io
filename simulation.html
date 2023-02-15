@@ -23,6 +23,7 @@ Office.onReady()
 
 function repaint(arg) {
     const msg = JSON.parse(arg.message);
+    console.log(msg.iter + " => " + msg.value);
     document.getElementById("txt").value = msg.iter + " => " + msg.value;
 }
 
