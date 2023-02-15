@@ -31,14 +31,14 @@ async function montecarlo() {
               }
           });
     });
-    const n_iter = parseInt(document.getElementById("niter").value);
+    // const n_iter = parseInt(document.getElementById("niter").value);
     let app = context.workbook.application;
     var prophecy = context.workbook.worksheets.getItem("prophecy");
     range = prophecy.getRange("A" + 2 + ":G" + (1+randoms.length));
     range.load("values");
     await context.sync();
     let confs = range.values;
-    for (let k = 0; k < n_iter; k++) {
+    for (let k = 0; k < 5; k++) {
       app.suspendApiCalculationUntilNextSync();
       console.log("iter => " + k);
       stepIn(confs, context);
@@ -46,9 +46,11 @@ async function montecarlo() {
       let outputs = stepOut(context);
       await context.sync()
       outputs.forEach((o,i) => {
-        out[i].push(o.values);
-        const msg = JSON.stringify({name: "pepe"});
-        // win[i].messageChild(msg);
+        let value = o.values[0][0]
+        out[i].push(value);
+        const msg = JSON.stringify({iter: k, value: value});
+        win[i].messageChild(msg);
+        console.log("message sent!")
       });
     }
   });

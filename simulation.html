@@ -8,7 +8,7 @@
 
 <body>
     <br>Simulation
-    <br><input id="txt" name="txt"/>
+    <br><input size="12" id="txt" name="txt"/>
 </body>
 
 <script>
@@ -22,8 +22,8 @@ Office.onReady()
   });
 
 function repaint(arg) {
-    // const msg = JSON.parse(arg.message);
-    document.getElementById("txt").value = "pepe";
+    const msg = JSON.parse(arg.message);
+    document.getElementById("txt").value = msg.iter + " => " + msg.value;
 }
 
 </script>
