@@ -22,7 +22,7 @@ async function montecarlo() {
       win[i] = window.open("https://rebo16v.github.io/simulation.html?id="+i, "forecast_"+i);
     });
     console.log("hola!");
-    await new Promise(r => setTimeout(r, 10000));
+    await new Promise(r => setTimeout(r, 3000));
     console.log("adios!");
     // const n_iter = parseInt(document.getElementById("niter").value);
     let app = context.workbook.application;
@@ -43,7 +43,7 @@ async function montecarlo() {
         out[i].push(value);
         // const msg = JSON.stringify({iter: k, value: value});
         win[i].postMessage(value);
-        console.log("message sent! " + msg);
+        console.log("message sent! " + value);
       });
     }
   });
