@@ -41,8 +41,8 @@ async function montecarlo() {
       outputs.forEach((o,i) => {
         let value = o.values[0][0]
         out[i].push(value);
-        const msg = JSON.stringify({iter: k, value: value});
-        win[i].postMessage(msg);
+        // const msg = JSON.stringify({iter: k, value: value});
+        win[i].postMessage(value);
         console.log("message sent! " + msg);
       });
     }
