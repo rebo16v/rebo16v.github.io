@@ -24,14 +24,15 @@ async function montecarlo() {
     console.log("hola!");
     await new Promise(r => setTimeout(r, 3000));
     console.log("adios!");
-    // const n_iter = parseInt(document.getElementById("niter").value);
+    let niter = parseInt(document.getElementById("niter").value);
+    let nbins = parseInt(document.getElementById("nbins").value);
     let app = context.workbook.application;
     var prophecy = context.workbook.worksheets.getItem("prophecy");
     range = prophecy.getRange("A" + 2 + ":G" + (1+randoms.length));
     range.load("values");
     await context.sync();
     let confs = range.values;
-    for (let k = 0; k <100; k++) {
+    for (let k = 0; k < niter; k++) {
       app.suspendApiCalculationUntilNextSync();
       // console.log("iter => " + k);
       stepIn(confs, context);
