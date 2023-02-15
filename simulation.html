@@ -15,6 +15,7 @@
 
 Office.onReady()
   .then(function() {
+      console.log("ready!");
       Office.context.ui.addHandlerAsync(
           Office.EventType.DialogParentMessageReceived,
           repaint);
