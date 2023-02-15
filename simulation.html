@@ -3,7 +3,6 @@
 
 <head>
     <script type="text/javascript"src="https://d3js.org/d3.v7.js"></script>
-    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 </head>
 
 <body>
@@ -28,10 +27,13 @@ function repaint(arg) {
     document.getElementById("txt").value = msg.iter + " => " + msg.value;
 }
 */
+window.addEventListener("load", (e1) => {
+  console.log("ready!");
+  window.addEventListener("message", (e2) => {
+    console.log("event => " + e2.data);
+  }, false);
+});
 
-window.addEventListener("message", (event) => {
-  console.log("event => " + event.data);
-}, false);
 
 </script>
 
