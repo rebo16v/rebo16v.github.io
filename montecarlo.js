@@ -1,4 +1,5 @@
-let out = []
+let out = [];
+let win = [];
 
 async function montecarlo() {
   await Excel.run(async(context) => {
@@ -7,12 +8,28 @@ async function montecarlo() {
     forecasts.forEach((f,i) => {
       out[i] = [];
       Office.context.ui.displayDialogAsync("https://rebo16v.github.io/simulation.html",
-          {height: 400, width: 600},
-          function (asyncResult) {
-              console.log("asyncResult");
-              win[i] = asyncResult.value;
+          {height: 400, width: 600, displayInIframe: true},
+          function dialogCallback(asyncResult) {
+              if (asyncResult.status == "failed") {
+                  switch (asyncResult.error.code) {
+                      case 12004:
+                          showNotification("Domain is not trusted");
+                          break;
+                      case 12005:
+                          showNotification("HTTPS is required");
+                          break;
+                      case 12007:
+                          showNotification("A dialog is already opened.");
+                          break;
+                      default:
+                          showNotification(asyncResult.error.message);
+                          break;
+                  }
+              } else {
+                  console.log("asyncResult");
+                  win[i] = asyncResult.value;
+              }
           });
-      win[i] = window.open("simulation.html?id=" + i, "output-" + i);
     });
     const n_iter = parseInt(document.getElementById("niter").value);
     let app = context.workbook.application;
@@ -31,7 +48,7 @@ async function montecarlo() {
       outputs.forEach((o,i) => {
         out[i].push(o.values);
         const msg = JSON.stringify({name: "pepe"});
-        win[i].messageChild(msg);
+        // win[i].messageChild(msg);
       });
     }
   });
