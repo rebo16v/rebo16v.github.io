@@ -17,8 +17,8 @@ let sims = [];
 const n_bins = 100
 
 const margin = {top: 60, right: 60, bottom: 60, left: 60},
-    width = window.innerWidth - margin.left - margin.right,
-    height = window.innerHeight - margin.top - margin.bottom;
+    width = window.innerWidth - 2*margin.left - 2*margin.right,
+    height = window.innerHeight - 2*margin.top - 2*margin.bottom;
 
 let svg = d3.select("#forecast")
   .append("svg")
