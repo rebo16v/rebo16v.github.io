@@ -33,7 +33,7 @@ var axis = [svg.append("g")
   svg.append("g")]
 
 var x = d3.scaleLinear()
-    .domain(0,50])
+    .domain([0,50])
     .range([0, width]);
 axis[0].call(d3.axisBottom(x));
 
