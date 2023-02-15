@@ -14,7 +14,7 @@
 
 let sims = [];
 
-const n_bins = 50
+const n_bins = 100
 
 const margin = {top: 60, right: 60, bottom: 60, left: 60},
     width = window.innerWidth - margin.left - margin.right,
@@ -33,10 +33,7 @@ let axis = [svg.append("g")
   svg.append("g")]
 
 let x;
-let y = d3.scaleLinear()
-      .domain([0, 1])
-      .range([height, 0]);
-axis[1].call(d3.axisLeft(y));
+let y;
 
 window.addEventListener("load", (e1) => {
   window.addEventListener("message", (e2) => {
@@ -47,6 +44,10 @@ window.addEventListener("load", (e1) => {
           .domain([0,3*value])
           .range([0, width]);
       axis[0].call(d3.axisBottom(x));
+      y = d3.scaleLinear()
+           .domain([0, 1])
+           .range([height, 0]);
+     axis[1].call(d3.axisLeft(y));
     }
     sims.push(value);
     repaint();

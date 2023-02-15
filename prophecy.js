@@ -32,17 +32,13 @@ async function workbookChange(event) {
       cell.load("address");
       return context.sync().then(function() {
         var address = cell.address
-        console.log("workbookChange => " + address)
         if (randoms.includes(address)) {
-          console.log("workbookChange => input")
           document.getElementById('input').checked = true;
           document.getElementById('distro').disabled = false;
         } else if (forecasts.includes(address)) {
-          console.log("workbookChange => output")
           document.getElementById('output').checked = true;
           document.getElementById('distro').disabled = true;
         } else {
-          console.log("workbookChange => none")
           document.getElementById('none').checked = true;
           document.getElementById('distro').disabled = true;
         }
@@ -51,7 +47,6 @@ async function workbookChange(event) {
 }
 
 async function radioChange(event) {
-  console.log("radioChange => " + event.value);
   await Excel.run(async (context) => {
     var sheet = context.workbook.worksheets.getActiveWorksheet();
     var cell = context.workbook.getActiveCell();
@@ -111,7 +106,6 @@ async function distro(event) {
     var cell = context.workbook.getActiveCell();
     cell.load("address");
     return context.sync().then(function() {
-      console.log("distro => " + cell.address);
       row = 2 + randoms.indexOf(cell.address);
       var prophecy = context.workbook.worksheets.getItem("prophecy");
       prophecy.activate();

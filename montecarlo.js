@@ -1,5 +1,5 @@
-let out = [];
-let win = [];
+let out;
+let win;
 
 async function montecarlo() {
   await Excel.run(async(context) => {
@@ -7,25 +7,11 @@ async function montecarlo() {
     out = [];
     forecasts.forEach((f,i) => {
       out[i] = [];
-      /*
-      Office.context.ui.displayDialogAsync("https://rebo16v.github.io/simulation.html",
-          {height: 50, width: 50},
-          function (asyncResult) {
-              if (asyncResult.status == "failed") {
-                console.log("error opening dialog => " +asyncResult.error.code);
-              } else {
-                  win[i] = asyncResult.value;
-                  console.log("asyncResult");
-              }
-          });
-          */
       win[i] = window.open("https://rebo16v.github.io/simulation.html?id="+i, "forecast_"+i);
     });
-    console.log("hola!");
-    await new Promise(r => setTimeout(r, 3000));
-    console.log("adios!");
+    await new Promise(r => setTimeout(r, 1000));
     let niter = parseInt(document.getElementById("niter").value);
-    let nbins = parseInt(document.getElementById("nbins").value);
+    // let nbins = parseInt(document.getElementById("nbins").value);
     let app = context.workbook.application;
     var prophecy = context.workbook.worksheets.getItem("prophecy");
     range = prophecy.getRange("A" + 2 + ":G" + (1+randoms.length));
@@ -34,7 +20,6 @@ async function montecarlo() {
     let confs = range.values;
     for (let k = 0; k < niter; k++) {
       app.suspendApiCalculationUntilNextSync();
-      // console.log("iter => " + k);
       stepIn(confs, context);
       await context.sync()
       let outputs = stepOut(context);
@@ -44,11 +29,9 @@ async function montecarlo() {
         out[i].push(value);
         // let msg = JSON.stringify({iter: k, value: value});
         win[i].postMessage(value);
-        console.log("message sent! " + value);
       });
     }
   });
-  forecasts.forEach((f,i) => console.log(i + " => " + out[i].length));
 }
 
 function stepIn(confs, context) {
