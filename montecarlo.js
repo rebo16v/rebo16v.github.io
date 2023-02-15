@@ -31,7 +31,7 @@ async function montecarlo() {
     range.load("values");
     await context.sync();
     let confs = range.values;
-    for (let k = 0; k < 5; k++) {
+    for (let k = 0; k <100; k++) {
       app.suspendApiCalculationUntilNextSync();
       console.log("iter => " + k);
       stepIn(confs, context);
