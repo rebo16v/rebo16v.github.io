@@ -33,7 +33,7 @@ async function montecarlo() {
     let confs = range.values;
     for (let k = 0; k <100; k++) {
       app.suspendApiCalculationUntilNextSync();
-      console.log("iter => " + k);
+      // console.log("iter => " + k);
       stepIn(confs, context);
       await context.sync()
       let outputs = stepOut(context);
@@ -41,7 +41,7 @@ async function montecarlo() {
       outputs.forEach((o,i) => {
         let value = o.values[0][0]
         out[i].push(value);
-        // const msg = JSON.stringify({iter: k, value: value});
+        // let msg = JSON.stringify({iter: k, value: value});
         win[i].postMessage(value);
         console.log("message sent! " + value);
       });
