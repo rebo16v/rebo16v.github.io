@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <label id="forecastid">Forecast </label>
+    <label id="forecastid">Forecast</label>
     <div id="forecastgraph"></div>
 </body>
 
@@ -40,7 +40,7 @@ window.addEventListener("load", (e1) => {
   const params = new URLSearchParams(query);
   const forecastId = params.get("id");
   console.log("id => " + forecastId);
-  document.getElementById("forecastid").value = "Forecast " + forecastId;
+  document.getElementById("forecastid").innerHTML = "Forecast " + forecastId;
   window.addEventListener("message", (e2) => {
     let value = parseFloat(e2.data);
     console.log("message => " + value);
