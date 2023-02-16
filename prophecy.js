@@ -52,6 +52,8 @@ async function workbookChange(event) {
 
 async function radioChange(event) {
   await Excel.run(async (context) => {
+    console.log("randoms => " +  randoms);
+    console.log("forecasts => + forecasts");
     var sheet = context.workbook.worksheets.getActiveWorksheet();
     var cell = context.workbook.getActiveCell();
     var prophecy = context.workbook.worksheets.getItem("prophecy")
@@ -87,7 +89,7 @@ async function radioChange(event) {
           }
           if (idx2 != -1) {
             forecasts.splice(idx2, 1);
-            var range = prophecy.getRange("I" + (2+idx) + ":K" + (2+idx));
+            var range = prophecy.getRange("I" + (2+idx2) + ":K" + (2+idx2));
             range.delete(Excel.DeleteShiftDirection.up);
           }
           cell.format.fill.color = "yellow"
@@ -119,7 +121,7 @@ async function radioChange(event) {
           }
           if (idx2 != -1) {
             forecasts.splice(idx2, 1);
-            var range = prophecy.getRange("I" + (2+idx) + ":K" + (2+idx));
+            var range = prophecy.getRange("I" + (2+idx2) + ":K" + (2+idx2));
             range.delete(Excel.DeleteShiftDirection.up);
           }
           cell.format.fill.clear();
