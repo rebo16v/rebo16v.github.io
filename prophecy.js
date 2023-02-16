@@ -81,7 +81,7 @@ async function radioChange(event) {
                   }
                 };
           }
-          if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
+          if (idx2 != -1) forecasts.splice(idx2, 1);
           cell.format.fill.color = "yellow"
       } else if (document.getElementById('output').checked) {
           document.getElementById('distro').disabled = true;
@@ -90,7 +90,17 @@ async function radioChange(event) {
             var range = prophecy.getRange("A" + (2+idx) + ":Z" + (2+idx));
             range.delete(Excel.DeleteShiftDirection.up);
           }
-          if (forecasts.indexOf(address) == -1) forecasts.push(address)
+          if (idx2 == -1) {
+            forecasts.push(address);
+            var row = forecasts.length
+            prophecy.getCell(row, 8).values = [["random_" + row]]
+            prophecy.getCell(row, 9I’m ).hyperlink = {
+                textToDisplay: address,
+                screenTip: "random_" + row,
+                documentReference: address
+                }
+            prophecy.getCell(row, 10).values = cell.values
+          }
           cell.format.fill.color = "red"
       } else {
           document.getElementById('distro').disabled = true;
@@ -99,7 +109,7 @@ async function radioChange(event) {
             var range = prophecy.getRange("A" + (2+idx) + ":Z" + (2+idx));
             range.delete(Excel.DeleteShiftDirection.up);
           }
-          if (forecasts.indexOf(address) != -1) forecasts.splice(forecasts.indexOf(address), 1);
+          if (idx2 != -1) forecasts.splice(idx2, 1);
           cell.format.fill.clear();
       }
     });
