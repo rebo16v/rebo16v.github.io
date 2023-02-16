@@ -16,7 +16,7 @@ async function montecarlo() {
     out = [];
     forecasts.forEach((f,i) => {
       out[i] = [];
-      win[i] = window.open("https://rebo16v.github.io/simulation.html?id=" + i + "?name=" + confs_out[i][0], "forecast_"+i);
+      win[i] = window.open("https://rebo16v.github.io/simulation.html?id=" + i + "&name=" + confs_out[i][0], "forecast_"+i);
     });
     await new Promise(r => setTimeout(r, 1000));
     let niter = parseInt(document.getElementById("niter").value);
