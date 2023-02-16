@@ -7,10 +7,16 @@
 </head>
 
 <body>
-    <div id="forecast"></div>
+    <label id="forecastid">Forecast </label>
+    <div id="forecastgraph"></div>
 </body>
 
 <script>
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const forecastId = urlParams.get("id");
+console.log("id => " + forecastId);
+document.getElementById("forecastid").value = "Forecast " + forecastId;
 
 let sims = [];
 
@@ -20,7 +26,7 @@ const margin = {top: 30, right: 20, bottom: 20, left: 30},
     width = window.innerWidth - 2*margin.left - 2*margin.right,
     height = window.innerHeight - 2*margin.top - 2*margin.bottom;
 
-let svg = d3.select("#forecast")
+let svg = d3.select("#forecastgraph")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
