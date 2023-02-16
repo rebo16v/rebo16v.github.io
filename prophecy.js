@@ -71,6 +71,9 @@ async function radioChange(event) {
                 }
             prophecy.getCell(row, 2).values = cell.values
             prophecy.getCell(row, 2).numberFormat = cell.numberFormat
+            prophecy.getCell(row, 4).numberFormat = cell.numberFormat
+            prophecy.getCell(row, 5).numberFormat = cell.numberFormat
+            prophecy.getCell(row, 6).numberFormat = cell.numberFormat
             prophecy.getCell(row, 3).dataValidation.rule = {
                   list: {
                     inCellDropDown: true,
