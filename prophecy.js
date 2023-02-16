@@ -53,6 +53,7 @@ async function radioChange(event) {
     var prophecy = context.workbook.worksheets.getItem("prophecy")
     cell.load("address");
     cell.load("values")
+    cell.load("numberFormat")
     return context.sync().then(function() {
       var address = cell.address
       var idx = randoms.indexOf(address)
@@ -69,6 +70,7 @@ async function radioChange(event) {
                 documentReference: address
                 }
             prophecy.getCell(row, 2).values = cell.values
+            prophecy.getCell(row, 2).numberFormat = cell.numberFormat
             prophecy.getCell(row, 3).dataValidation.rule = {
                   list: {
                     inCellDropDown: true,
