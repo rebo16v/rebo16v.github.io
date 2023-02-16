@@ -20,8 +20,10 @@ Office.onReady((info) => {
                 var prophecy = context.workbook.worksheets.add("prophecy")
                 range1 = prophecy.getRange("A1:E1");
                 range1.values = [["name", "cell", "value", "distribution", "parameters"]];
+                range1.format.fill.color = "yellow";
                 range2 = prophecy.getRange("I1:K1");
                 range2.values = [["name", "cell", "value"]];
+                range2.format.fill.color = "red"
               }
           });
         });
@@ -65,11 +67,10 @@ async function radioChange(event) {
           if (idx == -1) {
             randoms.push(address)
             var row = randoms.length
-            prophecy.getCell(row, 0).values = [["random_" + row]]
-            // prophecy.getCell(row, 1).values = [[address]]
+            prophecy.getCell(row, 0).values = [["input_" + row]]
             prophecy.getCell(row, 1).hyperlink = {
                 textToDisplay: address,
-                screenTip: "random_" + row,
+                screenTip: "input_" + row,
                 documentReference: address
                 }
             prophecy.getCell(row, 2).values = cell.values
@@ -84,7 +85,11 @@ async function radioChange(event) {
                   }
                 };
           }
-          if (idx2 != -1) forecasts.splice(idx2, 1);
+          if (idx2 != -1) {
+            forecasts.splice(idx2, 1);
+            var range = prophecy.getRange("I" + (2+idx) + ":K" + (2+idx));
+            range.delete(Excel.DeleteShiftDirection.up);
+          }
           cell.format.fill.color = "yellow"
       } else if (document.getElementById('output').checked) {
           document.getElementById('distro').disabled = true;
@@ -96,10 +101,10 @@ async function radioChange(event) {
           if (idx2 == -1) {
             forecasts.push(address);
             var row = forecasts.length
-            prophecy.getCell(row, 8).values = [["random_" + row]]
+            prophecy.getCell(row, 8).values = [["output_" + row]]
             prophecy.getCell(row, 9).hyperlink = {
                 textToDisplay: address,
-                screenTip: "random_" + row,
+                screenTip: "output_" + row,
                 documentReference: address
                 }
             prophecy.getCell(row, 10).values = cell.values
@@ -112,7 +117,11 @@ async function radioChange(event) {
             var range = prophecy.getRange("A" + (2+idx) + ":Z" + (2+idx));
             range.delete(Excel.DeleteShiftDirection.up);
           }
-          if (idx2 != -1) forecasts.splice(idx2, 1);
+          if (idx2 != -1) {
+            forecasts.splice(idx2, 1);
+            var range = prophecy.getRange("I" + (2+idx) + ":K" + (2+idx));
+            range.delete(Excel.DeleteShiftDirection.up);
+          }
           cell.format.fill.clear();
       }
     });
