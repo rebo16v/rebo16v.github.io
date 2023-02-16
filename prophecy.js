@@ -96,7 +96,7 @@ async function radioChange(event) {
             forecasts.push(address);
             var row = forecasts.length
             prophecy.getCell(row, 8).values = [["random_" + row]]
-            prophecy.getCell(row, 9I’m ).hyperlink = {
+            prophecy.getCell(row, 9).hyperlink = {
                 textToDisplay: address,
                 screenTip: "random_" + row,
                 documentReference: address
