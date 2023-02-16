@@ -18,8 +18,10 @@ Office.onReady((info) => {
               }
               else {
                 var prophecy = context.workbook.worksheets.add("prophecy")
-                range = prophecy.getRange("A" + 1 + ":E" + 1);
-                range.values = [["name", "cell", "value", "distribution", "parameters"]]
+                range1 = prophecy.getRange("A1:E1");
+                range1.values = [["name", "cell", "value", "distribution", "parameters"]];
+                range2 = prophecy.getRange("I1:K1");
+                range2.values = [["name", "cell", "value"]];
               }
           });
         });
