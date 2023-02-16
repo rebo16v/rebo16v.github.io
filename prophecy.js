@@ -58,7 +58,8 @@ async function radioChange(event) {
     cell.load("numberFormat")
     return context.sync().then(function() {
       var address = cell.address
-      var idx = randoms.indexOf(address)
+      var idx = randoms.indexOf(address);
+      var idx2 = forecasts.indexOf(address);
       if (document.getElementById('input').checked) {
           document.getElementById('distro').disabled = false;
           if (idx == -1) {
