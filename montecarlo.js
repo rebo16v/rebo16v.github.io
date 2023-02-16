@@ -3,24 +3,27 @@ let win;
 
 async function montecarlo() {
   await Excel.run(async(context) => {
+    let app = context.workbook.application;
+    var prophecy = context.workbook.worksheets.getItem("prophecy");
+    range_in = prophecy.getRange("A" + 2 + ":G" + (1+randoms.length));
+    range_in.load("values");
+    range_out = prophecy.getRange("I" + 2 + ":K" + (1+forecasts.length));
+    range_out.load("values");
+    await context.sync();
+    let confs_in = range_in.values;
+    let confs_out = range_out.values;
     win = [];
     out = [];
     forecasts.forEach((f,i) => {
       out[i] = [];
-      win[i] = window.open("https://rebo16v.github.io/simulation.html?id="+i, "forecast_"+i);
+      win[i] = window.open("https://rebo16v.github.io/simulation.html?id=" + i + "?name=" + confs_out[i][0], "forecast_"+i);
     });
     await new Promise(r => setTimeout(r, 1000));
     let niter = parseInt(document.getElementById("niter").value);
     // let nbins = parseInt(document.getElementById("nbins").value);
-    let app = context.workbook.application;
-    var prophecy = context.workbook.worksheets.getItem("prophecy");
-    range = prophecy.getRange("A" + 2 + ":G" + (1+randoms.length));
-    range.load("values");
-    await context.sync();
-    let confs = range.values;
     for (let k = 0; k < niter; k++) {
       app.suspendApiCalculationUntilNextSync();
-      stepIn(confs, context);
+      stepIn(confs_in, context);
       await context.sync()
       let outputs = stepOut(context);
       await context.sync()
