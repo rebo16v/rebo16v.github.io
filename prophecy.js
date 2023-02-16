@@ -53,7 +53,7 @@ async function workbookChange(event) {
 async function radioChange(event) {
   await Excel.run(async (context) => {
     console.log("randoms => " +  randoms);
-    console.log("forecasts => + forecasts");
+    console.log("forecasts =>" + forecasts);
     let sheet = context.workbook.worksheets.getActiveWorksheet();
     let cell = context.workbook.getActiveCell();
     let prophecy = context.workbook.worksheets.getItem("prophecy")
