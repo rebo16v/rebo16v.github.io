@@ -12,12 +12,6 @@
 </body>
 
 <script>
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const forecastId = urlParams.get("id");
-console.log("id => " + forecastId);
-document.getElementById("forecastid").value = "Forecast " + forecastId;
-
 let sims = [];
 
 const n_bins = 100
@@ -42,6 +36,11 @@ let x;
 let y;
 
 window.addEventListener("load", (e1) => {
+  const query = window.location.search;
+  const params = new URLSearchParams(query);
+  const forecastId = params.get("id");
+  console.log("id => " + forecastId);
+  document.getElementById("forecastid").value = "Forecast " + forecastId;
   window.addEventListener("message", (e2) => {
     let value = parseFloat(e2.data);
     console.log("message => " + value);
