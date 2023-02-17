@@ -45,10 +45,13 @@ function stepIn(confs, context) {
     switch (conf[3]) {
       case "uniform":
         input = sampleUniform(conf[5].min, conf[5].max);
+        break;
       case "normal":
         input = sampleNormal(conf[5].mean, conf[5].stdev);
+        break;
       case "triangular":
         input = sampleTriangular(conf[5].mean, conf[5].stdev, conf[5].mode);
+        break;
     }
     let [s, c] = conf[1].split("!");
     let sheet = context.workbook.worksheets.getItem(s);
