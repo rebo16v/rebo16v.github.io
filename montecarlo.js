@@ -44,9 +44,9 @@ function stepIn(confs, context) {
     let input = 0;
     switch (conf[3]) {
       case "uniform":
-        input = sampleUniform(conf[5].mean, conf[5].stdev);
+        input = sampleUniform(conf[5].min, conf[5].max);
       case "normal":
-        input = sampleNormal(conf[5].min, conf[5].max);
+        input = sampleNormal(conf[5].mean, conf[5].stdev);
       case "triangular":
         input = sampleTriangular(conf[5].mean, conf[5].stdev, conf[5].mode);
     }
