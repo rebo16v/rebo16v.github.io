@@ -114,13 +114,13 @@ async function radioChange(event) {
           if (idx2 == -1) {
             forecasts.push(address);
             let row = forecasts.length
-            prophecy.getCell(row, 6).values = [["output_" + row]]
-            prophecy.getCell(row, 7).hyperlink = {
+            prophecy.getCell(row, 8).values = [["output_" + row]]
+            prophecy.getCell(row, 9).hyperlink = {
                 textToDisplay: address,
                 screenTip: "output_" + row,
                 documentReference: address
                 }
-            prophecy.getCell(row, 8).values = cell.values
+            prophecy.getCell(row, 10).values = cell.values
           }
           cell.format.fill.color = "red"
       } else {
