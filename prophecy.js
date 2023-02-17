@@ -18,8 +18,8 @@ Office.onReady((info) => {
               }
               else {
                 let prophecy = context.workbook.worksheets.add("prophecy")
-                range1 = prophecy.getRange("A1:E1");
-                range1.values = [["name", "cell", "value", "distribution", "parameters"]];
+                range1 = prophecy.getRange("A1:G1");
+                range1.values = [["name", "cell", "value", "distribution", "parameters", "", ""]];
                 range1.format.borders.getItem('InsideHorizontal').style = 'Continuous';
                 range1.format.borders.getItem('InsideVertical').style = 'Continuous';
                 range1.format.borders.getItem('EdgeBottom').style = 'Continuous';
@@ -100,7 +100,7 @@ async function radioChange(event) {
           }
           if (idx2 != -1) {
             forecasts.splice(idx2, 1);
-            let range = prophecy.getRange("G" + (2+idx2) + ":I" + (2+idx2));
+            let range = prophecy.getRange("I" + (2+idx2) + ":K" + (2+idx2));
             range.delete(Excel.DeleteShiftDirection.up);
           }
           cell.format.fill.color = "yellow"
@@ -108,7 +108,7 @@ async function radioChange(event) {
           document.getElementById('distro').disabled = true;
           if (idx != -1) {
             randoms.splice(idx, 1);
-            let range = prophecy.getRange("A" + (2+idx) + ":E" + (2+idx));
+            let range = prophecy.getRange("A" + (2+idx) + ":G" + (2+idx));
             range.delete(Excel.DeleteShiftDirection.up);
           }
           if (idx2 == -1) {
@@ -127,12 +127,12 @@ async function radioChange(event) {
           document.getElementById('distro').disabled = true;
           if (idx != -1) {
             randoms.splice(idx, 1);
-            let range = prophecy.getRange("A" + (2+idx) + ":E" + (2+idx));
+            let range = prophecy.getRange("A" + (2+idx) + ":G" + (2+idx));
             range.delete(Excel.DeleteShiftDirection.up);
           }
           if (idx2 != -1) {
             forecasts.splice(idx2, 1);
-            let range = prophecy.getRange("G" + (2+idx2) + ":I" + (2+idx2));
+            let range = prophecy.getRange("I" + (2+idx2) + ":K" + (2+idx2));
             range.delete(Excel.DeleteShiftDirection.up);
           }
           cell.format.fill.clear();

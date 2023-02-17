@@ -5,9 +5,9 @@ async function montecarlo() {
   await Excel.run(async(context) => {
     let app = context.workbook.application;
     var prophecy = context.workbook.worksheets.getItem("prophecy");
-    range_in = prophecy.getRange("A" + 2 + ":E" + (1+randoms.length));
+    range_in = prophecy.getRange("A" + 2 + ":G" + (1+randoms.length));
     range_in.load("values");
-    range_out = prophecy.getRange("G" + 2 + ":I" + (1+forecasts.length));
+    range_out = prophecy.getRange("I" + 2 + ":K" + (1+forecasts.length));
     range_out.load("values");
     await context.sync();
     let confs_in = range_in.values;
@@ -19,7 +19,6 @@ async function montecarlo() {
       win[i] = window.open("https://rebo16v.github.io/simulation.html?id=" + i + "&name=" + confs_out[i][0], "forecast_"+i);
     });
     await new Promise(r => setTimeout(r, 1000));
-    confs_in.forEach(c => c[5] = JSON.parse(c[4]));
     console.log(confs_in);
     let niter = parseInt(document.getElementById("niter").value);
     // let nbins = parseInt(document.getElementById("nbins").value);
@@ -44,13 +43,13 @@ function stepIn(confs, context) {
     let input = 0;
     switch (conf[3]) {
       case "uniform":
-        input = sampleUniform(conf[5].min, conf[5].max);
+        input = sampleUniform(conf[4], conf[5]);
         break;
       case "normal":
-        input = sampleNormal(conf[5].mean, conf[5].stdev);
+        input = sampleNormal(conf[4], conf[5]);
         break;
       case "triangular":
-        input = sampleTriangular(conf[5].mean, conf[5].stdev, conf[5].mode);
+        input = sampleTriangular(conf[4], conf[5], conf[6]);
         break;
     }
     let [s, c] = conf[1].split("!");
