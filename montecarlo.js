@@ -20,6 +20,7 @@ async function montecarlo() {
     });
     await new Promise(r => setTimeout(r, 1000));
     confs_in.forEach(c => c[5] = JSON.parse(c[4]));
+    console.log(confs_in);
     let niter = parseInt(document.getElementById("niter").value);
     // let nbins = parseInt(document.getElementById("nbins").value);
     for (let k = 0; k < niter; k++) {
