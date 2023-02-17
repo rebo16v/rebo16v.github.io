@@ -14,8 +14,8 @@ function sampleTriangular(a, b, c) {
   const u = Math.random();
   const F = (b-a)/(c-a);
   if (u < F) {
-    return a + Match.sqrt(u * (b-a) * (c-a));
+    return a + Math.sqrt(u * (b-a) * (c-a));
   } else {
-    return b - Match.sqrt((1-u) * (b-a) * (b-c));
+    return b - Math.sqrt((1-u) * (b-a) * (b-c));
   }
 }
