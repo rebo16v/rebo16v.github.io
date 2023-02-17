@@ -21,7 +21,7 @@ Office.onReady((info) => {
                 range1 = prophecy.getRange("A1:E1");
                 range1.values = [["name", "cell", "value", "distribution", "parameters"]];
                 range1.format.fill.color = "yellow";
-                range2 = prophecy.getRange("I1:K1");
+                range2 = prophecy.getRange("G1:I1");
                 range2.values = [["name", "cell", "value"]];
                 range2.format.fill.color = "red"
               }
@@ -87,7 +87,7 @@ async function radioChange(event) {
           }
           if (idx2 != -1) {
             forecasts.splice(idx2, 1);
-            let range = prophecy.getRange("I" + (2+idx2) + ":K" + (2+idx2));
+            let range = prophecy.getRange("G" + (2+idx2) + ":I" + (2+idx2));
             range.delete(Excel.DeleteShiftDirection.up);
           }
           cell.format.fill.color = "yellow"
@@ -95,31 +95,31 @@ async function radioChange(event) {
           document.getElementById('distro').disabled = true;
           if (idx != -1) {
             randoms.splice(idx, 1);
-            let range = prophecy.getRange("A" + (2+idx) + ":Z" + (2+idx));
+            let range = prophecy.getRange("A" + (2+idx) + ":E" + (2+idx));
             range.delete(Excel.DeleteShiftDirection.up);
           }
           if (idx2 == -1) {
             forecasts.push(address);
             let row = forecasts.length
-            prophecy.getCell(row, 8).values = [["output_" + row]]
-            prophecy.getCell(row, 9).hyperlink = {
+            prophecy.getCell(row, 6).values = [["output_" + row]]
+            prophecy.getCell(row, 7).hyperlink = {
                 textToDisplay: address,
                 screenTip: "output_" + row,
                 documentReference: address
                 }
-            prophecy.getCell(row, 10).values = cell.values
+            prophecy.getCell(row, 8).values = cell.values
           }
           cell.format.fill.color = "red"
       } else {
           document.getElementById('distro').disabled = true;
           if (idx != -1) {
             randoms.splice(idx, 1);
-            let range = prophecy.getRange("A" + (2+idx) + ":Z" + (2+idx));
+            let range = prophecy.getRange("A" + (2+idx) + ":E" + (2+idx));
             range.delete(Excel.DeleteShiftDirection.up);
           }
           if (idx2 != -1) {
             forecasts.splice(idx2, 1);
-            let range = prophecy.getRange("I" + (2+idx2) + ":K" + (2+idx2));
+            let range = prophecy.getRange("G" + (2+idx2) + ":I" + (2+idx2));
             range.delete(Excel.DeleteShiftDirection.up);
           }
           cell.format.fill.clear();
