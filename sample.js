@@ -12,7 +12,7 @@ function sampleNormal(mean, stddev) {
 
 function sampleTriangular(a, b, c) {
   const u = Math.random();
-  const F = (b-a)/(c-a);
+  const F = (c-a)/(b-a);
   if (u < F) {
     return a + Math.sqrt(u * (b-a) * (c-a));
   } else {
