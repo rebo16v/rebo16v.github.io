@@ -21,9 +21,10 @@ Office.onReady((info) => {
                 range1 = prophecy.getRange("A1:E1");
                 range1.values = [["name", "cell", "value", "distribution", "parameters"]];
                 range1.format.fill.color = "yellow";
-                range2 = prophecy.getRange("G1:I1");
+                range2 = prophecy.getRange("I1:K1");
                 range2.values = [["name", "cell", "value"]];
                 range2.format.fill.color = "red"
+                range1 = prophecy.getRange("E1:G1").merge();
               }
           });
         });
