@@ -20,13 +20,14 @@ async function montecarlo() {
     });
     await new Promise(r => setTimeout(r, 1000));
     console.log(confs_in);
+    console.log(confs_out);
     let niter = parseInt(document.getElementById("niter").value);
     // let nbins = parseInt(document.getElementById("nbins").value);
     for (let k = 0; k < niter; k++) {
       app.suspendApiCalculationUntilNextSync();
       stepIn(confs_in, context);
       await context.sync()
-      let outputs = stepOut(context);
+      let outputs = stepOut(confs_out, context);
       await context.sync()
       outputs.forEach((o,i) => {
         let value = o.values[0][0]
@@ -59,10 +60,10 @@ function stepIn(confs, context) {
   });
 }
 
-function stepOut(context) {
+function stepOut(confs, context) {
   let ranges = [];
-  forecasts.forEach(f => {
-    let [s, c] = f.split("!");
+  confs.forEach(conf => {
+    let [s, c] = conf[1].split("!");
     let sheet = context.workbook.worksheets.getItem(s);
     range = sheet.getRange(c);
     range.load("values");
