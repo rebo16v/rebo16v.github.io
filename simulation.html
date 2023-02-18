@@ -12,9 +12,10 @@
 </body>
 
 <script>
+let x;
+let y;
+let n_bins;
 let sims = [];
-
-const n_bins = 100
 
 const margin = {top: 30, right: 20, bottom: 20, left: 30},
     width = window.innerWidth - 2*margin.left - 2*margin.right,
@@ -31,9 +32,6 @@ let svg = d3.select("#forecastgraph")
 let axis = [svg.append("g")
   .attr("transform", "translate(0," + height + ")"),
   svg.append("g")]
-
-let x;
-let y;
 
 window.addEventListener("load", (e1) => {
   const query = window.location.search;

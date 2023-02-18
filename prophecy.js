@@ -6,7 +6,7 @@ Office.onReady((info) => {
         document.getElementById("none").onchange = radioChange;
         document.getElementById("input").onchange = radioChange;
         document.getElementById("output").onchange = radioChange;
-        document.getElementById("distro").onclick = distro;
+        document.getElementById("config").onclick = config;
         document.getElementById("montecarlo").onclick = montecarlo;
 
         Excel.run((context) => {
@@ -76,13 +76,10 @@ async function workbookChange(event) {
         let address = cell.address
         if (randoms.includes(address)) {
           document.getElementById('input').checked = true;
-          document.getElementById('distro').disabled = false;
         } else if (forecasts.includes(address)) {
           document.getElementById('output').checked = true;
-          document.getElementById('distro').disabled = true;
         } else {
           document.getElementById('none').checked = true;
-          document.getElementById('distro').disabled = true;
         }
       });
     });
@@ -101,7 +98,6 @@ async function radioChange(event) {
       let idx = randoms.indexOf(address);
       let idx2 = forecasts.indexOf(address);
       if (document.getElementById('input').checked) {
-          document.getElementById('distro').disabled = false;
           if (idx == -1) {
             randoms.push(address)
             let row = randoms.length
@@ -130,7 +126,6 @@ async function radioChange(event) {
           }
           cell.format.fill.color = "yellow"
       } else if (document.getElementById('output').checked) {
-          document.getElementById('distro').disabled = true;
           if (idx != -1) {
             randoms.splice(idx, 1);
             let range = prophecy.getRange("A" + (2+idx) + ":G" + (2+idx));
@@ -149,7 +144,6 @@ async function radioChange(event) {
           }
           cell.format.fill.color = "red"
       } else {
-          document.getElementById('distro').disabled = true;
           if (idx != -1) {
             randoms.splice(idx, 1);
             let range = prophecy.getRange("A" + (2+idx) + ":G" + (2+idx));
@@ -166,16 +160,32 @@ async function radioChange(event) {
   });
 }
 
-async function distro(event) {
+async function config(event) {
   await Excel.run(async (context) => {
+    let prophecy = context.workbook.worksheets.getItem("prophecy");
     let cell = context.workbook.getActiveCell();
     cell.load("address");
     return context.sync().then(function() {
-      row = 2 + randoms.indexOf(cell.address);
-      let prophecy = context.workbook.worksheets.getItem("prophecy");
       prophecy.activate();
-      let range = prophecy.getRange("A" + row + ":Z" + row);
-      range.select()
+      let idx1 = randoms.indexOf(cell.address);
+      if (idx1 != -1) {
+        prophecy.getRange("A" + (2+idx1) + ":G" + (2+idx1)).select();
+      } else {
+        let idx2 = forecasts.indexOf(cell.address);
+        if (idx2 != -1) {
+          prophecy.getRange("I" + (2+idx2) + ":K" + (2+idx2)).select();
+        }
+      }
+    });
+  });
+}
+
+
+      if (idx2 )
+      row = 2 + randoms.indexOf(cell.address);
+
+
+
     });
   });
 }

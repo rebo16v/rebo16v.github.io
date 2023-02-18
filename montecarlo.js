@@ -14,21 +14,22 @@ async function montecarlo() {
     let confs_out = range_out.values;
     win = [];
     out = [];
-    forecasts.forEach((f,i) => {
+    let niter = parseInt(document.getElementById("niter").value);
+    let nbins = parseInt(document.getElementById("nbins").value);
+    confs_out.forEach((c,i) => {
       out[i] = [];
-      win[i] = window.open("https://rebo16v.github.io/simulation.html?id=" + i + "&name=" + confs_out[i][0], "forecast_"+i);
+      win[i] = window.open("https://rebo16v.github.io/simulation.html?id=" + i + "&name=" + c[0] + "&nbins=" + nbins, "forecast_"+i);
     });
     await new Promise(r => setTimeout(r, 1000));
     console.log(confs_in);
     console.log(confs_out);
-    let niter = parseInt(document.getElementById("niter").value);
-    // let nbins = parseInt(document.getElementById("nbins").value);
+
     for (let k = 0; k < niter; k++) {
       app.suspendApiCalculationUntilNextSync();
       stepIn(confs_in, context);
-      await context.sync()
+      await context.sync();
       let outputs = stepOut(confs_out, context);
-      await context.sync()
+      await context.sync();
       outputs.forEach((o,i) => {
         let value = o.values[0][0]
         out[i].push(value);

@@ -4,22 +4,23 @@
 <head>
     <script type="text/javascript"src="https://d3js.org/d3.v7.js"></script>
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-    <script type="text/javascript" src="sample.js?version=5"></script>
-    <script type="text/javascript" src="montecarlo.js?version=71"></script>
-    <script type="text/javascript" src="prophecy.js?version=32"></script>
+    <script type="text/javascript" src="sample.js?version=6"></script>
+    <script type="text/javascript" src="montecarlo.js?version=72"></script>
+    <script type="text/javascript" src="prophecy.js?version=33"></script>
 </head>
 
 <body>
-    <br><p>Montecarlo</p>
-    <input type="radio" id="none" name="age" value="None"><label for="none">None</label><br>
-    <input type="radio" id="input" name="age" value="Input"><label for="input">Input</label>
-    <button id="distro">Distribution...</button><br>
-    <input type="radio" id="output" name="age" value="Output"><label for="output">Output</label><br>
+    <p>Montecarlo</p>
+    <br><input type="radio" id="none" name="age" value="None"><label for="none">None</label>
+    <br><input type="radio" id="input" name="age" value="Input"><label for="input">Input</label>
+    <br><input type="radio" id="output" name="age" value="Output"><label for="output">Output</label>
+    <br><button id="config">Config...</button><br>
 
     <br><br>iterations:
-    <input type="text" size="8" id="niter" name="niter">
-    <br>bins:
-    <input type="text" size="8" id="nbins" name="nbins">
+    <label for="niter">Number of iterations:</label>
+    <input type="number" id="niter" name="niter" min="10" max="100">
+    <br><label for="nbins">Histogram bins:</label>
+    <input type="number" id="nbins" name="nbins" min="10" max="100">
     <br><button id="montecarlo">Montecarlo</button>
 </body>
 
