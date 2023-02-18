@@ -1,7 +1,7 @@
 let randoms = [];
 let forecasts = [];
 
-Office.onReady(async(info) => {
+Office.onReady((info) => {
     if (info.host === Office.HostType.Excel) {
         document.getElementById("none").onchange = radioChange;
         document.getElementById("input").onchange = radioChange;
@@ -9,7 +9,7 @@ Office.onReady(async(info) => {
         document.getElementById("distro").onclick = distro;
         document.getElementById("montecarlo").onclick = montecarlo;
 
-        await Excel.run(async(context) => {
+        Excel.run((context) => {
             context.workbook.onSelectionChanged.add(workbookChange)
             context.workbook.worksheets.load("items")
             return context.sync().then(function(){
@@ -19,24 +19,25 @@ Office.onReady(async(info) => {
                 range_in.load("values");
                 let range_out = prophecy.getRange("I2:K100");
                 range_out.load("values");
-                await context.sync();
-                let confs_in = range_in.values;
-                let confs_out = range_out.values;
-                confs_in.forEach(conf => {
-                  if (conf[1] != "") {
-                    let [s, c] = conf[1].split("!");
-                    let sheet = context.workbook.worksheets.getItem(s);
-                    sheet.getRange(c).format.fill.color = "yellow";
-                    randoms.push(conf[1]);
-                  }
-                });
-                confs_in.forEach(conf => {
-                  if (conf[1] != "") {
-                    let [s, c] = conf[1].split("!");
-                    let sheet = context.workbook.worksheets.getItem(s);
-                    sheet.getRange(c).format.fill.color = "red";
-                    forecasts.push(conf[1]);
-                  }
+                return context.sync().then(function() {
+                  let confs_in = range_in.values;
+                  let confs_out = range_out.values;
+                  confs_in.forEach(conf => {
+                    if (conf[1] != "") {
+                      let [s, c] = conf[1].split("!");
+                      let sheet = context.workbook.worksheets.getItem(s);
+                      sheet.getRange(c).format.fill.color = "yellow";
+                      randoms.push(conf[1]);
+                    }
+                  });
+                  confs_in.forEach(conf => {
+                    if (conf[1] != "") {
+                      let [s, c] = conf[1].split("!");
+                      let sheet = context.workbook.worksheets.getItem(s);
+                      sheet.getRange(c).format.fill.color = "red";
+                      forecasts.push(conf[1]);
+                    }
+                  });
                 });
               }
               else {
@@ -60,6 +61,7 @@ Office.onReady(async(info) => {
                 range2.format.borders.getItem('EdgeTop').style = 'Continuous';
                 range2.format.fill.color = "red"
                 prophecy.getRange("E1:G1").merge();
+                return context.sync();
               }
           });
         });
