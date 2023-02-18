@@ -14,7 +14,7 @@ Office.onReady((info) => {
             context.workbook.worksheets.load("items")
             return context.sync().then(function(){
               if (context.workbook.worksheets.items.filter(f => f.name == "prophecy").length > 0) {
-                console.log("prophecy found!")
+                let prophecy = context.workbook.worksheets.getItem("prophecy");
                 let range_in = prophecy.getRange("A2:G100");
                 range_in.load("values");
                 let range_out = prophecy.getRange("I2:K100");
@@ -90,7 +90,7 @@ async function radioChange(event) {
   await Excel.run(async (context) => {
     let sheet = context.workbook.worksheets.getActiveWorksheet();
     let cell = context.workbook.getActiveCell();
-    let prophecy = context.workbook.worksheets.getItem("prophecy")
+    let prophecy = context.workbook.worksheets.getItem("prophecy");
     cell.load("address");
     cell.load("values")
     cell.load("numberFormat")
