@@ -7,7 +7,6 @@ Office.onReady((info) => {
         document.getElementById("input").onchange = radioChange;
         document.getElementById("output").onchange = radioChange;
         document.getElementById("config").onclick = config;
-        document.getElementById("montecarlo").onclick = montecarlo;
         document.getElementById("stop").onclick = montecarlo_stop;
         document.getElementById("play").onclick = montecarlo_start;
         document.getElementById("pause").onclick = montecarlo_pause;
