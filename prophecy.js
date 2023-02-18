@@ -9,7 +9,7 @@ Office.onReady(async(info) => {
         document.getElementById("distro").onclick = distro;
         document.getElementById("montecarlo").onclick = montecarlo;
 
-        Excel.run(context => {
+        await Excel.run(async(context) => {
             context.workbook.onSelectionChanged.add(workbookChange)
             context.workbook.worksheets.load("items")
             return context.sync().then(function(){
