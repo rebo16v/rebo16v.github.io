@@ -21,7 +21,6 @@ Office.onReady((info) => {
                 range_out.load("values");
                 return context.sync().then(function() {
                   let confs_in = range_in.values;
-                  let confs_out = range_out.values;
                   confs_in.forEach(conf => {
                     if (conf[1] != "") {
                       let [s, c] = conf[1].split("!");
@@ -30,7 +29,8 @@ Office.onReady((info) => {
                       randoms.push(conf[1]);
                     }
                   });
-                  confs_in.forEach(conf => {
+                  let confs_out = range_out.values;
+                  confs_out.forEach(conf => {
                     if (conf[1] != "") {
                       let [s, c] = conf[1].split("!");
                       let sheet = context.workbook.worksheets.getItem(s);
