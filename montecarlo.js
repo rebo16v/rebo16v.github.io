@@ -21,9 +21,6 @@ async function montecarlo() {
       win[i] = window.open("https://rebo16v.github.io/simulation.html?id=" + i + "&name=" + c[0] + "&nbins=" + nbins, "forecast_"+i);
     });
     await new Promise(r => setTimeout(r, 1000));
-    console.log(confs_in);
-    console.log(confs_out);
-
     for (let k = 0; k < niter; k++) {
       app.suspendApiCalculationUntilNextSync();
       stepIn(confs_in, context);
