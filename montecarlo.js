@@ -84,6 +84,6 @@ async function montecarlo_start() {
   paused = false;
 }
 
-async function montecarlo_paused() {
+async function montecarlo_pause() {
   paused = true;
 }
