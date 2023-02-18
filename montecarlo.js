@@ -77,6 +77,7 @@ function stepOut(confs, context) {
 }
 
 async function montecarlo_stop() {
+  console.log("montecarlo_stop");
   running = false;
 }
 
@@ -85,5 +86,6 @@ async function montecarlo_start() {
 }
 
 async function montecarlo_pause() {
+  console.log("montecarlo_pause");
   paused = true;
 }
