@@ -15,6 +15,15 @@ Office.onReady((info) => {
             return context.sync().then(function(){
               if (context.workbook.worksheets.items.filter(f => f.name == "prophecy").length > 0) {
                 console.log("prophecy found!")
+                let range_in = prophecy.getRange("A2:G100");
+                range_in.load("values");
+                let range_out = prophecy.getRange("I2:K100");
+                range_out.load("values");
+                context.sync();
+                let confs_in = range_in.values;
+                let confs_out = range_out.values;
+                confs_in.forEach(conf => if (conf[1] != "") randoms.push(conf[1]));
+                confs_out.forEach(conf => if (conf[1] != "") forecasts.push(conf[1]));
               }
               else {
                 let prophecy = context.workbook.worksheets.add("prophecy")
