@@ -43,7 +43,6 @@ window.addEventListener("load", (e1) => {
   document.getElementById("forecastid").innerHTML = "Forecast - " + forecastName;
   window.addEventListener("message", (e2) => {
     let value = parseFloat(e2.data);
-    console.log("message => " + value);
     if (sims.length == 0) {
       x = d3.scaleLinear()
           .domain([0,2*value])
@@ -57,11 +56,9 @@ window.addEventListener("load", (e1) => {
     sims.push(value);
     repaint();
   }, false);
-  console.log("ready!");
 });
 
 function repaint(){
-  console.log("repaint");
   let bins = d3.histogram()
       .domain(x.domain())
       .thresholds(x.ticks(nbins))
