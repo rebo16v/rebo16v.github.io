@@ -10,7 +10,7 @@ Office.onReady((info) => {
         document.getElementById("montecarlo").onclick = montecarlo;
         document.getElementById("stop").onclick = montecarlo_stop;
         document.getElementById("play").onclick = montecarlo_start;
-        document.getElementById("play").onclick = montecarlo_pause;
+        document.getElementById("pause").onclick = montecarlo_pause;
 
         Excel.run((context) => {
             context.workbook.onSelectionChanged.add(workbookChange)
