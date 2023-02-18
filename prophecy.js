@@ -1,7 +1,7 @@
 let randoms = [];
 let forecasts = [];
 
-Office.onReady((info) => {
+Office.onReady(async(info) => {
     if (info.host === Office.HostType.Excel) {
         document.getElementById("none").onchange = radioChange;
         document.getElementById("input").onchange = radioChange;
@@ -19,7 +19,7 @@ Office.onReady((info) => {
                 range_in.load("values");
                 let range_out = prophecy.getRange("I2:K100");
                 range_out.load("values");
-                context.sync();
+                await context.sync();
                 let confs_in = range_in.values;
                 let confs_out = range_out.values;
                 confs_in.forEach(conf => {
