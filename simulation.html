@@ -38,6 +38,7 @@ window.addEventListener("load", (e1) => {
   const params = new URLSearchParams(query);
   const forecastId = params.get("id");
   const forecastName = params.get("name");
+  const forecastBins = parseInt(params.get("nbins"));
   console.log("id => " + forecastId);
   document.getElementById("forecastid").innerHTML = "Forecast - " + forecastName;
   window.addEventListener("message", (e2) => {
@@ -63,7 +64,7 @@ function repaint(){
   console.log("repaint");
   let bins = d3.histogram()
       .domain(x.domain())
-      .thresholds(x.ticks(50))
+      .thresholds(x.ticks(nbins))
       (sims);
   svg.selectAll("rect")
       .data(bins)
