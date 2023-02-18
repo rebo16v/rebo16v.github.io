@@ -8,6 +8,9 @@ Office.onReady((info) => {
         document.getElementById("output").onchange = radioChange;
         document.getElementById("config").onclick = config;
         document.getElementById("montecarlo").onclick = montecarlo;
+        document.getElementById("stop").onclick = montecarlo_stop;
+        document.getElementById("play").onclick = montecarlo_start;
+        document.getElementById("play").onclick = montecarlo_pause;
 
         Excel.run((context) => {
             context.workbook.onSelectionChanged.add(workbookChange)

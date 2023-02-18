@@ -1,8 +1,12 @@
 let out;
 let win;
+let running;
+let paused;
 
 async function montecarlo() {
   await Excel.run(async(context) => {
+    running = true;
+    paused = false;
     let app = context.workbook.application;
     var prophecy = context.workbook.worksheets.getItem("prophecy");
     range_in = prophecy.getRange("A" + 2 + ":G" + (1+randoms.length));
@@ -22,6 +26,8 @@ async function montecarlo() {
     });
     await new Promise(r => setTimeout(r, 1000));
     for (let k = 0; k < niter; k++) {
+      if (!running) break;
+      while (paused) {await new Promise(r => setTimeout(r, 1000));}
       app.suspendApiCalculationUntilNextSync();
       stepIn(confs_in, context);
       await context.sync();
@@ -68,5 +74,16 @@ function stepOut(confs, context) {
     ranges.push(range);
   });
   return ranges;
+}
 
+async function montecarlo_stop() {
+  running = false;
+}
+
+async function montecarlo_start() {
+  paused = false;
+}
+
+async function montecarlo_paused() {
+  paused = true;
 }
