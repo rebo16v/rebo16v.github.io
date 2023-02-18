@@ -45,7 +45,7 @@ window.addEventListener("load", (e1) => {
     console.log("message => " + value);
     if (sims.length == 0) {
       x = d3.scaleLinear()
-          .domain([0,3*value])
+          .domain([0,2*value])
           .range([0, width]);
       axis[0].call(d3.axisBottom(x));
       y = d3.scaleLinear()
