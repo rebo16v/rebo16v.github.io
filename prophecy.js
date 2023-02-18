@@ -22,8 +22,22 @@ Office.onReady((info) => {
                 context.sync();
                 let confs_in = range_in.values;
                 let confs_out = range_out.values;
-                confs_in.forEach(conf => if (conf[1] != "") randoms.push(conf[1]));
-                confs_out.forEach(conf => if (conf[1] != "") forecasts.push(conf[1]));
+                confs_in.forEach(conf => {
+                  if (conf[1] != "") {
+                    let [s, c] = conf[1].split("!");
+                    let sheet = context.workbook.worksheets.getItem(s);
+                    sheet.getRange(c).format.fill.color = "yellow";
+                    randoms.push(conf[1]);
+                  }
+                });
+                confs_in.forEach(conf => {
+                  if (conf[1] != "") {
+                    let [s, c] = conf[1].split("!");
+                    let sheet = context.workbook.worksheets.getItem(s);
+                    sheet.getRange(c).format.fill.color = "red";
+                    forecasts.push(conf[1]);
+                  }
+                });
               }
               else {
                 let prophecy = context.workbook.worksheets.add("prophecy")
