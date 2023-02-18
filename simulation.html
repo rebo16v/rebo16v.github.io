@@ -39,7 +39,6 @@ window.addEventListener("load", (e1) => {
   const forecastId = params.get("id");
   const forecastName = params.get("name");
   nbins = parseInt(params.get("nbins"));
-  console.log("id => " + forecastId);
   document.getElementById("forecastid").innerHTML = "Forecast - " + forecastName;
   window.addEventListener("message", (e2) => {
     let value = parseFloat(e2.data);
