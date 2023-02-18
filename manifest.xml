@@ -74,14 +74,14 @@
         <bt:Url id="Taskpane.Url" DefaultValue="https://rebo16v.github.io/iesepane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="GetStarted.Title" DefaultValue="Get started with the IESE add-in!"/>
-        <bt:String id="CommandsGroup.Label" DefaultValue="Contoso Add-in"/>
+        <bt:String id="GetStarted.Title" DefaultValue="Get started with the Prophecy add-in!"/>
+        <bt:String id="CommandsGroup.Label" DefaultValue="Prophecy"/>
         <bt:String id="TaskpaneButton.Label" DefaultValue="Montecarlo simulation"/>
         <bt:String id="TaskpaneButton.SupertipTitle" DefaultValue="Montecarlo simulation"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Get started with the IESE add-in!"/>
-        <bt:String id="TaskpaneButton.SupertipText" DefaultValue="Open the IESE excel add-in"/>
+        <bt:String id="GetStarted.Description" DefaultValue="Get started with the Prophecy add-in!"/>
+        <bt:String id="TaskpaneButton.SupertipText" DefaultValue="Open the Prophecy excel add-in"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
