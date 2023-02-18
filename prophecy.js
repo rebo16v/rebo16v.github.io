@@ -179,13 +179,3 @@ async function config(event) {
     });
   });
 }
-
-
-      if (idx2 )
-      row = 2 + randoms.indexOf(cell.address);
-
-
-
-    });
-  });
-}
