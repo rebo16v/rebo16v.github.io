@@ -19,3 +19,9 @@ function sampleTriangular(a, b, c) {
     return b - Math.sqrt((1-u) * (b-a) * (b-c));
   }
 }
+
+function sampleBin(prob) {
+  const u = Math.random();
+  if (u<=(1-prob)) return 0;
+  else return 1;
+}

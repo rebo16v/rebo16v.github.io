@@ -65,6 +65,9 @@ function stepIn(confs, context) {
       case "triangular":
         input = sampleTriangular(conf[4], conf[5], conf[6]);
         break;
+      case "binomial":
+        input = sampleBinomial(conf[4]);
+        break;
     }
     let [s, c] = conf[1].split("!");
     let sheet = context.workbook.worksheets.getItem(s);
