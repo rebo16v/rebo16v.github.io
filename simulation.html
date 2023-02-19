@@ -41,7 +41,7 @@ window.addEventListener("load", (e) => {
   nbins = parseInt(params.get("nbins"));
   document.getElementById("forecastid").innerHTML = "Forecast - " + forecastName;
   window.addEventListener("message", (e1) => {
-    let value = parseFloat(e2.data);
+    let value = parseFloat(e1.data);
     if (sims.length == 0) {
       x = d3.scaleLinear()
           .domain([0,2*value])
@@ -56,7 +56,7 @@ window.addEventListener("load", (e) => {
     repaint();
   }, false);
   window.addEventListener("resize", (e2) => {
-    console.log("window resized => " + e2);
+    console.log("window resized => " + e2.width);
   }, false);
 });
 
