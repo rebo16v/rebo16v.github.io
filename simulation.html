@@ -33,14 +33,14 @@ let axis = [svg.append("g")
   .attr("transform", "translate(0," + height + ")"),
   svg.append("g")]
 
-window.addEventListener("load", (e1) => {
+window.addEventListener("load", (e) => {
   const query = window.location.search;
   const params = new URLSearchParams(query);
   const forecastId = params.get("id");
   const forecastName = params.get("name");
   nbins = parseInt(params.get("nbins"));
   document.getElementById("forecastid").innerHTML = "Forecast - " + forecastName;
-  window.addEventListener("message", (e2) => {
+  window.addEventListener("message", (e1) => {
     let value = parseFloat(e2.data);
     if (sims.length == 0) {
       x = d3.scaleLinear()
@@ -54,6 +54,9 @@ window.addEventListener("load", (e1) => {
     }
     sims.push(value);
     repaint();
+  }, false);
+  window.addEventListener("resize", (e2) => {
+    console.log("window resized => " + e2);
   }, false);
 });
 
