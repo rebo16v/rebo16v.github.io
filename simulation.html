@@ -41,7 +41,7 @@ window.addEventListener("load", (e) => {
   const forecastId = params.get("id");
   const forecastName = params.get("name");
   nbins = parseInt(params.get("nbins"));
-  document.getElementById("forecastid").innerHTML = "<h2>Forecast - " + forecastName + "</h2>";
+  document.getElementById("forecastid").innerHTML = "<h2>" + forecastName + "</h2>";
   window.addEventListener("message", (e1) => {
     let value = parseFloat(e1.data);
     if (sims.length == 0) {
