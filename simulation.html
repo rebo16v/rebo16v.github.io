@@ -18,13 +18,13 @@ let n_bins;
 let sims = [];
 
 let margin = {top: 40, right: 20, bottom: 20, left: 40},
-    width = window.innerWidth - 2*margin.left - 2*margin.right,
-    height = window.innerHeight - 2*margin.top - 2*margin.bottom;
+    width = window.innerWidth - margin.left - margin.right,
+    height = window.innerHeight - margin.top - margin.bottom;
 
 let svg = d3.select("#forecastgraph")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    //.attr("width", width + margin.left + margin.right)
+    //.attr("height", height + margin.top + margin.bottom)
     .attr("viewBox", "0,0," + ( width + margin.left + margin.right) + "," + (height + margin.top + margin.bottom))
     .attr("preserveAspectRatio", "none")
   .append("g")
