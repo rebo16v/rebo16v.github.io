@@ -28,11 +28,11 @@ let svg = d3.select("#forecastgraph")
     .attr("viewBox", "0,0," + window.innerWidth + "," + window.innerHeight)
     .attr("preserveAspectRatio", "none")
   .append("g")
-    //.attr("transform",
-    //      "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
 
 let axis = [
-  svg.append("g").attr("transform", "translate(0," + height + ")"),
+  svg.append("g").attr("transform", "translate(0," + window.innerHeight + ")"),
   svg.append("g")];
 
 window.addEventListener("load", (e) => {
