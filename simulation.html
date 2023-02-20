@@ -31,7 +31,7 @@ let svg = d3.select("#forecastgraph")
           "translate(" + margin.left + "," + margin.top + ")");
 
 let axis = [
-  svg.append("g").attr("transform", "translate(0,100"),
+  svg.append("g").attr("transform", "translate(0," + height + ")"),
   svg.append("g")];
 
 window.addEventListener("load", (e) => {
