@@ -17,7 +17,7 @@ let y;
 let n_bins;
 let sims = [];
 
-let margin = {top: 50, right: 20, bottom: 20, left: 40},
+let margin = {top: 20, right: 20, bottom: 20, left: 20},
     width = window.innerWidth - 2*margin.left - 2*margin.right,
     height = window.innerHeight - 2*margin.top - 2*margin.bottom;
 
@@ -28,8 +28,8 @@ let svg = d3.select("#forecastgraph")
     .attr("viewBox", "0,0," + window.innerWidth + "," + window.innerHeight)
     .attr("preserveAspectRatio", "none")
   .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+    //.attr("transform",
+    //      "translate(" + margin.left + "," + margin.top + ")");
 
 let axis = [
   svg.append("g").attr("transform", "translate(0," + height + ")"),
