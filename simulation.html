@@ -18,8 +18,8 @@ let n_bins;
 let sims = [];
 
 let margin = {top: 20, right: 20, bottom: 20, left: 20},
-    width = window.innerWidth - 2*margin.left - 2*margin.right,
-    height = window.innerHeight - 2*margin.top - 2*margin.bottom;
+    width = window.innerWidth - margin.left - margin.right,
+    height = window.innerHeight - margin.top - margin.bottom;
 
 let svg = d3.select("#forecastgraph")
   .append("svg")
@@ -32,7 +32,7 @@ let svg = d3.select("#forecastgraph")
           "translate(" + margin.left + "," + margin.top + ")");
 
 let axis = [
-  svg.append("g").attr("transform", "translate(0," + window.innerHeight + ")"),
+  svg.append("g").attr("transform", "translate(0," + height + ")"),
   svg.append("g")];
 
 window.addEventListener("load", (e) => {
