@@ -48,6 +48,9 @@ async function montecarlo_start() {
           win[i].postMessage(value);
         });
       }
+      document.getElementById("play").disabled = false;
+      document.getElementById("stop").disabled = true;
+      document.getElementById("pause").disabled = true;
     }
   });
 }
