@@ -25,13 +25,13 @@ let svg = d3.select("#forecastgraph")
     //.attr("width", width + margin.left + margin.right)
     //.attr("height", height + margin.top + margin.bottom)
     .attr("viewBox", "0,0,100,100")
-    // .attr("preserveAspectRatio", "none")
+    .attr("preserveAspectRatio", "none")
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
 let axis = [
-  svg.append("g").attr("transform", "translate(0," + height + ")"),
+  svg.append("g").attr("transform", "translate(0,100"),
   svg.append("g")];
 
 window.addEventListener("load", (e) => {
