@@ -19,8 +19,8 @@ let summa = 0;
 let mean = 0;
 
 let margin = {top: 20, right: 20, bottom: 20, left: 20};
-let width = window.innerWidth - margin.left;
-let height = window.innerHeight - margin.top;
+let width = window.innerWidth - 2*margin.left;
+let height = window.innerHeight - 2*margin.top;
 
 let svg = d3.select("body")
   .append("svg")
