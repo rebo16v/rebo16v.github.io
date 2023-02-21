@@ -41,7 +41,7 @@ let mean_text = svg.append("text").attr("text-anchor", "end").attr("font-family"
 window.addEventListener("load", (e) => {
   const query = window.location.search;
   const params = new URLSearchParams(query);
-  name_text.text(params.get("name")).attr("x", width-2).attr("y", 2*margin.top);
+  name_text.text(params.get("name")).attr("x", width-margin.right).attr("y", 2*margin.top);
   nbins = parseInt(params.get("nbins"));
   window.addEventListener("message", (e1) => {
     let value = parseFloat(e1.data);
@@ -72,7 +72,7 @@ window.addEventListener("load", (e) => {
     axis[0].call(d3.axisBottom(x));
     y.range([height, 0]);
     axis[1].call(d3.axisLeft(y));
-    name_text.attr("x", width-2).attr("y", 2*margin.top);
+    name_text.attr("x", width-margin.right).attr("y", 2*margin.top);
     repaint();
   }, false);
 });
