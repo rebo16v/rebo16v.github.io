@@ -85,9 +85,10 @@ function repaint(){
               .attr("height", function(d) {return y(0) - y(d.length/sims.length)})
               .style("fill", "green"),
           update => update
+              .attr("x", function(d) {return x(d.x0)})
               .attr("y", function(d) {return y(d.length/sims.length)})
-              .attr("height", function(d) {return y(0) - y(d.length/sims.length)}))
-
+              .attr("width", function(d) {return x(d.x1) - x(d.x0) - 2})
+              .attr("height", function(d) {return y(0) - y(d.length/sims.length)}));
 }
 </script>
 
