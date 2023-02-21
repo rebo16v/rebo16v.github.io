@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    
+
 </body>
 
 <script>
@@ -31,7 +31,7 @@ let svg = d3.select("body")
     //      "translate(" + margin.left + "," + margin.top + ")");
 
 let axis = [
-  svg.append("g"), // .attr("transform", "translate(0," + (height-margin.bottom) + ")"),
+  svg.append("g").attr("transform", "translate(0," + height + ")"),
   svg.append("g")];
 
 window.addEventListener("load", (e) => {
