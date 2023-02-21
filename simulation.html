@@ -68,7 +68,7 @@ window.addEventListener("load", (e) => {
     axis[0].attr("transform", `translate(0,${height - margin.bottom})`);
     axis[0].call(d3.axisBottom(x));
     y.range([height - margin.bottom, margin.top]);
-    axis[1].attr("transform", `translate(${margin.left},0)`)];
+    axis[1].attr("transform", `translate(${margin.left},0)`);
     axis[1].call(d3.axisLeft(y));
     name_text.attr("x", width-margin.right).attr("y", margin.top);
     repaint();
