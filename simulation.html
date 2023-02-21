@@ -34,14 +34,14 @@ let axis = [
   svg.append("g").attr("transform", "translate(0," + height + ")"),
   svg.append("g")];
 
+let name_text = svg.append("text");
 let mean_line = svg.append("line");
 let mean_text = svg.append("text");
 
 window.addEventListener("load", (e) => {
   const query = window.location.search;
   const params = new URLSearchParams(query);
-  const forecastId = params.get("id");
-  const forecastName = params.get("name");
+  name_text.text(params.get("name"))
   nbins = parseInt(params.get("nbins"));
   window.addEventListener("message", (e1) => {
     let value = parseFloat(e1.data);
@@ -72,6 +72,7 @@ window.addEventListener("load", (e) => {
     axis[0].call(d3.axisBottom(x));
     y.range([height, 0]);
     axis[1].call(d3.axisLeft(y));
+    name_text.attr("x", x(width)-100).attr("y", 2*margin.top);
     repaint();
   }, false);
 });
@@ -106,7 +107,7 @@ function repaint(){
   mean_text
     .text("mean=" + mean)
     .attr("x", mean_x)
-    .attr("y", margin.top);
+    .attr("y", 2*margin.top);
 }
 </script>
 
