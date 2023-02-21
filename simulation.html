@@ -41,7 +41,7 @@ let mean_text = svg.append("text");
 window.addEventListener("load", (e) => {
   const query = window.location.search;
   const params = new URLSearchParams(query);
-  name_text.text(params.get("name")).attr("x", width-100).attr("y", 2*margin.top);
+  name_text.text(params.get("name")).attr("font-family", "Arial").attr("fill", "blue").attr("x", width-100).attr("y", 2*margin.top);
   nbins = parseInt(params.get("nbins"));
   window.addEventListener("message", (e1) => {
     let value = parseFloat(e1.data);
