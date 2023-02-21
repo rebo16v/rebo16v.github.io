@@ -16,22 +16,22 @@ let y;
 let n_bins;
 let sims = [];
 
-let margin = {top: 20, right: 20, bottom: 20, left: 20},
-    width = window.innerWidth - margin.left - margin.right,
-    height = window.innerHeight - margin.top - margin.bottom;
+const margin = {top: 30, right: 20, bottom: 20, left: 30},
+    width = window.innerWidth - 2*margin.left - 2*margin.right,
+    height = window.innerHeight - 2*margin.top - 2*margin.bottom;
 
 let svg = d3.select("#forecastgraph")
   .append("svg")
-    //.attr("width", width + margin.left + margin.right)
-    //.attr("height", height + margin.top + margin.bottom)
-    .attr("viewBox", "0,0,100,100")
-    .attr("preserveAspectRatio", "none")
+  //.attr("viewBox", "0,0,100,100")
+  //.attr("preserveAspectRatio", "none")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
 let axis = [
-  svg.append("g").attr("transform", "translate(0,100)"),
+  svg.append("g").attr("transform", "translate(0," + height + ")"),
   svg.append("g")];
 
 window.addEventListener("load", (e) => {
