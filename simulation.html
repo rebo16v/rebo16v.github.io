@@ -18,7 +18,7 @@ let sims = [];
 let summa = 0;
 let mean = 0;
 
-let margin = {top: 20, right: 20, bottom: 20, left: 30};
+let margin = {top: 20, right: 20, bottom: 20, left: 20};
 let width = window.innerWidth - margin.left;
 let height = window.innerHeight - margin.top;
 
@@ -34,14 +34,14 @@ let axis = [
   svg.append("g").attr("transform", "translate(0," + height + ")"),
   svg.append("g")];
 
-let name_text = svg.append("text");
+let name_text = svg.append("text").attr("font-family", "Arial").attr("fill", "blue");
 let mean_line = svg.append("line");
-let mean_text = svg.append("text");
+let mean_text = svg.append("text").attr("font-family", "Arial").attr("fill", "blue");
 
 window.addEventListener("load", (e) => {
   const query = window.location.search;
   const params = new URLSearchParams(query);
-  name_text.text(params.get("name")).attr("font-family", "Arial").attr("fill", "blue").attr("x", width-100).attr("y", 2*margin.top);
+  name_text.text(params.get("name")).attr("x", width-100).attr("y", 2*margin.top);
   nbins = parseInt(params.get("nbins"));
   window.addEventListener("message", (e1) => {
     let value = parseFloat(e1.data);
