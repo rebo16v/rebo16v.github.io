@@ -18,21 +18,23 @@ let sims = [];
 let summa = 0;
 let mean = 0;
 
-let margin = {top: 10, right: 20, bottom: 20, left: 20};
-let width = window.innerWidth - 2*margin.left;
-let height = window.innerHeight - 2*margin.top;
+let margin = { top: 30, right: 30, bottom: 30, left: 30 }
+let width = window.innerWidth;
+let height = window.innerHeight;
 
 let svg = d3.select("body")
   .append("svg")
     .attr("width", width)
     .attr("height", height)
+    /*
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + (0-margin.top) + ")");
+          */
 
 let axis = [
-  svg.append("g").attr("transform", "translate(0," + height + ")"),
-  svg.append("g")];
+  svg.append("g").attr("transform", "translate(0,${height - margin.bottom})"),
+  svg.append("g").attr("transform", "translate(${margin.left},0)")];
 
 let name_text = svg.append("text").attr("text-anchor", "end").attr("font-family", "Arial").attr("fill", "blue");
 let mean_line = svg.append("line");
@@ -48,11 +50,11 @@ window.addEventListener("load", (e) => {
     if (sims.length == 0) {
       x = d3.scaleLinear()
           .domain([0,2*value])
-          .range([0, width]);
+          .range([margin.left, width - margin.right]);
       axis[0].call(d3.axisBottom(x));
       y = d3.scaleLinear()
            .domain([0, 1])
-           .range([height, 0]);
+           .range([height - margin.bottom, margin.top]);
      axis[1].call(d3.axisLeft(y));
     }
     sims.push(value);
