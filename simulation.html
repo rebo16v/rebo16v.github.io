@@ -96,16 +96,17 @@ function repaint(){
               .attr("y", function(d) {return y(d.length/sims.length)})
               .attr("width", function(d) {return x(d.x1) - x(d.x0) - 2})
               .attr("height", function(d) {return y(0) - y(d.length/sims.length)}));
+  let mean_x = x(mean)
   mean_line
-    .attr("x1", x(mean))
-    .attr("x2", x(mean))
+    .attr("x1", mean_x)
+    .attr("x2", mean_x)
     .attr("y1", 0)
     .attr("y2", height)
-    .attr("stroke", "black");
+    .attr("stroke", "blue");
   mean_text
     .text("mean=" + mean)
-    .attr("x", x(mean))
-    .attr("y1", 0)    
+    .attr("x", mean_x)
+    .attr("y", 0);
 }
 </script>
 
