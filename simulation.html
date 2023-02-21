@@ -16,7 +16,7 @@ let y;
 let n_bins;
 let sims = [];
 
-let margin = {top: 30, right: 20, bottom: 20, left: 30};
+let margin = {top: 20, right: 20, bottom: 20, left: 30};
 let width = window.innerWidth - margin.left;
 let height = window.innerHeight - margin.top;
 
@@ -28,7 +28,7 @@ let svg = d3.select("body")
     .attr("height", height)
   .append("g")
     .attr("transform",
-          "translate(" + margin.left + ",0)");
+          "translate(" + margin.left + "," + (0-margin.top) + ")");
 
 let axis = [
   svg.append("g").attr("transform", "translate(0," + height + ")"),
