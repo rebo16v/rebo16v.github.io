@@ -61,8 +61,8 @@ window.addEventListener("load", (e) => {
         .attr("width", width)
         .attr("height", height);
     x.range([0, width]);
-    axis[0].call(d3.axisBottom(x));
     axis[0].attr("transform", "translate(0," + height + ")");
+    axis[0].call(d3.axisBottom(x));
     y.range([height, 0]);
     axis[1].call(d3.axisLeft(y));
     repaint();
