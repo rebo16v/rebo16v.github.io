@@ -15,6 +15,8 @@ let x;
 let y;
 let n_bins;
 let sims = [];
+let summa = 0;
+let mean = 0;
 
 let margin = {top: 20, right: 20, bottom: 20, left: 30};
 let width = window.innerWidth - margin.left;
@@ -31,6 +33,8 @@ let svg = d3.select("body")
 let axis = [
   svg.append("g").attr("transform", "translate(0," + height + ")"),
   svg.append("g")];
+
+let mean_line = svg.append("line");
 
 window.addEventListener("load", (e) => {
   const query = window.location.search;
@@ -51,6 +55,8 @@ window.addEventListener("load", (e) => {
      axis[1].call(d3.axisLeft(y));
     }
     sims.push(value);
+    summa += value;
+    mean = summa / sims.length;
     repaint();
   }, false);
   window.addEventListener("resize", (e2) => {
@@ -89,6 +95,12 @@ function repaint(){
               .attr("y", function(d) {return y(d.length/sims.length)})
               .attr("width", function(d) {return x(d.x1) - x(d.x0) - 2})
               .attr("height", function(d) {return y(0) - y(d.length/sims.length)}));
+  mean_line
+    .attr("x1", x(mean))
+    .attr("x2", x(mean))
+    .attr("y1", 0)
+    .attr("y2", height)
+    .attr("stroke", "black");
 }
 </script>
 
