@@ -34,7 +34,7 @@ let axis = [
   svg.append("g").attr("transform", "translate(0," + height + ")"),
   svg.append("g")];
 
-let name_text = svg.append("text").attr("font-family", "Arial").attr("fill", "blue");
+let name_text = svg.append("text").attr("text-anchor", "end").attr("font-family", "Arial").attr("fill", "blue");
 let mean_line = svg.append("line");
 let mean_text = svg.append("text").attr("text-anchor", "end").attr("font-family", "Arial").attr("font-size", "smaller").attr("fill", "blue");
 
@@ -72,7 +72,7 @@ window.addEventListener("load", (e) => {
     axis[0].call(d3.axisBottom(x));
     y.range([height, 0]);
     axis[1].call(d3.axisLeft(y));
-    name_text.attr("x", width-100).attr("y", 2*margin.top);
+    name_text.attr("x", width-2).attr("y", 2*margin.top);
     repaint();
   }, false);
 });
@@ -106,8 +106,8 @@ function repaint(){
     .attr("stroke", "blue");
   mean_text
     .text("mean=" + mean)
-    .attr("x", mean_x+2)
-    .attr("y", 2*margin.top);
+    .attr("x", mean_x-2)
+    .attr("y", margin.top);
 }
 </script>
 
