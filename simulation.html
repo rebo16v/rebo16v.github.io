@@ -43,8 +43,8 @@ window.addEventListener("load", (e) => {
   nbins = parseInt(params.get("nbins"));
   window.addEventListener("message", (e1) => {
     let json = JSON.parse(e1.data);
-    let iter = parseInt(e1.json.iter);
-    let value = parseFloat(e1.json.value);
+    let iter = parseInt(json.iter);
+    let value = parseFloat(json.value);
     iter_text.text(iter).attr("x", width-margin.right).attr("y", 2*margin.top);
     if (sims.length == 0) {
       x = d3.scaleLinear()
