@@ -45,7 +45,7 @@ window.addEventListener("load", (e) => {
     let json = JSON.parse(e1.data);
     let iter = parseInt(json.iter);
     let value = parseFloat(json.value);
-    iter_text.text(iter).attr("x", width-margin.right).attr("y", 2*margin.top);
+    iter_text.text("iter " + iter).attr("x", width-margin.right).attr("y", 2*margin.top);
     if (sims.length == 0) {
       x = d3.scaleLinear()
           .domain([0,2*value])
