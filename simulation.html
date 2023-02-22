@@ -32,16 +32,20 @@ let axis = [
   svg.append("g").attr("transform", `translate(${margin.left},0)`)];
 
 let name_text = svg.append("text").attr("text-anchor", "end").attr("font-family", "Arial").attr("fill", "blue");
+let iter_text = svg.append("text").attr("text-anchor", "end").attr("font-family", "Arial").attr("font-size", "smaller").attr("fill", "blue");
 let mean_line = svg.append("line");
 let mean_text = svg.append("text").attr("text-anchor", "end").attr("font-family", "Arial").attr("font-size", "smaller").attr("fill", "blue");
 
 window.addEventListener("load", (e) => {
   const query = window.location.search;
   const params = new URLSearchParams(query);
-  name_text.text(params.get("name")).attr("x", width-margin.right).attr("y", 2*margin.top);
+  name_text.text(params.get("name")).attr("x", width-margin.right).attr("y", margin.top);
   nbins = parseInt(params.get("nbins"));
   window.addEventListener("message", (e1) => {
-    let value = parseFloat(e1.data);
+    let json = JSON.parse(e1.data);
+    let iter = parseInt(e1.json.iter);
+    let value = parseFloat(e1.json.value);
+    iter_text.text(iter).attr("x", width-margin.right).attr("y", 2*margin.top);
     if (sims.length == 0) {
       x = d3.scaleLinear()
           .domain([0,2*value])
@@ -71,6 +75,7 @@ window.addEventListener("load", (e) => {
     axis[1].attr("transform", `translate(${margin.left},0)`);
     axis[1].call(d3.axisLeft(y));
     name_text.attr("x", width-margin.right).attr("y", margin.top);
+    iter_text.attr("x", width-margin.right).attr("y", 2*margin.top);
     repaint();
   }, false);
 });

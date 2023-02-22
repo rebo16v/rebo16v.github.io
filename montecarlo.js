@@ -44,8 +44,8 @@ async function montecarlo_start() {
         outputs.forEach((o,i) => {
           let value = o.values[0][0]
           out[i].push(value);
-          // let msg = JSON.stringify({iter: k, value: value});
-          win[i].postMessage(value);
+          let msg = JSON.stringify({iter: k, value: value});
+          win[i].postMessage(msg);
         });
       }
       document.getElementById("play").disabled = false;
